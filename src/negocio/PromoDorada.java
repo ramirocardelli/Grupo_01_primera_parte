@@ -5,7 +5,7 @@ public class PromoDorada extends Promo{
         super();
     }
     
-    public void movilAcompanamiento(Contratacion contratacion){
+    public static void promo(Contratacion contratacion){
         contratacion.aplicaPromocionDorada();
     }
     

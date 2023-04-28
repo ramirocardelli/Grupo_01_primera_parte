@@ -1,7 +1,6 @@
 package modelo;
 
 import java.util.ArrayList;
-
 import negocio.Abonado;
 
 public class DatosAbonados {

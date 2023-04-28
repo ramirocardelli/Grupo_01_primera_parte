@@ -5,7 +5,7 @@ public class PromoPlatino extends Promo{
         super();
     }
     
-    public void getPromocion(Contratacion contratacion){
+    public static void promo(Contratacion contratacion){
         contratacion.aplicaPromocionPlatino();
     }
 }

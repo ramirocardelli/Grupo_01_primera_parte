@@ -9,9 +9,9 @@ public abstract class Contratacion {
     protected static int numeroId=0;
     protected double precio; //E
 
-    protected static final double valorunidadCamara=3000;
-    protected static final double valorunidadBotAntipanico=2000;
-    protected static final double valorMovilAcompanamiento=7500;
+    protected static final double valorUnidadCamara = 3000;
+    protected static final double valorUnidadBotAntipanico = 2000;
+    protected static final double valorMovilAcompanamiento = 7500;
                 
     public Contratacion(int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio) {
         super();

@@ -1,18 +1,25 @@
 package negocio;
 
 public class ContratacionComercio extends Contratacion {
-    private double precio; //E
-    private static final double valorComercio=10000;
+    private double precio;
+    private static final double valorComercio = 10000;
    
     public ContratacionComercio(int camaras, int botonesAntipanico, boolean movilAcompanamiento, Domicilio domicilio){
         super(camaras, botonesAntipanico, movilAcompanamiento, domicilio);
-        this.precio=calculaPrecio(camaras,botonesAntipanico,movilAcompanamiento);
+        this.precio = calculaPrecio(camaras, botonesAntipanico, movilAcompanamiento);
     }
-    
     
     public double calculaPrecio(int camaras, int botonesAntipanico, boolean movilAcompanamiento){
-        return (valorComercio+camaras*valorunidadCamara+botonesAntipanico*valorunidadBotAntipanico+((movilAcompanamiento)?valorMovilAcompanamiento:0));
+    	double res = 0;
+    	res = valorComercio;
+    	res += camaras*valorUnidadCamara;
+    	res += botonesAntipanico*valorUnidadBotAntipanico;
+    	if(movilAcompanamiento)
+    		res += valorMovilAcompanamiento;
+    	
+    	return res;
     }
+    
     public void promo(Promo promo){
        promo.promo(this);
      }

@@ -9,6 +9,17 @@ public class ContratacionVivienda extends Contratacion {
         this.precio = 0;
     }
     
+    public double calculaPrecio(int camaras, int botonesAntipanico, boolean movilAcompanamiento){
+    	double res = 0;
+    	res = valorVivienda;
+    	res += camaras*valorUnidadCamara;
+    	res += botonesAntipanico*valorUnidadBotAntipanico;
+    	if(movilAcompanamiento)
+    		res += valorMovilAcompanamiento;
+    	
+    	return res;
+    }
+    
     public void promo(Promo promo){
        promo.promo(this);
      }

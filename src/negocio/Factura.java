@@ -2,27 +2,50 @@ package negocio;
 
 import java.util.ArrayList;
 
-public class Factura implements Cloneable {
+public class Factura implements Cloneable, IFactura {
     private Abonado abonado;
     private ArrayList<Contratacion> contrataciones = new ArrayList<Contratacion>();
-    
-
     
     public Factura() {
         super();
     }
     
-    public double getPrecioTotal(){
-		return 0;
+    // Precondiciones
+    // Que el domicilio pertenezca al abonado
+    public void agregarContratacion(Contratacion contratacion) {
+    	contrataciones.add(contratacion);
+    }
+    // Si hay una contratacion con ese domicilio, tira excepción
+    
+    public double calcularTotalSinDescuento() {
+    	return abonado.calcularTotal(this);
     }
     
-    public double getPrecioPFisica(){
-		return 0;
+    public double calcularTotalConDescuento() {
+    	return abonado.calcularTotal(this);
     }
     
-    public double getPrecioPJuridica(){
-		return 0;
+    public double getPrecioPersonaFisica(){
+    	double res = 0;
+    	Iterator<Contratacion>it = contrataciones.iterator();
+    	while(it.hastNext()) {
+    		res += it.next().getPrecio();
+    	}
+		return res;
     }
     
+    public double getPrecioPersonaJuridica(){
+    	double res = 0;
+    	int i = 0;
+    	Iterator<Contratacion>it = contrataciones.iterator();
+    	while(it.hastNext()) {
+    		if(i > 3)
+    			res += it.next().getPrecio()*0.5;
+    		else
+    			res += it.next().getPrecio();
+    		i++;
+    	}
+		return res;
+    }
 }
 
