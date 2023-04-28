@@ -12,6 +12,8 @@ public class PersonaFisica extends Abonado {
     	return factura.getPrecioPersonaFisica();
     }
     
+	//No es necesario sobreescribir el clon() xq no cambia del ya creado en la clase padre (como se extiende ya lo tiene)
+	
     // abonado.calcularPrecio()
     // system.calcularPrecio(abonado)
     // busca en facturas la del abonado

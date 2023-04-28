@@ -49,5 +49,17 @@ public class Factura implements Cloneable, IFactura {
     	}
 		return res;
     }
+    
+    public Object clone() throws CloneNotSupportedException{
+    	Factura clon= (Factura)super.clone();
+    	clon.abonado=(Abonado)this.abonado.clon();
+    	clon.contrataciones=(ArrayList<Contratacion>)this.contrataciones.clone();
+    	clon.contrataciones.clear();
+    	Iterator<Contratacion> it=this.contrataciones.iterator();
+    	while(it.hasNext()) {
+    		clon.contrataciones.add(it.next());
+    	}
+		return clon;
+    }
 }
 

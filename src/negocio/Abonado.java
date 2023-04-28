@@ -1,6 +1,6 @@
 package negocio;
 
-public abstract class Abonado {  //hacer como socio
+public abstract class Abonado implements Cloneable{  //hacer como socio
     private String nombre;
     private String dni;
     
@@ -21,5 +21,8 @@ public abstract class Abonado {  //hacer como socio
 		return dni;
 	}
     
-    
+	public Object clon() throws CloneNotSupportedException{
+    	Abonado clon= (Abonado)super.clone();
+		return clon;
+    }
 }
