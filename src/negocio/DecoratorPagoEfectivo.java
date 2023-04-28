@@ -2,8 +2,8 @@ package negocio;
 
 public class DecoratorPagoEfectivo extends DecoratorPago {
 	private static final double factor = 0.8;
-    public DecoratorPagoEfectivo() {
-        super();
+    public DecoratorPagoEfectivo(IFactura encapsulado) {
+        super(encapsulado);
     }
 
 	public double calcularTotalSinDescuento() {

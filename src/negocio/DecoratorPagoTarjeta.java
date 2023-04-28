@@ -2,8 +2,8 @@
 public class DecoratorPagoTarjeta extends DecoratorPago {
 	private static final double factor = 1.05;
 	
-    public DecoratorPagoTarjeta() {
-        super();
+    public DecoratorPagoTarjeta(IFactura encapsulado) {
+        super(encapsulado);
     }
 
 	public double calcularTotalSinDescuento() {
