@@ -7,8 +7,9 @@ public class Factura implements Cloneable, IFactura {
     private Abonado abonado;
     private ArrayList<Contratacion> contrataciones = new ArrayList<Contratacion>();
     
-    public Factura() {
+    public Factura(Abonado abonado) {
         super();
+        this.abonado = abonado;
     }
     
     // Precondiciones

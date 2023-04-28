@@ -4,11 +4,10 @@ public class FactoryPagos {
     public FactoryPagos() {
         super();
     }
-    
-    
+        
     // Precondicion: abonado != null
     public static IFactura factoryFactura(Abonado abonado, String metodoPago) throws Exception {
-    	IFactory creado = null;
+    	IFactura creado = null;
     	
     	Factura factura = new Factura(abonado);
     	
