@@ -2,12 +2,14 @@ package negocio;
 //puede aceptar clonacion
 public class PersonaFisica extends Abonado {
 	
-    public PersonaFisica() {
-        super();
-    }
-    
-    public double calcularTotal(Factura factura){
-    	return factura.calcularTotalPersonaFisica();
+    public PersonaFisica(String nombre, String dni) {
+		super(nombre, dni);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+    public double calcularTotal(Factura factura) {
+    	return factura.getPrecioPersonaFisica();
     }
     
     // abonado.calcularPrecio()

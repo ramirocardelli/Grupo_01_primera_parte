@@ -8,4 +8,13 @@ public class Domicilio {
         this.calle=calle;
         this.numero=numero;
     }
+
+	public String getCalle() {
+		return calle;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+    
 }

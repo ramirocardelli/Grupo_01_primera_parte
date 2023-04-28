@@ -1,9 +1,10 @@
+package negocio;
 
-public class DecoratorPagoCheque {
+public class DecoratorPagoCheque extends DecoratorPago{
 	private static final double factor = 1.1;
 	
-    public DecoratorPagoCheque(IFactura encapsulado) {
-        super(encapsulado);
+    public DecoratorPagoCheque() {
+        super();
     }
 
 	public double calcularTotalSinDescuento() {
@@ -11,7 +12,7 @@ public class DecoratorPagoCheque {
 	}
 	
 	public double calcularTotalConDescuento() {
-		return encapsulado.calcularTotalSinDescuento() * factor;
+		return encapsulado.calcularTotalConDescuento() * factor;
 	}
 
 }

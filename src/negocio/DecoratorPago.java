@@ -2,9 +2,9 @@ package negocio;
 
 public abstract class DecoratorPago implements IFactura{
     protected IFactura encapsulado;
-    public DecoratorPago(IFactura encapsulado) {
+    
+    public DecoratorPago() {
         super();
-        this.encapsulado = encapsulado;        
     }
     
 	public void agregarContratacion(Contratacion contratacion) {

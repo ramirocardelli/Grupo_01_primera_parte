@@ -7,7 +7,7 @@ public abstract class Contratacion {
     protected Domicilio domicilio; //NO SE PUEDE REPETIR
     protected int id;
     protected static int numeroId=0;
-    protected double precio; //E
+    protected double precio;
 
     protected static final double valorUnidadCamara = 3000;
     protected static final double valorUnidadBotAntipanico = 2000;
@@ -40,7 +40,11 @@ public abstract class Contratacion {
         promo.promo(this);
     }
     
-    public abstract void aplicaPromocionPlatino();
+    public double getPrecio() {
+		return precio;
+	}
+
+	public abstract void aplicaPromocionPlatino();
     
     public abstract void aplicaPromocionDorada();
 }

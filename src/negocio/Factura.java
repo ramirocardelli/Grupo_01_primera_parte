@@ -1,14 +1,14 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Factura implements Cloneable, IFactura {
     private Abonado abonado;
     private ArrayList<Contratacion> contrataciones = new ArrayList<Contratacion>();
     
-    public Factura(Abonado abonado) {
+    public Factura() {
         super();
-        this.abonado = abonado;
     }
     
     // Precondiciones
@@ -29,7 +29,7 @@ public class Factura implements Cloneable, IFactura {
     public double getPrecioPersonaFisica(){
     	double res = 0;
     	Iterator<Contratacion>it = contrataciones.iterator();
-    	while(it.hastNext()) {
+    	while(it.hasNext()) {
     		res += it.next().getPrecio();
     	}
 		return res;
@@ -39,7 +39,7 @@ public class Factura implements Cloneable, IFactura {
     	double res = 0;
     	int i = 0;
     	Iterator<Contratacion>it = contrataciones.iterator();
-    	while(it.hastNext()) {
+    	while(it.hasNext()) {
     		if(i > 3)
     			res += it.next().getPrecio()*0.5;
     		else

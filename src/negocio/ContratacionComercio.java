@@ -1,7 +1,6 @@
 package negocio;
 
 public class ContratacionComercio extends Contratacion {
-    private double precio;
     private static final double valorComercio = 10000;
    
     public ContratacionComercio(int camaras, int botonesAntipanico, boolean movilAcompanamiento, Domicilio domicilio){
