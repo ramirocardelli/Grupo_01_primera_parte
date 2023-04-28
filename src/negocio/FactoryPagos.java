@@ -10,7 +10,7 @@ public class FactoryPagos {
     public static IFactura factoryFactura(Abonado abonado, String metodoPago) throws Exception {
     	IFactory creado = null;
     	
-    	Factura factura = new Factura(Abonado abonado);
+    	Factura factura = new Factura(abonado);
     	
     	if(metodoPago.equalsIgnoreCase("EFECTIVO"))
     		creado = new DecoratorPagoEfectivo(factura);
