@@ -1,5 +1,6 @@
 package negocio;
 
+
 public abstract class DecoratorPago implements IFactura{
     protected IFactura encapsulado;
     

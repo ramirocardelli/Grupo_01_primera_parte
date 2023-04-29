@@ -1,12 +1,21 @@
 package negocio;
 
+/** Clase que crea para un abonado determinado, una factura decorada segun el metodo de pago. Se utiliza el patrón Factory.
+ */
 public class FactoryPagos {
     public FactoryPagos() {
         super();
     }
     
     
-    // Precondicion: abonado != null
+    /**
+     * @param abonado
+     * @param metodoPago
+     * @return
+     * @throws Exception
+     * <b> Pre: </b> abonado no puede ser null, y metodoPago no puede ser null ni " ". <br>
+     * <b> Post: </b> Se crea factura que contiene al abonado, y la decora usando el patrón decorator correspondiente segun el metodo de pago. 
+     */
     public static IFactura factoryFactura(Abonado abonado, String metodoPago) throws Exception {
     	IFactura creado = null;
     	Factura factura = new Factura(abonado);
@@ -18,9 +27,10 @@ public class FactoryPagos {
     	else if (metodoPago.equalsIgnoreCase("CHEQUE"))
     		creado = new DecoratorPagoCheque(factura);
     	
-    	if(creado == null)
-    		throw new Exception("metodo de pago erroneo");	// Mejorar esta excepciÃ³n
-    	
+    	// excepcion o contrato?
+         /* if(creado == null)
+            throw new Exception("metodo de pago erroneo");	// hacer excep
+    	*/
     	return creado;
     }
 }

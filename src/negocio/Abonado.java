@@ -11,6 +11,8 @@ public abstract class Abonado implements Cloneable{  //hacer como socio
     /** Constructor de 2 parametros String para crear un nuevo abonado.
      * @param nombre : Nombre del abonado.
      * @param dni : Numero de documento de identidad del abonado.
+     * <b> Pre: </b> nombre y dni no pueden ser nulos ni " ". <br>
+     *  <b> Post: </b> Se crea un nuevo abonado con nombre y dni.
      */
     public Abonado(String nombre, String dni) {
 		super();
@@ -26,20 +28,20 @@ public abstract class Abonado implements Cloneable{  //hacer como socio
      */
     public abstract double calcularTotal(Factura factura);
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getDni() {
-		return dni;
-	}
+    public String getDni() {
+        return dni;
+    }
 
     /** Metodo para clonar un abonado.
      * @return : Se devuelve un clon del abonado correspondiente.
-     * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jurídica.
+     * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jurídica, la cual no puede aceptar clonacion.
      */
     public Object clon() throws CloneNotSupportedException{
     	Abonado clon= (Abonado)super.clone();
-		return clon;
+    return clon;
     }
 }
