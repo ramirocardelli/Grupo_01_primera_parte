@@ -29,10 +29,6 @@ public class ContratacionVivienda extends Contratacion {
              return valorVivienda + super.calculaPrecio();
         }
         
-    
-    public void promo(Promo promo){ 
-       promo.promo(this);
-     }
 
     /** Metodo que aplica la promocion dorada para viviendas.
      * Modifica el precio de la contratacion con un descuento de $1500.

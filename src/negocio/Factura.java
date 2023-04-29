@@ -29,9 +29,6 @@ public class Factura implements Cloneable, IFactura {
                     return (res.domicilio.equalsIgnoreCase(domicilio));
     */
     
-    // Precondiciones
-    // Que el domicilio pertenezca al abonado 
-
     /** Metodo que agrega una contratacion a la lista de todas las contrataciones.
      * @param contratacion : Contratacion que se quiere agregar a la lista de contrataciones.<br>
      * <b> Pre: </b> La contratacion no puede ser nula. <br>
@@ -40,7 +37,6 @@ public class Factura implements Cloneable, IFactura {
     public void agregarContratacion(Contratacion contratacion) {
     	contrataciones.add(contratacion);
     }
-    // Si hay una contratacion con ese domicilio, tira excepción
 
     /** Metodo que calcula el monto total (entre todas sus contrataciones) que debe pagar un abonado sin aplicar el descuento por el metodo de pago.
      * @return double que contiene el valor que se debe abonar.
@@ -56,7 +52,6 @@ public class Factura implements Cloneable, IFactura {
     	return abonado.calcularTotal(this);
     }
 
-    // che estos metodos no hacen lo mismo?
 
     /** Calcula el monto total de contrataciones que debe abonar una persona fisica.
      * @return double que contiene el valor del monto total a abonar.
