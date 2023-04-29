@@ -1,6 +1,9 @@
 package negocio;
 
 public class MetodoDePagoInvalidoException extends Throwable {
-    MetodoDePagoInvalidoException(String string) {
+	private static final long serialVersionUID = 1L;
+
+	public MetodoDePagoInvalidoException() {
+		super();
     }
 }

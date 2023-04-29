@@ -5,35 +5,40 @@ import java.util.Iterator;
 import modelo.*;
 
 public class Sistema { //Singleton
-    private AbonadosSinContratacion datoAbonadosSinC; //sistema tendra una referencia a la capa de datos mediante la cual se comunicara para solicitar o modificar datos
-    private DatosFacturas datoFacturas;
+    private SubSistemaDatos datos;
 
-    public Sistema(AbonadosSinContratacion abonadosSnC, DatosFacturas datoFacturas) { //se pasan por constructor y no se les hace new para no limitar la herencia
+    public Sistema() { //se pasan por constructor y no se les hace new para no limitar la herencia
         super();
-        this.datoAbonadosSinC=abonadosSnC;
-        this.datoFacturas=datoFacturas;
+        this.datos=new SubSistemaDatos();
     }
     
-    
-    //clase conjunto de clientes - interfaz conjunto de clientes
-    //abonado 
-    
-    public Abonado buscaAbonado(String dni) {
-    	//Busca abonado en lista de facturas y lista de abonados sin contratacion
+    public Abonado buscaAbonado(String dni) { //si no lo encuentra devuelve null
+    	return this.datos.buscaAbonado(dni);
     }
     
-    public Contratacion buscaContratacion(Abonado abonado,Domicilio domicilio) {
-    	//busca la factura y luego dentro de la factura busca la contratacion
+    public Contratacion buscaContratacion(String calle,int numero) {
+    	Domicilio domicilio=new Domicilio(calle,numero);
+    	return this.datos.buscaContratacion(domicilio);
     }
     
     public Factura buscaFactura(Abonado abonado) {
-    	//busca la factura por abonado
+    	return this.datos.buscaFactura(abonado);
     }
     
-    public void nuevoAbonado(String nombre,String dni,String tipo){ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoConFactura,AbonadoYaCargadoSinFactura, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
     	//verificar que no existe en la lista de abonados existente y tampoco en la lista de facturas
-    	Abonado abonado=factoryAbonado(nombre,dni,tipo);
-    	//agregar a la lista de abonadosSinContratacion
+    	if(buscaAbonado(dni)==null) {
+    		FactoryAbonado FA=new FactoryAbonado();
+    		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
+    		Factura busquedaF=buscaFactura(abonado);
+    		if(busquedaF==null) {
+    			datos.agregaAbonadoSinFacctura(abonado);
+    		}
+    		else
+    			throw new AbonadoYaCargadoConFactura(nombre,dni);
+    	}
+    	else
+    		throw new AbonadoYaCargadoSinFactura(nombre,dni);
     }
     
     public void nuevaContratacion(Abonado abonado,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura

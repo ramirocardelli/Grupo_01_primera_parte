@@ -1,8 +1,11 @@
 package negocio;
 
+import modelo.AbonadosSinContratacion;
+import modelo.DatosFacturas;
+
 public class SubSistemaDatos {
-	AbonadosSinContratacion abonadosSinContratacion;
-	DatosFacturas datosFacturas;
+	private AbonadosSinContratacion abonadosSinContratacion;
+	private DatosFacturas datosFacturas;
 	
 	
 	public SubSistemaDatos() {
@@ -10,7 +13,33 @@ public class SubSistemaDatos {
 		abonadosSinContratacion=new AbonadosSinContratacion();
 	}
 	
-	public existeAbonado();
+	public Abonado buscaAbonado(String dni) {
+		return null;
+	}
 	
-	publi
+	public Contratacion buscaContratacion(Domicilio domicilio) { //Ingresando un domicilio busca la contratacion
+		return null;
+	}
+	
+	public Factura buscaFactura(Abonado abonado) {
+		return null;
+	}
+	
+	public void agregaFactura(Factura factura) {
+		this.datosFacturas.agregaFactura(factura);
+		
+	}
+	
+	public void agregaAbonadoSinFacctura(Abonado abonado) {
+		this.abonadosSinContratacion.agregaAbonado(abonado);
+	}
+	
+	public void eliminaFactura(int i) {
+		this.datosFacturas.eliminaFacturas(i);
+	}
+	
+	public void eliminaAbonadoSinFactura(int i){
+		this.abonadosSinContratacion.eliminaAbonado(i);
+	}
+	
 }
