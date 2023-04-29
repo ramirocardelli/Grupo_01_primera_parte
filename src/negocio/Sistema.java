@@ -14,6 +14,7 @@ public class Sistema { //Singleton
         this.datoFacturas=datoFacturas;
     }
     
+    
     //clase conjunto de clientes - interfaz conjunto de clientes
     //abonado 
     

@@ -3,16 +3,16 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import negocio.WorkAbonado;
+import negocio.Abonado;
 
 public class AbonadosSinContratacion {
-    public ArrayList<WorkAbonado> Abonados=new ArrayList<WorkAbonado>();
+    public ArrayList<Abonado> Abonados=new ArrayList<Abonado>();
     
     public AbonadosSinContratacion() {
         super();
     }
 
-	public Iterator<WorkAbonado> getAbonados() {
+	public Iterator<Abonado> getAbonados() {
 		return Abonados.iterator();
 	}
 
@@ -20,6 +20,5 @@ public class AbonadosSinContratacion {
 	public String toString() {
 		return "AbonadosSinContratacion [Abonados=" + Abonados + "]"; //NO HECHO
 	}
-	
 }
 //prueba commit - comentario jo
