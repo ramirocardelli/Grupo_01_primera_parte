@@ -10,7 +10,9 @@ public class SubSistemaDatos {
 		abonadosSinContratacion=new AbonadosSinContratacion();
 	}
 	
-	public existeAbonado();
+	public int existeAbonado();
 	
-	publi
+	private int existeFacturaAbonado();
+	
+	private int existeAbonadoSinContratacion();
 }
