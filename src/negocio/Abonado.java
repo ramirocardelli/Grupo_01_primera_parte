@@ -3,7 +3,7 @@ package negocio;
 /** Esta clase representa un abonado dentro de un sistema de contratación de un servicios de seguridad.
  * Contiene información sobre su nombre y su dni.
  */
-public abstract class Abonado implements Cloneable{  //hacer como socio
+public abstract class Abonado implements Cloneable{  
     private String nombre;
     private String dni;
 
@@ -12,7 +12,7 @@ public abstract class Abonado implements Cloneable{  //hacer como socio
      * @param nombre : Nombre del abonado.
      * @param dni : Numero de documento de identidad del abonado.
      * <b> Pre: </b> nombre y dni no pueden ser nulos ni " ". <br>
-     *  <b> Post: </b> Se crea un nuevo abonado con nombre y dni.
+     * <b> Post: </b> Se crea un nuevo abonado con nombre y dni.
      */
     public Abonado(String nombre, String dni) {
 		super();

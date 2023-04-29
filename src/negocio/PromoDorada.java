@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa la promo dorada que ocasinalmente la empresa aplica a sus servicios.
+/** Clase que representa la promo dorada que ocasionalmente la empresa aplica a sus servicios.
  */
 public class PromoDorada extends Promo{
     public PromoDorada() {

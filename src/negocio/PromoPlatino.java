@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa la promo platino que ocasinalmente la empresa aplica a sus servicios.
+/** Clase que representa la promo platino que ocasionalmente la empresa aplica a sus servicios.
  */
 public class PromoPlatino extends Promo{
     public PromoPlatino() {
