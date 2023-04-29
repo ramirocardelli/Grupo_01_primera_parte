@@ -23,7 +23,7 @@ public class PersonaJuridica extends Abonado {
     @Override
     public double calcularTotal(Factura factura) {
     	return factura.getPrecioPersonaJuridica();
-	}
+    }
 
     /** Implementacion del metodo clone() para clonar una persona juridica.
      * @throws CloneNotSupportedException siempre, la persona juridica no admite clonacion.

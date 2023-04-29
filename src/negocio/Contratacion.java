@@ -61,8 +61,8 @@ public abstract class Contratacion {
         return movilAcompanamiento;
     }
     
-    public void promo(Promo promo){
-        promo.promo(this);
+    public void promo(Promo tipoPromo){
+        tipoPromo.promo(this);
     }
     
     public double getPrecio() {

@@ -29,10 +29,6 @@ public class ContratacionComercio extends Contratacion {
     	return valorComercio + super.calculaPrecio();
     }
     
-    public void promo(Promo promo){
-       promo.promo(this);
-     }
-
     /** Metodo que aplica la promocion dorada para comercios.
      * Modifica el precio de la contratacion con un descuento de $2500.
      */
