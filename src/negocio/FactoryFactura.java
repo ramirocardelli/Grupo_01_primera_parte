@@ -8,11 +8,10 @@ public class FactoryFactura {
         super();
     }
     
-    private IFactura factoryTipoFactura(Abonado abonado,String tipo) throws TipoFacturaIncorrecto {
+    private IFactura factoryTipoFactura(Abonado abonado, String tipo) throws TipoFacturaIncorrecto {
     	IFactura creado=null;
-    	if(tipo==null) {
+    	if(tipo == null)
     		creado=new Factura(abonado);
-    	}
     	else
     		throw new TipoFacturaIncorrecto(abonado,tipo);
     	return creado;
@@ -29,16 +28,16 @@ public class FactoryFactura {
      */
     public IFactura creaFactura(Abonado abonado, String metodoPago,String tipo) throws MetodoDePagoInvalidoException, TipoFacturaIncorrecto {
     	IFactura creado = factoryTipoFactura(abonado,tipo);
+    	
     	if(metodoPago.equalsIgnoreCase("EFECTIVO"))
     		creado = new DecoratorPagoEfectivo(creado);
-    	else 
-    		if (metodoPago.equalsIgnoreCase("TARJETA"))
-    			creado = new DecoratorPagoTarjeta(creado);
-    		else 
-	    		if (metodoPago.equalsIgnoreCase("CHEQUE"))
-	    			creado = new DecoratorPagoCheque(creado);
-	    		else
-	    			throw new MetodoDePagoInvalidoException(creado, metodoPago);
+    	else if (metodoPago.equalsIgnoreCase("TARJETA"))
+    		creado = new DecoratorPagoTarjeta(creado);
+    	else if (metodoPago.equalsIgnoreCase("CHEQUE"))
+	    	creado = new DecoratorPagoCheque(creado);
+	    else
+	    	throw new MetodoDePagoInvalidoException(creado, metodoPago);
+    	
     	return creado;
     }
 }
