@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa una contrataci�n de monitoreo de alarmas para viviendas.
+/** Clase que representa una contrataci�n de monitoreo de alarmas para viviendas.
  */
 public class ContratacionVivienda extends Contratacion {
     private static final double valorVivienda=8500;
@@ -43,4 +43,12 @@ public class ContratacionVivienda extends Contratacion {
      public void aplicaPromocionPlatino(){
        this.precio *= 0.7;
      }
+     
+     public String toString() {
+ 		return "Monitoreo de Alarmas de Vivienda para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
+ 				+ "Agregados: \n "
+ 				+ " Cámaras: " + camaras + "\n"
+ 				+ " Botones Antipánico: " + botonesAntipanicos+ "\n"
+ 				+ " Movil/es de acompañamiento=" + movilAcompanamiento + " \n ";
+ 	}
 }

@@ -1,5 +1,7 @@
 package negocio; // sistema ->invoca todos los metodos
 
+import java.util.Iterator;
+
 public class Sistema { //Singleton
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
@@ -127,6 +129,9 @@ public class Sistema { //Singleton
 	}
 	
 	public void MuestraEstado() {
+		Iterator<IFactura> it = datos.iteratorFacturas();
+		
+		
 		//Recorre los 2 arreglos mostrando toda la informacion contenida en ellos (tostring)
 	}
 }                                               
