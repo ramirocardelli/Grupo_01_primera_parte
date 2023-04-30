@@ -1,13 +1,20 @@
 package negocio;
 
-/** Clase que crea para un abonado determinado, una factura decorada segun el metodo de pago. Se utiliza el patr�n Factory.
+/** Clase que crea para un abonado determinado, una factura decorada segun el metodo de pago. Se utiliza el patron Factory.
  */
 public class FactoryFactura {
 	
     public FactoryFactura() {
         super();
     }
-    
+
+    /** Metodo que crea una factura si el tipo ingresado es correcto, de otra forma lanza excepcion.
+     * @param abonado : abonado de quien se quire crear la factura
+     * @param tipo : tipo de factura
+     * @return IFactura creada
+     * @throws TipoFacturaIncorrecto excepcion que se lanza cuando el tipo de factura ingresado es incorrecto. <br>
+     * <b> Pre: </b> abonado no debe ser null, y tipo no debe ser " "
+     */
     private IFactura factoryTipoFactura(Abonado abonado, String tipo) throws TipoFacturaIncorrecto {
     	IFactura creado=null;
     	if(tipo == null)
