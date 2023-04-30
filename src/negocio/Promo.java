@@ -1,10 +1,11 @@
 package negocio;
 
-public class Promo {
+/** Clase que representa una promo que ocasionalmente brinda el sistema.
+ */
+public abstract class Promo {
     public Promo() {
         super();
     }
     
-    public void promo(Contratacion contratacion){
-    }
+    public abstract void promo(Contratacion contratacion);
 }

@@ -91,8 +91,13 @@ public class Factura implements Cloneable, IFactura {
 	public Abonado getAbonado() {
 		return abonado;
 	}
-	
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
+
+    /** Metodo que elimina una contratacion de la lista.
+     * @param domicilio : Domicilio del cual se quiere eliminar la contratacion.
+     * @throws DomicilioSinContratacionEnAbonadoException cuando el domicilio no se encuentra en la lista de contrataciones. <br>
+     * <b> Pre: </b> domicilio no puede ser null
+     */
+    public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 		int i=buscaContratacion(domicilio);
     	if(i>-1) {
     		this.contrataciones.remove(i);
@@ -101,12 +106,20 @@ public class Factura implements Cloneable, IFactura {
     		throw new DomicilioSinContratacionEnAbonadoException(domicilio,this.abonado);
 	}
 
-	@Override
+    /** Metodo que determina si la lista de contrataciones esta vacia
+     * @return boolean true si la lista no tiene contrataciones, false si se encuentran contrataciones en la lista.
+     */
+    @Override
 	public boolean sinContratacion() {
 		return (this.contrataciones.size()==0);
 	}
 
-	private int buscaContratacion(Domicilio domicilio) {
+    /** Metodo que busca una determinada contratacion en la lista.
+     * @param domicilio : domicilio del que se quiere buscar la contratacion.
+     * @return int con la posicion de la lista en la que se encuentra el domicilio buscado. <br>
+     * <b> Pre: </b> domicilio no puede ser null.
+     */
+    private int buscaContratacion(Domicilio domicilio) {
 		int i=0;
 		int tamanio=contrataciones.size();
     	while(i<tamanio && !this.contrataciones.get(i).getDomicilio().equals(domicilio)) {

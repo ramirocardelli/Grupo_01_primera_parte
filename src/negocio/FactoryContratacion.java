@@ -1,5 +1,7 @@
 package negocio;
 
+/** Clase que utiliza el patrón Factory para crear una contratacion segun su tipo (de vivienda o de comercio). 
+ */
 public class FactoryContratacion {
 	
 	public Contratacion creaContratacion(int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws TipoIncorrectoServicioException {

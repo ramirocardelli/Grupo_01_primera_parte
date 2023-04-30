@@ -38,7 +38,7 @@ public abstract class Contratacion implements Cloneable{
     }
 
     /** Metodo para calcular el precio de una contratcion.
-     * @return double con el valor del precio para la contratacion en base a los servicios contratados.
+     * @return double con el valor del precio sin contar el costo de contratacion base dependiendo si es comercio o vivienda.
      */
     protected double calculaPrecio(){ 
         double res = 0;
@@ -76,7 +76,7 @@ public abstract class Contratacion implements Cloneable{
 		return domicilio;
 	}
 
-	/** Se aplica la promocion platino a la contratacion correspondiente.
+    /** Se aplica la promocion platino a la contratacion correspondiente.
      */
     public abstract void aplicaPromocionPlatino();
 
@@ -89,7 +89,7 @@ public abstract class Contratacion implements Cloneable{
     public Object clone() throws CloneNotSupportedException {
     	Contratacion clon=(Contratacion)super.clone();
     	this.domicilio=(Domicilio)this.domicilio.clone();
-    	return clon;
+    return clon;
     }
 }
 
