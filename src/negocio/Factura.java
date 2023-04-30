@@ -103,11 +103,7 @@ public class Factura implements Cloneable, IFactura {
 
 	@Override
 	public boolean sinContratacion() {
-		boolean rta=false;
-		if(this.contrataciones.size()==0) {
-			rta=true;
-		}
-		return rta;
+		return (this.contrataciones.size()==0);
 	}
 
 	private int buscaContratacion(Domicilio domicilio) {
