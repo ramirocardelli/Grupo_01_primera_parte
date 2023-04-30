@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa una contratación de monitoreo de alarmas para comercios.
+/** Clase que representa una contrataciï¿½n de monitoreo de alarmas para comercios.
  */
 public class ContratacionComercio extends Contratacion {
     private static final double valorComercio = 10000;
@@ -25,7 +25,6 @@ public class ContratacionComercio extends Contratacion {
      * @return double con el valor del precio de la contratacion correspondiente. 
      */
     public double calculaPrecio(){ 
-    	
     	return valorComercio + super.calculaPrecio();
     }
     

@@ -87,7 +87,7 @@ public class Sistema { //Singleton
     	datos.eliminaAbonadoSinFactura(dni);
     }
     
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionException, dniDesconocidoException {
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException, dniDesconocidoException {
     	IFactura factura=datos.buscaFactura(dni);
     	if(factura!=null) {
     		factura.eliminarContratacion(domicilio);
@@ -101,15 +101,24 @@ public class Sistema { //Singleton
     	}
     }
     
-    public void aplicaPromoDorada(Contratacion contratacion) {
-        contratacion.aplicaPromocionDorada();
+    public void aplicaPromocion(Domicilio domicilio, Promo promocion) throws DomicilioSinContratacionException {
+        Contratacion contratacion=datos.buscaContratacion(domicilio);
+        if(contratacion!=null)
+        	contratacion.promo(promocion);
+        else
+        	throw new DomicilioSinContratacionException(domicilio);  
     }
 	
-    public void aplicaPromoPlatino(Contratacion contratacion) {
-        contratacion.aplicaPromocionPlatino();
-    }
-	
-    public void calculaPrecioAPagar(){ //de una factura especifica pasada por parametro
+    public double calculaPrecioAPagar(String dni) throws dniDesconocidoException{ 
+    	IFactura factura=datos.buscaFactura(dni);
+    	double rta=0;
+    	if(factura!=null) {
+    		rta=factura.calcularTotalConDescuento();
+    	}
+    	else {
+    		throw new dniDesconocidoException(dni);
+    	}
+		return rta;
     }
 	
 	public Factura clonacionFactura(Factura original) throws CloneNotSupportedException {

@@ -31,13 +31,14 @@ public class FactoryFactura {
     	IFactura creado = factoryTipoFactura(abonado,tipo);
     	if(metodoPago.equalsIgnoreCase("EFECTIVO"))
     		creado = new DecoratorPagoEfectivo(creado);
-    	else if (metodoPago.equalsIgnoreCase("TARJETA"))
-    		creado = new DecoratorPagoTarjeta(creado);
-    	else if (metodoPago.equalsIgnoreCase("CHEQUE"))
-    		creado = new DecoratorPagoCheque(creado);
-    	
-        if(creado == null)
-            throw new MetodoDePagoInvalidoException(creado, metodoPago);
+    	else 
+    		if (metodoPago.equalsIgnoreCase("TARJETA"))
+    			creado = new DecoratorPagoTarjeta(creado);
+    		else 
+	    		if (metodoPago.equalsIgnoreCase("CHEQUE"))
+	    			creado = new DecoratorPagoCheque(creado);
+	    		else
+	    			throw new MetodoDePagoInvalidoException(creado, metodoPago);
     	return creado;
     }
 }

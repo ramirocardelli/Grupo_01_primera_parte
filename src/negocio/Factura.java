@@ -92,13 +92,13 @@ public class Factura implements Cloneable, IFactura {
 		return abonado;
 	}
 	
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException {
 		int i=buscaContratacion(domicilio);
     	if(i>-1) {
     		this.contrataciones.remove(i);
     	}
     	else
-    		throw new DomicilioSinContratacionException(domicilio,this.abonado);
+    		throw new DomicilioSinContratacionenAbonadoException(domicilio,this.abonado);
 	}
 
 	@Override
