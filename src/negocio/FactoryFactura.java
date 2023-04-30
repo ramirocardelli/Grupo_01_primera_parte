@@ -28,8 +28,8 @@ public class FactoryFactura {
      * @param abonado : persona que contrata y abona los servicios.
      * @param metodoPago : metodo de pago de la factura.
      * @return IFactura segun el metodo de pago.
-     * @throws TipoFacturaIncorrecto 
-     * @throws Exception cuando el metodo de pago ingresado no es valido.
+     * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.
+     * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.
      * <b> Pre: </b> abonado no puede ser null, y metodoPago no puede ser null ni " ". <br>
      * <b> Post: </b> Se crea factura que contiene al abonado, y la decora segun el metodo de pago. 
      */
