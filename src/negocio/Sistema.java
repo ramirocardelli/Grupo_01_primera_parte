@@ -99,7 +99,13 @@ public class Sistema { //Singleton
     public void eliminaAbonadoSinContratacion(String dni)throws DniDesconocidoException, AbonadoYaCargadoException {
     	datos.eliminaAbonadoSinFactura(dni);
     }
-    
+    /**
+     * Este metodo elimina una Contratacion asociada a un domicilio de un Abonado asociado a un DNI
+     * @param dni : DNI del Abonado
+     * @param domicilio : Domicilio de la Contratacion asociada
+     * @throws DomicilioSinContratacionEnAbonadoException Se lanza esta excepcion si en la Factura del Abonado no se encuentra una Contratacion con el Domiclio provisto
+     * @throws DniDesconocidoException Se lanza esta excepcion si no hay un Abonado con ese DNI
+     */
     public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
     	IFactura factura=datos.buscaFactura(dni);
     	if(factura!=null) {
@@ -114,6 +120,13 @@ public class Sistema { //Singleton
     	}
     }
     
+    /**
+     * Metodo para aplicar la promocion deseada a un domicilio dado
+     * @param domicilio : Domicilio asociado a la contratacion a la que se le quiere aplicar la promocion
+     * @param promocion : Tipo de promocion que se quiere aplicar
+     *  <b> Pre </b> Promocion debe ser distinto de null y una instancia valida de Promo
+     * @throws DomicilioSinContratacionException Se lanza esta excepcion si no existe una contratacion asociada a ese Domicilio
+     */
     public void aplicaPromocion(Domicilio domicilio, Promo promocion) throws DomicilioSinContratacionException {
         Contratacion contratacion=datos.buscaContratacion(domicilio);
         if(contratacion!=null)
@@ -122,6 +135,13 @@ public class Sistema { //Singleton
         	throw new DomicilioSinContratacionException(domicilio);  
     }
 	
+    
+    /**Metodo que calcula el precio que un Abonado asociado al DNI debe pagar dependiendo si se aplica o no el descuento. 
+     * @param dni : DNI que esta asociado a un Abonado
+     * @param descuento : booleano para decidir entre el precio con descuento o el precio sin descuento
+     * @return double con el precio que debe pagar
+     * @throws DniDesconocidoException
+     */
     public double calculaPrecioAPagar(String dni,boolean descuento) throws DniDesconocidoException{ 
     	IFactura factura=datos.buscaFactura(dni);
     	double rta=0;
@@ -137,6 +157,14 @@ public class Sistema { //Singleton
 		return rta;
     }
 	
+    
+    
+    /**Metodo que se encarga de realizar la clonacion de una factura dado el DNI de un Abonado 
+     * @param dni
+     * @return IFactura que contiene una referencia a una instancia de Factura encapsulada por un decorador segun el tipo de pago
+     * @throws CloneNotSupportedException Se lanza esta excepcion si no es posible clonar la una factura asociada a ese DNI
+     * @throws DniDesconocidoException Se lanza esta excepcion si no hay una factura asociada a este DNI
+     */
 	public IFactura clonacionFactura(String dni) throws CloneNotSupportedException,DniDesconocidoException {
 		IFactura original=datos.buscaFactura(dni);
 		IFactura clon=null;
