@@ -134,7 +134,7 @@ public class Sistema { //Singleton
 		}
 		return clon;
 	}
-
+	
 	
 	/**
 	 * Muestra el contenido de todas las Facturas almacenadas junto con el detalle de cada una de <br>
