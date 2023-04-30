@@ -128,9 +128,19 @@ public class Sistema { //Singleton
 		return clon;
 	}
 	
+	
+	
+	
+	/**
+	 * Muestra el contenido de todas las Facturas almacenadas junto con el detalle de cada una de <br>
+	 * las contrataciones que realizo el Abonado  
+	 **/
 	public void MuestraEstado() {
 		Iterator<IFactura> it = datos.iteratorFacturas();
-		
+		System.out.println("Entro a metodo");
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
 		
 		//Recorre los 2 arreglos mostrando toda la informacion contenida en ellos (tostring)
 	}

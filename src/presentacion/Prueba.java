@@ -54,6 +54,7 @@ import negocio.*;
 			
 			System.out.println("\nPrueba eliminar contrataciones");
 			ingresaContratacion("44667826", 1, 3, false,new Domicilio("Moreno",2410), "Comercio");
+<<<<<<< Updated upstream
 			eliminaContratacionAbonado("44667826",  new Domicilio("Moreno",2410));
 			ingresaAbonado("Nicolas", "44667826", "Fisica");//como se elimino la factura por no tener mas contrataciones, entonces pasa a formar parte de la lista de abonados
 			
@@ -74,6 +75,13 @@ import negocio.*;
 			ingresaContratacion("3434534354", 3, 3, true,new Domicilio("Tucuman",2312), "Vivienda");
 			aplicaPromocion(new Domicilio("Tucuman",2312), new PromoDorada());
 			FacturaAPagar("3434534354");
+<<<<<<< HEAD
+=======
+			eliminaContratacionAbonado("44667826", new Domicilio("Moreno",2410));
+			ingresaAbonado("Nicolas", "44667826", "Juridica");//como se elimino el unico servicio con el que contaba pasa a formar parte de la lista de abonados sin contratacion(por ello es que no puede agregarse a la lista)
+			sistema.MuestraEstado();
+>>>>>>> Stashed changes
+=======
 			
 			eliminaFactura("44235283");
 			ingresaFactura("44235283", "Tarjeta", null);
@@ -90,6 +98,7 @@ import negocio.*;
 			ingresaFactura("44231231", "Cheque", null);
 			ingresaContratacion("44231231", 3, 3, true, new Domicilio("Arenales",7236), "Vivienda");//31000
 			FacturaAPagar("44231231");
+>>>>>>> 10f86a6ef800ff88d544d7a480a94f99931b4ef0
 		}
 	
 	
