@@ -31,4 +31,25 @@ public abstract class DecoratorPago implements IFactura{
     public double calcularTotalSinDescuento() {
             return encapsulado.calcularTotalSinDescuento();
     }
+   
+    @Override
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+			this.encapsulado.eliminarContratacion(domicilio);
+	}
+    
+    @Override
+	public boolean sinContratacion() {
+		return this.encapsulado.sinContratacion();
+	}
+    
+    @Override
+	public Abonado getAbonado() {
+		return this.encapsulado.getAbonado();
+	}
+
+	@Override
+	public Contratacion getContratacion(Domicilio domicilio) {
+		return this.encapsulado.getContratacion(domicilio);
+	}
+
 }

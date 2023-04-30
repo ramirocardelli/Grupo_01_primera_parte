@@ -19,5 +19,4 @@ public class DecoratorPagoTarjeta extends DecoratorPago {
     public double calcularTotalConDescuento() {
             return encapsulado.calcularTotalSinDescuento() * factor;
     }
-
 }

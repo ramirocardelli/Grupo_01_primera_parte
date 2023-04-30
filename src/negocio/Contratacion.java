@@ -68,8 +68,12 @@ public abstract class Contratacion {
     public double getPrecio() {
         return precio;
 	}
+    
+    public Domicilio getDomicilio() {
+		return domicilio;
+	}
 
-    /** Se aplica la promocion platino a la contratacion correspondiente.
+	/** Se aplica la promocion platino a la contratacion correspondiente.
      */
     public abstract void aplicaPromocionPlatino();
 

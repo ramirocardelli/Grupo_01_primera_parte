@@ -20,8 +20,8 @@ public class AbonadosSinContratacion {
 		this.Abonados.add(abonado);
 	}
 	
-	public void eliminaAbonado(int i) {
-		this.Abonados.remove(i);
+	public boolean eliminaAbonado(Abonado abonado) {
+		return this.Abonados.remove(abonado);
 	}
 	
 	@Override

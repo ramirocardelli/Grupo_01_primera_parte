@@ -20,8 +20,8 @@ public class DatosFacturas {
 		this.facturas.add(factura);
 	}
 	
-	public void eliminaFacturas(int i) {
-		this.eliminaFacturas(i);
+	public boolean eliminaFacturas(IFactura factura) {
+		return this.facturas.remove(factura);
 	}
 	
 	@Override

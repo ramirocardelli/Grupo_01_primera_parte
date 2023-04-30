@@ -19,5 +19,4 @@ public class DecoratorPagoCheque extends DecoratorPago{
     public double calcularTotalConDescuento() {
             return encapsulado.calcularTotalConDescuento() * factor;
     }
-
 }
