@@ -33,7 +33,4 @@ public class Domicilio {
 	public String toString() {
 		return "Calle: " + calle + " numero: " + numero ;
 	}
-	
-	
-    
 }

@@ -89,7 +89,7 @@ public class Sistema { //Singleton
     	datos.eliminaAbonadoSinFactura(dni);
     }
     
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException, DniDesconocidoException {
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
     	IFactura factura=datos.buscaFactura(dni);
     	if(factura!=null) {
     		factura.eliminarContratacion(domicilio);

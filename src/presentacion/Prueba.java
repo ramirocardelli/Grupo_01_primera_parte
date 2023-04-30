@@ -138,7 +138,7 @@ import negocio.*;
 		catch(AbonadoYaCargadoException e) {
 			System.out.println("El Abonado '"+e.getNombre()+"' asociado con el dni "+e.getDni()+" ya dispone de una factura");
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("Ningun cliente registrado posee como dni "+e.getDni());
 		}
 	}
@@ -147,7 +147,7 @@ import negocio.*;
 		try {
 			Sistema.getInstance().eliminarFactura(dni);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni ingresado: "+e.getDni()+" no se corresponde con ningun cliente asociado factura");
 		}
 	}
@@ -156,7 +156,7 @@ import negocio.*;
 		try {
 			Sistema.getInstance().eliminaAbonadoSinContratacion(dni);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni ingresado: '"+e.getDni()+"' no se encuentra cargado como cliente sin contratacion");
 		}
 		catch(AbonadoYaCargadoException e) {
@@ -168,10 +168,10 @@ import negocio.*;
 		try {
 			Sistema.getInstance().eliminaContratacionAbonado(dni, domicilio);
 		}
-		catch(DomicilioSinContratacionenAbonadoException e){
+		catch(DomicilioSinContratacionEnAbonadoException e){
 			System.out.println(e.getDomicilio()+" no cuenta con ninguna contratacion existente para el abonado "+e.getAbonado().getNombre()+" con dni "+e.getAbonado().getDni());
 		}
-		catch(dniDesconocidoException e){
+		catch(DniDesconocidoException e){
 			System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
 		}
 	}
@@ -190,7 +190,7 @@ import negocio.*;
 			double precio= Sistema.getInstance().calculaPrecioAPagar(dni);
 			System.out.println("La factura a pagar por "+dni+" es de: $"+precio);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni '"+e.getDni()+"' no dispone de factura");
 		}
 	}

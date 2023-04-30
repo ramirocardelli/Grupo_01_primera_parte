@@ -33,7 +33,7 @@ public abstract class DecoratorPago implements IFactura{
     }
    
     @Override
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException {
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 			this.encapsulado.eliminarContratacion(domicilio);
 	}
     
