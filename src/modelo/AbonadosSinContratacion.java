@@ -29,4 +29,3 @@ public class AbonadosSinContratacion {
 		return "AbonadosSinContratacion [Abonados=" + Abonados + "]"; //NO HECHO
 	}
 }
-//prueba commit - comentario jo

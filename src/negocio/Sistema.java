@@ -31,7 +31,7 @@ public class Sistema { //Singleton
     	return this.datos.buscaFactura(dni);
     }
     
-    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargado, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoException, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
     	if(buscaAbonado(dni)==null) { //verifica que abonado no este cargado en la lista de abonados sin contratacion
     		FactoryAbonado FA=new FactoryAbonado();
     		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
@@ -40,13 +40,13 @@ public class Sistema { //Singleton
     			datos.agregaAbonadoSinFacctura(abonado);
     		}
     		else
-    			throw new AbonadoYaCargado(nombre,dni,true);
+    			throw new AbonadoYaCargadoException(nombre,dni,true);
     	}
     	else
-    		throw new AbonadoYaCargado(nombre,dni,false);
+    		throw new AbonadoYaCargadoException(nombre,dni,false);
     }
     
-    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, NoExisteFacturaException, TipoIncorrectoServicio { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
+    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, NoExisteFacturaException, TipoIncorrectoServicioException { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
     	FactoryContratacion FC=new FactoryContratacion();
     	Contratacion nuevaContratacion=FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
     	IFactura buscaFactura=datos.buscaFactura(dni);
@@ -63,7 +63,7 @@ public class Sistema { //Singleton
     		throw new NoExisteFacturaException(dni,nuevaContratacion);
     }
     
-    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargado, dniDesconocidoException{
+    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargadoException, dniDesconocidoException{
     	Abonado buscaAbonado=datos.buscaAbonado(dni);
     	if(buscaAbonado!=null) {
     		FactoryFactura FF=new FactoryFactura();//crea la factura con factory y la inserta en la capa de datos
@@ -74,7 +74,7 @@ public class Sistema { //Singleton
     	else {
     		IFactura buscafactura=datos.buscaFactura(dni);
     		if(buscafactura!=null) {
-    			throw new AbonadoYaCargado(buscafactura.getAbonado().getNombre(),dni,true);
+    			throw new AbonadoYaCargadoException(buscafactura.getAbonado().getNombre(),dni,true);
     		}
     		else
     			throw new dniDesconocidoException(dni);
@@ -85,7 +85,7 @@ public class Sistema { //Singleton
     	datos.eliminaFactura(dni);
     }
     
-    public void eliminaAbonadoSinContratacion(String dni)throws dniDesconocidoException, AbonadoYaCargado {
+    public void eliminaAbonadoSinContratacion(String dni)throws dniDesconocidoException, AbonadoYaCargadoException {
     	datos.eliminaAbonadoSinFactura(dni);
     }
     

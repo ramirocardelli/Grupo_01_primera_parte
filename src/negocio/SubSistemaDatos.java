@@ -81,7 +81,7 @@ public class SubSistemaDatos {
 		
 	}
 	
-	public void eliminaAbonadoSinFactura(String dni) throws dniDesconocidoException, AbonadoYaCargado{ 
+	public void eliminaAbonadoSinFactura(String dni) throws dniDesconocidoException, AbonadoYaCargadoException{ 
 		Abonado elimina=buscaAbonado(dni);
 		if(elimina!=null)
 			this.abonadosSinContratacion.eliminaAbonado(elimina);
@@ -97,7 +97,7 @@ public class SubSistemaDatos {
 			if(!encuentra)
 				throw new dniDesconocidoException(dni);
 			else
-				throw new AbonadoYaCargado(dni, busca.getAbonado().getNombre(), true);
+				throw new AbonadoYaCargadoException(dni, busca.getAbonado().getNombre(), true);
 		}
 	}
 	public Iterator<IFactura> iteratorFacturas() {

@@ -1,20 +1,6 @@
 package presentacion;
 
-import negocio.AbonadoYaCargado;
-import negocio.Domicilio;
-import negocio.DomicilioSinContratacionException;
-import negocio.DomicilioSinContratacionenAbonadoException;
-import negocio.DomicilioYaConContratacionExcepcion;
-import negocio.MetodoDePagoInvalidoException;
-import negocio.NoExisteFacturaException;
-import negocio.Promo;
-import negocio.PromoDorada;
-import negocio.PromoPlatino;
-import negocio.Sistema;
-import negocio.TipoFacturaIncorrecto;
-import negocio.TipoIncorrectoPersonaException;
-import negocio.TipoIncorrectoServicio;
-import negocio.dniDesconocidoException;
+import negocio.*;
 
 	public class Prueba {
 		public static void main(String[] args)  {
@@ -94,7 +80,7 @@ import negocio.dniDesconocidoException;
 		try {
 			Sistema.getInstance().nuevoAbonado(nombre, dni, tipo);
 		}
-		catch(AbonadoYaCargado e){
+		catch(AbonadoYaCargadoException e){
 			String print="El abonado "+e.getNombre()+" con dni "+e.getDni()+" ya se encuentra cargado";
 			if(e.isFactura())
 				print+=" con una factura a su nombre";
@@ -117,7 +103,7 @@ import negocio.dniDesconocidoException;
 		catch(NoExisteFacturaException e) { 
 			System.out.println("No existe una factura para el dni ingresado('"+e.getdni()+"')");
 		}
-		catch(TipoIncorrectoServicio e){
+		catch(TipoIncorrectoServicioException e){
 			System.out.println("El tipo de servicio ingresado ('"+e.getTipo()+"') no coincide con ninguno de los disponibles");
 		}
 	}
@@ -132,7 +118,7 @@ import negocio.dniDesconocidoException;
 		catch(TipoFacturaIncorrecto e) {
 			System.out.println("El tipo de factura ingresada ('"+e.getTipo()+"') no coincide con ninguna factura disponible");
 		}
-		catch(AbonadoYaCargado e) {
+		catch(AbonadoYaCargadoException e) {
 			System.out.println("El Abonado '"+e.getNombre()+"' asociado con el dni "+e.getDni()+" ya dispone de una factura");
 		}
 		catch(dniDesconocidoException e) {
@@ -156,7 +142,7 @@ import negocio.dniDesconocidoException;
 		catch(dniDesconocidoException e) {
 			System.out.println("El dni ingresado: '"+e.getDni()+"' no se encuentra cargado como cliente sin contratacion");
 		}
-		catch(AbonadoYaCargado e) {
+		catch(AbonadoYaCargadoException e) {
 			System.out.println("El abonado ingresado ('"+e.getNombre()+"'/'"+e.getDni()+"') dispone de una contratacion y por lo tanto no puede ser eliminado");
 		}
 	}
