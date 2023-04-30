@@ -10,5 +10,6 @@ public interface IFactura {
     boolean sinContratacion();
     Abonado getAbonado();
     Contratacion getContratacion(Domicilio domicilio);
+    Object clone() throws CloneNotSupportedException;
     String toString();
 }

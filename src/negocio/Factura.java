@@ -83,7 +83,7 @@ public class Factura implements Cloneable, IFactura {
     	clon.contrataciones.clear();
     	Iterator<Contratacion> it=this.contrataciones.iterator();
     	while(it.hasNext()) {
-    		clon.contrataciones.add(it.next());
+    		clon.contrataciones.add((Contratacion)it.next().clone());
     	}
 		return clon;
     }

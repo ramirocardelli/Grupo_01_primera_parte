@@ -2,7 +2,7 @@ package negocio;
 
 /** Clase que representa un domicilio de un abonado. Contiene un String para el nombre de la calle y un int para la altura. 
  */
-public class Domicilio {
+public class Domicilio implements Cloneable {
     private String calle;
     private int numero;
 
@@ -32,5 +32,10 @@ public class Domicilio {
 	@Override
 	public String toString() {
 		return "Calle: " + calle + " numero: " + numero ;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Domicilio clon=(Domicilio)super.clone();
+		return clon;
 	}
 }

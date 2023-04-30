@@ -123,13 +123,18 @@ public class Sistema { //Singleton
 		return rta;
     }
 	
-	public Factura clonacionFactura(Factura original) throws CloneNotSupportedException {
-		Factura clon=(Factura) original.clone(); //llama al metodo de factura para que devuelva su clonado
+	public IFactura clonacionFactura(String dni) throws CloneNotSupportedException,DniDesconocidoException {
+		IFactura original=datos.buscaFactura(dni);
+		IFactura clon=null;
+		if(original!=null) {
+			clon=(IFactura) original.clone();	
+		}
+		else {
+			throw new DniDesconocidoException(dni);
+		}
 		return clon;
 	}
-	
-	
-	
+
 	
 	/**
 	 * Muestra el contenido de todas las Facturas almacenadas junto con el detalle de cada una de <br>

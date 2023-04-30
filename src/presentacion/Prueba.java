@@ -13,7 +13,7 @@ import negocio.*;
 			ingresaAbonado("Nicolas","44667826","Fisica");
 			//errores
 			ingresaAbonado("Nicolas","44667826","Fisica");//carga por 2da vez el abonado
-			ingresaAbonado("Joaquin","3434534354","lol");//carga con tipo desconocido
+			ingresaAbonado("Mariana","3215123","Astronauta");//carga con tipo desconocido
 			
 			
 			System.out.println("\nPrueba Ingreso Facturas");
@@ -93,6 +93,14 @@ import negocio.*;
 			ingresaFactura("44231231", "Cheque", null);
 			ingresaContratacion("44231231", 3, 3, true, new Domicilio("Arenales",7236), "Vivienda");//31000
 			FacturaAPagar("44231231");
+			
+			System.out.println("\nPrueba clonacion");
+			IFactura clon1=clonaFactura("44235283");
+			IFactura clon2=clonaFactura("44231231");
+			IFactura clon3=clonaFactura("3434534354"); //clonacion correcta
+			System.out.println("\nAntes de modificacion en factura:\n"+clon3);
+			aplicaPromocion(new Domicilio("Tucuman",2312), new PromoDorada());
+			System.out.println("Despues de la modificacion en factura: \n"+clon3); //se observa que el precio no varia, por mas de que se haya aplicado una promocion al original
 		}
 	
 	
@@ -198,4 +206,17 @@ import negocio.*;
 		}
 	}
 	
+	private static IFactura clonaFactura(String dni) {
+		IFactura clon=null;
+		try {
+			clon=Sistema.getInstance().clonacionFactura(dni);
+		}
+		catch(CloneNotSupportedException e) {
+			System.out.println(e.getMessage());
+		}
+		catch(DniDesconocidoException e) {
+			System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
+		}
+		return clon;
+	}
 }

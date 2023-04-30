@@ -4,7 +4,7 @@ package negocio;
 /**
  *Clase que representa una contratacion de un cliente con los servicios correspondientes.
  */
-public abstract class Contratacion { 
+public abstract class Contratacion implements Cloneable{ 
     protected int camaras;
     protected int botonesAntipanicos;
     protected boolean movilAcompanamiento;
@@ -82,5 +82,11 @@ public abstract class Contratacion {
     public abstract void aplicaPromocionDorada();
     
     public abstract String toString();
+    
+    public Object clone() throws CloneNotSupportedException {
+    	Contratacion clon=(Contratacion)super.clone();
+    	this.domicilio=(Domicilio)this.domicilio.clone();
+    	return clon;
+    }
 }
 

@@ -29,6 +29,6 @@ public class PersonaJuridica extends Abonado {
      * @throws CloneNotSupportedException siempre, la persona juridica no admite clonacion.
      */
     public Object clon() throws CloneNotSupportedException{
-        throw new CloneNotSupportedException();
+        throw new CloneNotSupportedException("Metodo clon no permitido para un tipo de persona juridica");
     }
 }
