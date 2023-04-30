@@ -19,23 +19,34 @@ public class Sistema { //Singleton
     }
     
     
-    public Abonado buscaAbonado(String dni) { //si no lo encuentra devuelve null
-    	return this.datos.buscaAbonado(dni);
+    public Abonado buscaAbonado(String dni) throws DniDesconocidoException {
+    	Abonado rta= this.datos.buscaAbonado(dni);
+    	if(rta==null) {
+    		throw new DniDesconocidoException(dni);
+    	}
+    	return rta;
     }
     
-    public Contratacion buscaContratacion(Domicilio domicilio) {
-    	return this.datos.buscaContratacion(domicilio);
+    public Contratacion buscaContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+    	Contratacion rta=this.datos.buscaContratacion(domicilio);
+    	if(rta==null)
+    		throw new DomicilioSinContratacionException(domicilio);
+    	return rta;
     }
     
-    public IFactura buscaFactura(String dni) {
+    public IFactura buscaFactura(String dni) throws DniDesconocidoException {
+    	IFactura rta=this.datos.buscaFactura(dni);
+    	if(rta==null) {
+    		throw new DniDesconocidoException(dni);
+    	}
     	return this.datos.buscaFactura(dni);
     }
     
     public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoException, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
-    	if(buscaAbonado(dni)==null) { //verifica que abonado no este cargado en la lista de abonados sin contratacion
+    	if(datos.buscaAbonado(dni)==null) { //verifica que abonado no este cargado en la lista de abonados sin contratacion
     		FactoryAbonado FA=new FactoryAbonado();
     		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
-    		IFactura busquedaF=buscaFactura(dni);
+    		IFactura busquedaF=datos.buscaFactura(dni);
     		if(busquedaF==null) { //si no encuentra el abonado en las facturas lo guarda en la lista de abonados sin servicios
     			datos.agregaAbonadoSinFacctura(abonado);
     		}
@@ -111,11 +122,14 @@ public class Sistema { //Singleton
         	throw new DomicilioSinContratacionException(domicilio);  
     }
 	
-    public double calculaPrecioAPagar(String dni) throws DniDesconocidoException{ 
+    public double calculaPrecioAPagar(String dni,boolean descuento) throws DniDesconocidoException{ 
     	IFactura factura=datos.buscaFactura(dni);
     	double rta=0;
     	if(factura!=null) {
-    		rta=factura.calcularTotalConDescuento();
+    		if(descuento)
+    			rta=factura.calcularTotalConDescuento();
+    		else
+    			rta=factura.calcularTotalSinDescuento();
     	}
     	else {
     		throw new DniDesconocidoException(dni);
@@ -142,7 +156,7 @@ public class Sistema { //Singleton
 	 **/
 	public void MuestraEstado() {
 		Iterator<IFactura> it = datos.iteratorFacturas();
-		System.out.println("Entro a metodo");
+		System.out.println("El sistema cuenta con las siguientes facturas:\n");
 		while (it.hasNext()) {
 			System.out.println(it.next());
 		}

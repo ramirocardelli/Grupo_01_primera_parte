@@ -68,14 +68,14 @@ import negocio.*;
 			
 			System.out.println("\nPrueba promociones y Factura a pagar");
 			aplicaPromocion(Domicilio.generaDomicilio("Santa Fe",2410), new PromoDorada());
-			FacturaAPagar("44667826");
+			FacturaAPagar("44667826",false);
+			FacturaAPagar("44667826",true);
 			
 			ingresaFactura("3434534354", "Efectivo", null);
 			ingresaContratacion("3434534354", 3, 3, true,Domicilio.generaDomicilio("Tucuman",2312), "Vivienda");
 			aplicaPromocion(Domicilio.generaDomicilio("Tucuman",2312), new PromoDorada());
-			FacturaAPagar("3434534354");
-			eliminaContratacionAbonado("44667826", Domicilio.generaDomicilio("Moreno",2410));
-			ingresaAbonado("Nicolas", "44667826", "Juridica");//como se elimino el unico servicio con el que contaba pasa a formar parte de la lista de abonados sin contratacion(por ello es que no puede agregarse a la lista)
+			FacturaAPagar("3434534354",true);
+			FacturaAPagar("3434534354",false);
 			
 			eliminaFactura("44235283");
 			ingresaFactura("44235283", "Tarjeta", null);
@@ -87,19 +87,21 @@ import negocio.*;
 			aplicaPromocion(Domicilio.generaDomicilio("Roca",1234), new PromoDorada());
 			aplicaPromocion(Domicilio.generaDomicilio("Jujuy",8442), new PromoPlatino());
 			aplicaPromocion(Domicilio.generaDomicilio("Alvear",2464), new PromoPlatino());
-			FacturaAPagar("44235283");
+			FacturaAPagar("44235283",true);// *1.05 ya que se paga con tarjeta
+			FacturaAPagar("44235283",false);
 			
 			ingresaFactura("44231231", "Cheque", null);
 			ingresaContratacion("44231231", 3, 3, true, Domicilio.generaDomicilio("Arenales",7236), "Vivienda");//31000
-			FacturaAPagar("44231231");
+			FacturaAPagar("44231231",true);
+			FacturaAPagar("44231231",false);
 			
 			System.out.println("\nPrueba clonacion");
 			IFactura clon1=clonaFactura("44235283");
-			IFactura clon2=clonaFactura("44231231");
+			IFactura clon2=clonaFactura("44667826");
 			IFactura clon3=clonaFactura("3434534354"); //clonacion correcta
-			System.out.println("\nAntes de modificacion en factura:\n"+clon3);
 			aplicaPromocion(Domicilio.generaDomicilio("Tucuman",2312), new PromoDorada());
-			System.out.println("Despues de la modificacion en factura: \n"+clon3); //se observa que el precio no varia, por mas de que se haya aplicado una promocion al original
+			MuestraFactura("3434534354");
+			System.out.println("MUESTRA CLON: \n"+clon3);
 			sistema.MuestraEstado();
 		}
 		
@@ -202,7 +204,7 @@ import negocio.*;
 				Sistema.getInstance().eliminaContratacionAbonado(dni, domicilio);
 			}
 			catch(DomicilioSinContratacionEnAbonadoException e){
-				System.out.println(e.getDomicilio()+" no cuenta con ninguna contratacion existente para el abonado "+e.getAbonado().getNombre()+" con dni "+e.getAbonado().getDni());
+				System.out.println("El domicilio con "+e.getDomicilio()+" no cuenta con ninguna contratacion existente para el abonado "+e.getAbonado().getNombre()+" con dni "+e.getAbonado().getDni());
 			}
 			catch(DniDesconocidoException e){
 				System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
@@ -219,17 +221,17 @@ import negocio.*;
 				Sistema.getInstance().aplicaPromocion(domicilio, promocion);
 			}
 			catch(DomicilioSinContratacionException e) {
-				System.out.println(e.getDomicilio()+" no se encuentra con una contratacion vigente");
+				System.out.println("El domicilio con "+ e.getDomicilio()+" no se encuentra con una contratacion vigente");
 			}
 		}
 		else
 			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
 	}
 	
-	private static void FacturaAPagar(String dni) {
+	private static void FacturaAPagar(String dni,boolean descuento) {
 		if(dni!=null && !dni.equals("")){
 			try {
-				double precio= Sistema.getInstance().calculaPrecioAPagar(dni);
+				double precio= Sistema.getInstance().calculaPrecioAPagar(dni,descuento);
 				System.out.println("La factura a pagar por "+dni+" es de: $"+precio);
 			}
 			catch(DniDesconocidoException e) {
@@ -257,4 +259,44 @@ import negocio.*;
 			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
 		return clon;
 	}
+	
+	private static void MuestraFactura(String dni) {
+		if(dni!=null && !dni.equals("")){
+				try {
+					System.out.println(Sistema.getInstance().buscaFactura(dni));
+				}
+				catch(DniDesconocidoException e) {
+					System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
+				}
+		}
+		else
+			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
+	}
+	private static void MuestraAbonadoSinFactura(String dni) {
+		if(dni!=null && !dni.equals("")){
+				try {
+					System.out.println(Sistema.getInstance().buscaAbonado(dni));
+				}
+				catch(DniDesconocidoException e) {
+					System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado sin factura");
+				}
+		}
+		else
+			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
+	}
+	
+	private static void MuestraContratacion(Domicilio domicilio) {
+		if(domicilio!=null){
+				try {
+					System.out.println(Sistema.getInstance().buscaContratacion(domicilio));
+				}
+				catch(DomicilioSinContratacionException e) {
+					System.out.println("El domicilio "+e.getDomicilio()+" no se encuentra con ninguna contratacion vigente");
+				}
+		}
+		else
+			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
+	}
+	
+	
 }

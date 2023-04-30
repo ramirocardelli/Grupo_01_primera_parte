@@ -19,4 +19,9 @@ public class DecoratorPagoEfectivo extends DecoratorPago {
     public double calcularTotalConDescuento() {
         return encapsulado.calcularTotalSinDescuento() * factor;
     }
+    
+    @Override
+	public String toString() {
+		return this.encapsulado.toString()+"\t Metodo de pago: efectivo\n";
+	}
 }

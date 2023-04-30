@@ -19,4 +19,9 @@ public class DecoratorPagoCheque extends DecoratorPago{
     public double calcularTotalConDescuento() {
             return encapsulado.calcularTotalConDescuento() * factor;
     }
+
+	@Override
+	public String toString() {
+		return this.encapsulado.toString()+"\t Metodo de pago: cheque\n";
+	}
 }

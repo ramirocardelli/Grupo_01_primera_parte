@@ -39,7 +39,7 @@ public abstract class Abonado implements Cloneable{
     
     @Override
 	public String toString() {
-		return "Abonado " + nombre + ", DNI: " + dni + "]";
+		return "Abonado " + nombre + " con DNI: " + dni ;
 	}
 
 	/** Metodo para clonar un abonado.
