@@ -83,10 +83,27 @@ import negocio.dniDesconocidoException;
 			System.out.println("\nPrueba promociones y Factura a pagar");
 			aplicaPromocion(new Domicilio("Santa Fe",2410), new PromoDorada());
 			FacturaAPagar("44667826");
+			
 			ingresaFactura("3434534354", "Efectivo", null);
 			ingresaContratacion("3434534354", 3, 3, true,new Domicilio("Tucuman",2312), "Vivienda");
 			aplicaPromocion(new Domicilio("Tucuman",2312), new PromoDorada());
 			FacturaAPagar("3434534354");
+			
+			eliminaFactura("44235283");
+			ingresaFactura("44235283", "Tarjeta", null);
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Roca",1234), "Vivienda");//31000-1500
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Alvear",2464), "Vivienda");//31000*0.70
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Tucuman",5642), "Comercio");//32500-2500
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Jujuy",8442), "Comercio");//32500*0.5*0.65
+			aplicaPromocion(new Domicilio("Tucuman",5642), new PromoDorada());
+			aplicaPromocion(new Domicilio("Roca",1234), new PromoDorada());
+			aplicaPromocion(new Domicilio("Jujuy",8442), new PromoPlatino());
+			aplicaPromocion(new Domicilio("Alvear",2464), new PromoPlatino());
+			FacturaAPagar("44235283");
+			
+			ingresaFactura("44231231", "Cheque", null);
+			ingresaContratacion("44231231", 3, 3, true, new Domicilio("Arenales",7236), "Vivienda");//31000
+			FacturaAPagar("44231231");
 		}
 	
 	

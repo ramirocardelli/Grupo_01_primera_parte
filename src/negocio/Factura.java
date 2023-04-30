@@ -63,7 +63,7 @@ public class Factura implements Cloneable, IFactura {
     	int i = 0;
     	Iterator<Contratacion>it = contrataciones.iterator();
     	while(it.hasNext()) {
-    		if(i > 3)
+    		if(i >=3)
     			res += it.next().getPrecio()*0.5;
     		else
     			res += it.next().getPrecio();
