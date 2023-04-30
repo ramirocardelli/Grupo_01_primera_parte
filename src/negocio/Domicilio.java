@@ -26,11 +26,7 @@ public class Domicilio {
 	}
 	
 	public boolean equals(Domicilio domicilio) {
-		boolean rta=false;
-		if(this.calle.equals(domicilio.calle) && this.numero==domicilio.numero) {
-			rta=true;
-		}
-		return rta;
+		return (this.calle.equals(domicilio.calle) && this.numero==domicilio.numero);
 	}
 
 	@Override
