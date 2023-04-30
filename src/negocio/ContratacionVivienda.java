@@ -45,10 +45,10 @@ public class ContratacionVivienda extends Contratacion {
      }
      
      public String toString() {
- 		return "Monitoreo de Alarmas de Vivienda para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
- 				+ "Agregados: \n "
- 				+ " Cámaras: " + camaras + "\n"
- 				+ " Botones Antipánico: " + botonesAntipanicos+ "\n"
- 				+ " Movil/es de acompañamiento=" + movilAcompanamiento + " \n ";
+ 		return "\t\tMonitoreo de Alarmas de Vivienda para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
+ 				+ "\t\t\tAgregados: \n "
+ 				+ "\t\t\tCamaras: " + camaras + "\n"
+ 				+ "\t\t\tBotones Antipánico: " + botonesAntipanicos+ "\n"
+ 				+ "\t\t\tMovil/es de acompanamiento=" + movilAcompanamiento + " \n ";
  	}
 }

@@ -53,9 +53,7 @@ public abstract class DecoratorPago implements IFactura,Cloneable{
 	}
 
 	@Override
-	public String toString() {
-		return encapsulado.toString();
-	}
+	public abstract String toString();
 	
 	public Object clone() throws CloneNotSupportedException {
 		DecoratorPago clon=(DecoratorPago)super.clone();

@@ -1,7 +1,7 @@
 package negocio;
 
-/** Esta clase representa un abonado dentro de un sistema de contratacion de un servicio de seguridad.
- * Contiene informacion sobre su nombre y su dni.
+/** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
+ * Contiene informaci�n sobre su nombre y su dni.
  */
 public abstract class Abonado implements Cloneable{  
     private String nombre;
@@ -38,11 +38,11 @@ public abstract class Abonado implements Cloneable{
 
     
     @Override
-    public String toString() {
-            return "Abonado " + nombre + ", DNI: " + dni + "]";
-    }
+	public String toString() {
+		return "Abonado " + nombre + " con DNI: " + dni ;
+	}
 
-    /** Metodo para clonar un abonado.
+	/** Metodo para clonar un abonado.
      * @return : Se devuelve un clon del abonado correspondiente.
      * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jur�dica, la cual no puede aceptar clonacion.
      */
