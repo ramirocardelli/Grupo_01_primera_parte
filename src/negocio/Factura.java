@@ -132,6 +132,13 @@ public class Factura implements Cloneable, IFactura {
     	}
     	return rta;
 	}
+
+	@Override
+	public String toString() {
+		return "Factura de " + abonado + ", cuenta con las siguientes contrataciones: \n" + contrataciones + " \n ";
+	}
+	
+	
 	
 	
 }

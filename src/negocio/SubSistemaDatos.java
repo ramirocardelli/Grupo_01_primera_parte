@@ -102,9 +102,6 @@ public class SubSistemaDatos {
 	}
 	public Iterator<IFactura> iteratorFacturas() {
 		return datosFacturas.getFacturas();
-		
-		
-		//Recorre los 2 arreglos mostrando toda la informacion contenida en ellos (tostring)
 	}
 	
 	

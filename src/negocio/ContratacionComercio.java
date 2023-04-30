@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa una contrataci�n de monitoreo de alarmas para comercios.
+/** Clase que representa una contratacion de monitoreo de alarmas para comercios.
  */
 public class ContratacionComercio extends Contratacion {
     private static final double valorComercio = 10000;
