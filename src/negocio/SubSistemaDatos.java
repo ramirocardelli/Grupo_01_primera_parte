@@ -100,6 +100,7 @@ public class SubSistemaDatos {
 				throw new AbonadoYaCargadoException(dni, busca.getAbonado().getNombre(), true);
 		}
 	}
+	
 	public Iterator<IFactura> iteratorFacturas() {
 		return datosFacturas.getFacturas();
 	}
