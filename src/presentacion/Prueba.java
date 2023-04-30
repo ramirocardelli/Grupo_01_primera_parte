@@ -283,7 +283,13 @@ import negocio.*;
 		if(dni!=null && !dni.equals("")){
 			try {
 				double precio= Sistema.getInstance().calculaPrecioAPagar(dni,descuento);
-				System.out.println("La factura a pagar por "+dni+" es de: $"+precio);
+				String conosindesc=null;
+				if(descuento) {
+					conosindesc="con";
+				}
+				else
+					conosindesc="sin";
+				System.out.println("La factura a pagar "+conosindesc+" descuento por el abonado con dni: '"+dni+"' es de: $"+precio);
 			}
 			catch(DniDesconocidoException e) {
 				System.out.println("El dni '"+e.getDni()+"' no dispone de factura");
