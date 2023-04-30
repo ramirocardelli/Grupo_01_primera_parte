@@ -10,4 +10,5 @@ public interface IFactura {
     boolean sinContratacion();
     Abonado getAbonado();
     Contratacion getContratacion(Domicilio domicilio);
+    String toString();
 }

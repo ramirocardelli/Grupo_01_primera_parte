@@ -80,5 +80,7 @@ public abstract class Contratacion {
     /** Se aplica la promocion dorada a la contratacion correspondiente. 
      */
     public abstract void aplicaPromocionDorada();
+    
+    public abstract String toString();
 }
 

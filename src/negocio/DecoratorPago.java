@@ -52,4 +52,11 @@ public abstract class DecoratorPago implements IFactura{
 		return this.encapsulado.getContratacion(domicilio);
 	}
 
+	@Override
+	public String toString() {
+		return encapsulado.toString();
+	}
+	
+	
+
 }

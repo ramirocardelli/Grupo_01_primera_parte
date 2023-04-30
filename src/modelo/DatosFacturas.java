@@ -23,10 +23,6 @@ public class DatosFacturas {
 	public boolean eliminaFacturas(IFactura factura) {
 		return this.facturas.remove(factura);
 	}
-	
-	@Override
-	public String toString() {
-		return "DatosFacturas [Facturas=" + this.facturas + "]"; //NO HECHO
-	}
+
     
 }
