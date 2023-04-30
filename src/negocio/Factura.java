@@ -63,7 +63,7 @@ public class Factura implements Cloneable, IFactura {
     	int i = 0;
     	Iterator<Contratacion>it = contrataciones.iterator();
     	while(it.hasNext()) {
-    		if(i > 3)
+    		if(i >=3)
     			res += it.next().getPrecio()*0.5;
     		else
     			res += it.next().getPrecio();
@@ -92,22 +92,18 @@ public class Factura implements Cloneable, IFactura {
 		return abonado;
 	}
 	
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException {
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 		int i=buscaContratacion(domicilio);
     	if(i>-1) {
     		this.contrataciones.remove(i);
     	}
     	else
-    		throw new DomicilioSinContratacionenAbonadoException(domicilio,this.abonado);
+    		throw new DomicilioSinContratacionEnAbonadoException(domicilio,this.abonado);
 	}
 
 	@Override
 	public boolean sinContratacion() {
-		boolean rta=false;
-		if(this.contrataciones.size()==0) {
-			rta=true;
-		}
-		return rta;
+		return (this.contrataciones.size()==0);
 	}
 
 	private int buscaContratacion(Domicilio domicilio) {

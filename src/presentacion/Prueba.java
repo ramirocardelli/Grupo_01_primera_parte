@@ -1,20 +1,6 @@
 package presentacion;
 
-import negocio.AbonadoYaCargado;
-import negocio.Domicilio;
-import negocio.DomicilioSinContratacionException;
-import negocio.DomicilioSinContratacionenAbonadoException;
-import negocio.DomicilioYaConContratacionExcepcion;
-import negocio.MetodoDePagoInvalidoException;
-import negocio.NoExisteFacturaException;
-import negocio.Promo;
-import negocio.PromoDorada;
-import negocio.PromoPlatino;
-import negocio.Sistema;
-import negocio.TipoFacturaIncorrecto;
-import negocio.TipoIncorrectoPersonaException;
-import negocio.TipoIncorrectoServicio;
-import negocio.dniDesconocidoException;
+import negocio.*;
 
 	public class Prueba {
 		public static void main(String[] args)  {
@@ -84,15 +70,35 @@ import negocio.dniDesconocidoException;
 			System.out.println("\nPrueba promociones y Factura a pagar");
 			aplicaPromocion(new Domicilio("Santa Fe",2410), new PromoDorada());
 			FacturaAPagar("44667826");
+			
 			ingresaFactura("3434534354", "Efectivo", null);
 			ingresaContratacion("3434534354", 3, 3, true,new Domicilio("Tucuman",2312), "Vivienda");
 			aplicaPromocion(new Domicilio("Tucuman",2312), new PromoDorada());
 			FacturaAPagar("3434534354");
+<<<<<<< HEAD
 =======
 			eliminaContratacionAbonado("44667826", new Domicilio("Moreno",2410));
 			ingresaAbonado("Nicolas", "44667826", "Juridica");//como se elimino el unico servicio con el que contaba pasa a formar parte de la lista de abonados sin contratacion(por ello es que no puede agregarse a la lista)
 			sistema.MuestraEstado();
 >>>>>>> Stashed changes
+=======
+			
+			eliminaFactura("44235283");
+			ingresaFactura("44235283", "Tarjeta", null);
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Roca",1234), "Vivienda");//31000-1500
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Alvear",2464), "Vivienda");//31000*0.70
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Tucuman",5642), "Comercio");//32500-2500
+			ingresaContratacion("44235283", 3, 3, true, new Domicilio("Jujuy",8442), "Comercio");//32500*0.5*0.65
+			aplicaPromocion(new Domicilio("Tucuman",5642), new PromoDorada());
+			aplicaPromocion(new Domicilio("Roca",1234), new PromoDorada());
+			aplicaPromocion(new Domicilio("Jujuy",8442), new PromoPlatino());
+			aplicaPromocion(new Domicilio("Alvear",2464), new PromoPlatino());
+			FacturaAPagar("44235283");
+			
+			ingresaFactura("44231231", "Cheque", null);
+			ingresaContratacion("44231231", 3, 3, true, new Domicilio("Arenales",7236), "Vivienda");//31000
+			FacturaAPagar("44231231");
+>>>>>>> 10f86a6ef800ff88d544d7a480a94f99931b4ef0
 		}
 	
 	
@@ -100,7 +106,7 @@ import negocio.dniDesconocidoException;
 		try {
 			Sistema.getInstance().nuevoAbonado(nombre, dni, tipo);
 		}
-		catch(AbonadoYaCargado e){
+		catch(AbonadoYaCargadoException e){
 			String print="El abonado "+e.getNombre()+" con dni "+e.getDni()+" ya se encuentra cargado";
 			if(e.isFactura())
 				print+=" con una factura a su nombre";
@@ -123,7 +129,7 @@ import negocio.dniDesconocidoException;
 		catch(NoExisteFacturaException e) { 
 			System.out.println("No existe una factura para el dni ingresado('"+e.getdni()+"')");
 		}
-		catch(TipoIncorrectoServicio e){
+		catch(TipoIncorrectoServicioException e){
 			System.out.println("El tipo de servicio ingresado ('"+e.getTipo()+"') no coincide con ninguno de los disponibles");
 		}
 	}
@@ -138,10 +144,10 @@ import negocio.dniDesconocidoException;
 		catch(TipoFacturaIncorrecto e) {
 			System.out.println("El tipo de factura ingresada ('"+e.getTipo()+"') no coincide con ninguna factura disponible");
 		}
-		catch(AbonadoYaCargado e) {
+		catch(AbonadoYaCargadoException e) {
 			System.out.println("El Abonado '"+e.getNombre()+"' asociado con el dni "+e.getDni()+" ya dispone de una factura");
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("Ningun cliente registrado posee como dni "+e.getDni());
 		}
 	}
@@ -150,7 +156,7 @@ import negocio.dniDesconocidoException;
 		try {
 			Sistema.getInstance().eliminarFactura(dni);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni ingresado: "+e.getDni()+" no se corresponde con ningun cliente asociado factura");
 		}
 	}
@@ -159,10 +165,10 @@ import negocio.dniDesconocidoException;
 		try {
 			Sistema.getInstance().eliminaAbonadoSinContratacion(dni);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni ingresado: '"+e.getDni()+"' no se encuentra cargado como cliente sin contratacion");
 		}
-		catch(AbonadoYaCargado e) {
+		catch(AbonadoYaCargadoException e) {
 			System.out.println("El abonado ingresado ('"+e.getNombre()+"'/'"+e.getDni()+"') dispone de una contratacion y por lo tanto no puede ser eliminado");
 		}
 	}
@@ -171,10 +177,10 @@ import negocio.dniDesconocidoException;
 		try {
 			Sistema.getInstance().eliminaContratacionAbonado(dni, domicilio);
 		}
-		catch(DomicilioSinContratacionenAbonadoException e){
+		catch(DomicilioSinContratacionEnAbonadoException e){
 			System.out.println(e.getDomicilio()+" no cuenta con ninguna contratacion existente para el abonado "+e.getAbonado().getNombre()+" con dni "+e.getAbonado().getDni());
 		}
-		catch(dniDesconocidoException e){
+		catch(DniDesconocidoException e){
 			System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
 		}
 	}
@@ -193,7 +199,7 @@ import negocio.dniDesconocidoException;
 			double precio= Sistema.getInstance().calculaPrecioAPagar(dni);
 			System.out.println("La factura a pagar por "+dni+" es de: $"+precio);
 		}
-		catch(dniDesconocidoException e) {
+		catch(DniDesconocidoException e) {
 			System.out.println("El dni '"+e.getDni()+"' no dispone de factura");
 		}
 	}

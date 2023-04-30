@@ -40,7 +40,7 @@ public abstract class Contratacion {
     /** Metodo para calcular el precio de una contratcion.
      * @return double con el valor del precio para la contratacion en base a los servicios contratados.
      */
-    public double calculaPrecio(){ 
+    protected double calculaPrecio(){ 
         double res = 0;
         res += this.camaras*valorUnidadCamara;
         res += this.botonesAntipanicos*valorUnidadBotAntipanico;
