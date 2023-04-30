@@ -19,20 +19,10 @@ public class Factura implements Cloneable, IFactura {
         this.abonado = abonado;
     }
     
-   /* public int existeDomicilio(Domicilio domicilio) {
-            Iterator<Contratacion> it;
-            Contratacion res=null;
-            it=this.ArrayList.iterator();
-            while(it.hastNext()&& !(res.domicilio.equals(domicilio))) { //esto entra con res=null no se si puede acceder a res.domicilio
-                    res = (Contratacion)it.next();
-            }
-                    return (res.domicilio.equalsIgnoreCase(domicilio));
-    */
-    
     /** Metodo que agrega una contratacion a la lista de todas las contrataciones.
      * @param contratacion : Contratacion que se quiere agregar a la lista de contrataciones.<br>
      * <b> Pre: </b> La contratacion no puede ser nula. <br>
-     * <b> Post: </b> Se añade el elemento contratacion a la lista.
+     * <b> Post: </b> Se aï¿½ade el elemento contratacion a la lista.
      */
     public void agregarContratacion(Contratacion contratacion) {
     	contrataciones.add(contratacion);
@@ -97,5 +87,52 @@ public class Factura implements Cloneable, IFactura {
     	}
 		return clon;
     }
+
+	public Abonado getAbonado() {
+		return abonado;
+	}
+	
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+		int i=buscaContratacion(domicilio);
+    	if(i>-1) {
+    		this.contrataciones.remove(i);
+    	}
+    	else
+    		throw new DomicilioSinContratacionException(domicilio,this.abonado);
+	}
+
+	@Override
+	public boolean sinContratacion() {
+		boolean rta=false;
+		if(this.contrataciones.size()==0) {
+			rta=true;
+		}
+		return rta;
+	}
+
+	private int buscaContratacion(Domicilio domicilio) {
+		int i=0;
+		int tamanio=contrataciones.size();
+    	while(i<tamanio && !this.contrataciones.get(i).getDomicilio().equals(domicilio)) {
+    		i++;
+    	}
+    	if(i>=tamanio) {
+    		i=-1;
+    	}
+    	return i;
+    		
+	}
+	
+	@Override
+	public Contratacion getContratacion(Domicilio domicilio) {
+		int i=buscaContratacion(domicilio);
+		Contratacion rta=null;
+		if(i>-1) {
+			rta=this.contrataciones.get(i);
+    	}
+    	return rta;
+	}
+	
+	
 }
 

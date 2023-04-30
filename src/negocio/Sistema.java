@@ -1,96 +1,104 @@
 package negocio; // sistema ->invoca todos los metodos
 
-import java.util.Iterator;
-
-import modelo.*;
-
 public class Sistema { //Singleton
     private SubSistemaDatos datos;
+    private static Sistema instancia=null;
 
-    public Sistema() { //se pasan por constructor y no se les hace new para no limitar la herencia
+    private Sistema() { //se pasan por constructor y no se les hace new para no limitar la herencia
         super();
         this.datos=new SubSistemaDatos();
     }
+    
+    public static Sistema getInstance() {
+    	if(Sistema.instancia==null) {
+    		instancia= new Sistema();
+    	}
+		return instancia;
+    }
+    
     
     public Abonado buscaAbonado(String dni) { //si no lo encuentra devuelve null
     	return this.datos.buscaAbonado(dni);
     }
     
-    public Contratacion buscaContratacion(String calle,int numero) {
-    	Domicilio domicilio=new Domicilio(calle,numero);
+    public Contratacion buscaContratacion(Domicilio domicilio) {
     	return this.datos.buscaContratacion(domicilio);
     }
     
-    public Factura buscaFactura(Abonado abonado) {
-    	return this.datos.buscaFactura(abonado);
+    public IFactura buscaFactura(String dni) {
+    	return this.datos.buscaFactura(dni);
     }
     
-    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoConFactura,AbonadoYaCargadoSinFactura, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
-    	//verificar que no existe en la lista de abonados existente y tampoco en la lista de facturas
-    	if(buscaAbonado(dni)==null) {
+    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargado, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    	if(buscaAbonado(dni)==null) { //verifica que abonado no este cargado en la lista de abonados sin contratacion
     		FactoryAbonado FA=new FactoryAbonado();
     		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
-    		Factura busquedaF=buscaFactura(abonado);
-    		if(busquedaF==null) {
+    		IFactura busquedaF=buscaFactura(dni);
+    		if(busquedaF==null) { //si no encuentra el abonado en las facturas lo guarda en la lista de abonados sin servicios
     			datos.agregaAbonadoSinFacctura(abonado);
     		}
     		else
-    			throw new AbonadoYaCargadoConFactura(nombre,dni);
+    			throw new AbonadoYaCargado(nombre,dni,true);
     	}
     	else
-    		throw new AbonadoYaCargadoSinFactura(nombre,dni);
+    		throw new AbonadoYaCargado(nombre,dni,false);
     }
     
-    public void nuevaContratacion(Abonado abonado,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
-    	Contratacion nuevaContratacion=factoryContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
-    	
+    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, NoExisteFacturaException, TipoIncorrectoServicio { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
+    	FactoryContratacion FC=new FactoryContratacion();
+    	Contratacion nuevaContratacion=FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
+    	IFactura buscaFactura=datos.buscaFactura(dni);
     	//Se debe buscar si el abonado que se pasa tiene una factura existente y si el domicilio ingresado ya existe en cualquier otra factura
-    	if(abonado tiene facutura){
-    		if(domicilio no se repite en cualq factura) { 
-    			//agrega la contratacion a la factura
+    	if(buscaFactura!=null){
+    		Contratacion buscaContratacion=datos.buscaContratacion(domicilio);
+    		if(buscaContratacion==null) { 
+    			buscaFactura.agregarContratacion(nuevaContratacion);
+    		}
+    		else 
+    			throw new DomicilioYaConContratacionExcepcion(domicilio,nuevaContratacion,buscaContratacion);
+    	}
+    	else
+    		throw new NoExisteFacturaException(dni,nuevaContratacion);
+    }
+    
+    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargado, dniDesconocidoException{
+    	Abonado buscaAbonado=datos.buscaAbonado(dni);
+    	if(buscaAbonado!=null) {
+    		FactoryFactura FF=new FactoryFactura();//crea la factura con factory y la inserta en la capa de datos
+    		IFactura nuevaFactura= FF.creaFactura(buscaAbonado, tipoPago, tipoFactura);
+    		datos.agregaFactura(nuevaFactura);
+    		datos.eliminaAbonadoSinFactura(dni);
+    	}
+    	else {
+    		IFactura buscafactura=datos.buscaFactura(dni);
+    		if(buscafactura!=null) {
+    			throw new AbonadoYaCargado(buscafactura.getAbonado().getNombre(),dni,true);
     		}
     		else
-    			throw new DomicilioYaConContratacion(abonado,nuevaContratacion);
+    			throw new dniDesconocidoException(dni);
     	}
-    	else
-    		throw new AbonadoSinFacturaException(abonado,nuevaContratacion);
-                
     }
     
-    /* public int domicilioNoRepetido(Domicilio domicilio) {
-	Iterator<Factura> it=Datos.getIteratorFacturas();
-	Factura aux;
-	while (it.hasNext()) {
-		aux=(Factura)it.next();
-		
-	}
-}*/
-    
-    public void nuevaFactura(Abonado abonado, String tipo) {
-    	//busca el abonado en la lista de abonados sin contratacion
-    	if(encuentraabonado)
-    		//crea la factura con factory y la inserta en la capa de datos
-    	else
-    		throw new AbonadoYaConFacturaException();
+    public void eliminarFactura(String dni) throws dniDesconocidoException {
+    	datos.eliminaFactura(dni);
     }
     
-    public void eliminarFactura(Abonado abonado) {
-    	
+    public void eliminaAbonadoSinContratacion(String dni)throws dniDesconocidoException, AbonadoYaCargado {
+    	datos.eliminaAbonadoSinFactura(dni);
     }
     
-    
-    public void eliminaContratacionAbonado(Abonado abonado,Domicilio domicilio) {
-    	Factura factura=null;
-    	//busca la factura
-    	if(factura existe) {
-    		//busca contratacion
-        	if(contratacion existe)
-        		//elimina y pregunta si queda vacio el arreglo
-        	if(arreglovacio)
-        		//elimina la factura y mueve al abonado a la lista de abonados sin contratacion
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionException, dniDesconocidoException {
+    	IFactura factura=datos.buscaFactura(dni);
+    	if(factura!=null) {
+    		factura.eliminarContratacion(domicilio);
+	        if(factura.sinContratacion()) {
+	        	datos.agregaAbonadoSinFacctura(factura.getAbonado());
+	        	datos.eliminaFactura(dni);
+	        }
     	}
-    	else
-    		//tira excepcion
+    	else {
+    		throw new dniDesconocidoException(dni);
+    	}
     }
     
     public void aplicaPromoDorada(Contratacion contratacion) {

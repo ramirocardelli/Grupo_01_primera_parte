@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.Iterator;
+
 import modelo.AbonadosSinContratacion;
 import modelo.DatosFacturas;
 
@@ -14,32 +16,89 @@ public class SubSistemaDatos {
 	}
 	
 	public Abonado buscaAbonado(String dni) {
-		return null;
+		Iterator<Abonado>it=abonadosSinContratacion.getAbonados();
+		Abonado busqueda=null;
+		boolean encuentra=false;
+		while(it.hasNext() && !encuentra){
+			busqueda=it.next();
+			if(dni.equals(busqueda.getDni())) {
+				encuentra=true;
+			}
+		}
+		if(!encuentra)
+			busqueda=null;
+		return busqueda;
 	}
 	
 	public Contratacion buscaContratacion(Domicilio domicilio) { //Ingresando un domicilio busca la contratacion
-		return null;
+		Iterator<IFactura>it=this.datosFacturas.getFacturas();
+		Contratacion rta = null;
+		boolean encuentra=false;
+		while(it.hasNext() && !encuentra){
+			rta=it.next().getContratacion(domicilio);
+			if(rta!=null)
+				encuentra=true;
+		}
+		if(!encuentra)
+			rta=null;
+		return rta;
 	}
 	
-	public Factura buscaFactura(Abonado abonado) {
-		return null;
+	public IFactura buscaFactura(String dni) {
+		Iterator<IFactura>it=this.datosFacturas.getFacturas();
+		IFactura rta = null;
+		boolean encuentra=false;
+		while(it.hasNext() && !encuentra){
+			rta=it.next();
+			String rtadni=rta.getAbonado().getDni();
+			if(rtadni.compareTo(dni)==0) {
+				encuentra=true;
+			}
+		}
+		if(!encuentra)
+			rta=null;
+		return rta;
 	}
 	
-	public void agregaFactura(Factura factura) {
+	public void agregaFactura(IFactura factura) {
 		this.datosFacturas.agregaFactura(factura);
-		
 	}
 	
 	public void agregaAbonadoSinFacctura(Abonado abonado) {
 		this.abonadosSinContratacion.agregaAbonado(abonado);
 	}
 	
-	public void eliminaFactura(int i) {
-		this.datosFacturas.eliminaFacturas(i);
+	public void eliminaFactura(String dni) throws dniDesconocidoException {
+		IFactura elimina=buscaFactura(dni);
+		if(elimina!=null) {
+			agregaAbonadoSinFacctura(elimina.getAbonado());
+			this.datosFacturas.eliminaFacturas(elimina);
+			
+		}
+		else {
+			throw new dniDesconocidoException(dni);
+		}
+		
 	}
 	
-	public void eliminaAbonadoSinFactura(int i){
-		this.abonadosSinContratacion.eliminaAbonado(i);
+	public void eliminaAbonadoSinFactura(String dni) throws dniDesconocidoException, AbonadoYaCargado{ 
+		Abonado elimina=buscaAbonado(dni);
+		if(elimina!=null)
+			this.abonadosSinContratacion.eliminaAbonado(elimina);
+		else {
+			Iterator<IFactura>it=this.datosFacturas.getFacturas();
+			IFactura busca=null;
+			boolean encuentra=false;
+			while(it.hasNext() && !encuentra) {
+				busca=it.next();
+				if(busca.getAbonado().getDni().equals(dni))
+					encuentra=true;
+			}
+			if(!encuentra)
+				throw new dniDesconocidoException(dni);
+			else
+				throw new AbonadoYaCargado(dni, busca.getAbonado().getNombre(), true);
+		}
 	}
 	
 }

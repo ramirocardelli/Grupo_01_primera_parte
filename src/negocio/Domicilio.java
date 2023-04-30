@@ -24,5 +24,20 @@ public class Domicilio {
 	public int getNumero() {
 		return numero;
 	}
+	
+	public boolean equals(Domicilio domicilio) {
+		boolean rta=false;
+		if(this.calle.equals(domicilio.calle) && this.numero==domicilio.numero) {
+			rta=true;
+		}
+		return rta;
+	}
+
+	@Override
+	public String toString() {
+		return "Domicilio con calle: " + calle + " y numero: " + numero ;
+	}
+	
+	
     
 }
