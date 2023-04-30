@@ -63,7 +63,7 @@ public class Sistema { //Singleton
     		throw new NoExisteFacturaException(dni,nuevaContratacion);
     }
     
-    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargadoException, dniDesconocidoException{
+    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargadoException, DniDesconocidoException{
     	Abonado buscaAbonado=datos.buscaAbonado(dni);
     	if(buscaAbonado!=null) {
     		FactoryFactura FF=new FactoryFactura();//crea la factura con factory y la inserta en la capa de datos
@@ -77,19 +77,19 @@ public class Sistema { //Singleton
     			throw new AbonadoYaCargadoException(buscafactura.getAbonado().getNombre(),dni,true);
     		}
     		else
-    			throw new dniDesconocidoException(dni);
+    			throw new DniDesconocidoException(dni);
     	}
     }
     
-    public void eliminarFactura(String dni) throws dniDesconocidoException {
+    public void eliminarFactura(String dni) throws DniDesconocidoException {
     	datos.eliminaFactura(dni);
     }
     
-    public void eliminaAbonadoSinContratacion(String dni)throws dniDesconocidoException, AbonadoYaCargadoException {
+    public void eliminaAbonadoSinContratacion(String dni)throws DniDesconocidoException, AbonadoYaCargadoException {
     	datos.eliminaAbonadoSinFactura(dni);
     }
     
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException, dniDesconocidoException {
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionenAbonadoException, DniDesconocidoException {
     	IFactura factura=datos.buscaFactura(dni);
     	if(factura!=null) {
     		factura.eliminarContratacion(domicilio);
@@ -99,7 +99,7 @@ public class Sistema { //Singleton
 	        }
     	}
     	else {
-    		throw new dniDesconocidoException(dni);
+    		throw new DniDesconocidoException(dni);
     	}
     }
     
@@ -111,14 +111,14 @@ public class Sistema { //Singleton
         	throw new DomicilioSinContratacionException(domicilio);  
     }
 	
-    public double calculaPrecioAPagar(String dni) throws dniDesconocidoException{ 
+    public double calculaPrecioAPagar(String dni) throws DniDesconocidoException{ 
     	IFactura factura=datos.buscaFactura(dni);
     	double rta=0;
     	if(factura!=null) {
     		rta=factura.calcularTotalConDescuento();
     	}
     	else {
-    		throw new dniDesconocidoException(dni);
+    		throw new DniDesconocidoException(dni);
     	}
 		return rta;
     }

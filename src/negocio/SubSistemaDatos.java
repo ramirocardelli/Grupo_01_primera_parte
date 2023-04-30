@@ -68,7 +68,7 @@ public class SubSistemaDatos {
 		this.abonadosSinContratacion.agregaAbonado(abonado);
 	}
 	
-	public void eliminaFactura(String dni) throws dniDesconocidoException {
+	public void eliminaFactura(String dni) throws DniDesconocidoException {
 		IFactura elimina=buscaFactura(dni);
 		if(elimina!=null) {
 			agregaAbonadoSinFacctura(elimina.getAbonado());
@@ -76,12 +76,12 @@ public class SubSistemaDatos {
 			
 		}
 		else {
-			throw new dniDesconocidoException(dni);
+			throw new DniDesconocidoException(dni);
 		}
 		
 	}
 	
-	public void eliminaAbonadoSinFactura(String dni) throws dniDesconocidoException, AbonadoYaCargadoException{ 
+	public void eliminaAbonadoSinFactura(String dni) throws DniDesconocidoException, AbonadoYaCargadoException{ 
 		Abonado elimina=buscaAbonado(dni);
 		if(elimina!=null)
 			this.abonadosSinContratacion.eliminaAbonado(elimina);
@@ -95,7 +95,7 @@ public class SubSistemaDatos {
 					encuentra=true;
 			}
 			if(!encuentra)
-				throw new dniDesconocidoException(dni);
+				throw new DniDesconocidoException(dni);
 			else
 				throw new AbonadoYaCargadoException(dni, busca.getAbonado().getNombre(), true);
 		}
