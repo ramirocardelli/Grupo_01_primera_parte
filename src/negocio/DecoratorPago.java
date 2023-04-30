@@ -3,7 +3,7 @@ package negocio;
 
 /** Clase abstracta que representa el comportamiento de una factura segun su metodo de pago.
  */
-public abstract class DecoratorPago implements IFactura{
+public abstract class DecoratorPago implements IFactura,Cloneable{
     protected IFactura encapsulado;
 
     /** Constructor de un parametro IFactura que crea un nuevo objeto DecoratorPago con una IFactura como encapsulado.
@@ -33,7 +33,7 @@ public abstract class DecoratorPago implements IFactura{
     }
    
     @Override
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 			this.encapsulado.eliminarContratacion(domicilio);
 	}
     
@@ -50,6 +50,17 @@ public abstract class DecoratorPago implements IFactura{
 	@Override
 	public Contratacion getContratacion(Domicilio domicilio) {
 		return this.encapsulado.getContratacion(domicilio);
+	}
+
+	@Override
+	public String toString() {
+		return encapsulado.toString();
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		DecoratorPago clon=(DecoratorPago)super.clone();
+		clon.encapsulado=(IFactura)this.encapsulado.clone();
+		return clon;
 	}
 
 }

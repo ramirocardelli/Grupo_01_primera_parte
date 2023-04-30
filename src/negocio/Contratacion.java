@@ -4,7 +4,7 @@ package negocio;
 /**
  *Clase que representa una contratacion de un cliente con los servicios correspondientes.
  */
-public abstract class Contratacion { 
+public abstract class Contratacion implements Cloneable{ 
     protected int camaras;
     protected int botonesAntipanicos;
     protected boolean movilAcompanamiento;
@@ -40,7 +40,7 @@ public abstract class Contratacion {
     /** Metodo para calcular el precio de una contratcion.
      * @return double con el valor del precio para la contratacion en base a los servicios contratados.
      */
-    public double calculaPrecio(){ 
+    protected double calculaPrecio(){ 
         double res = 0;
         res += this.camaras*valorUnidadCamara;
         res += this.botonesAntipanicos*valorUnidadBotAntipanico;
@@ -83,5 +83,13 @@ public abstract class Contratacion {
     /** Se aplica la promocion dorada a la contratacion correspondiente. 
      */
     public abstract void aplicaPromocionDorada();
+    
+    public abstract String toString();
+    
+    public Object clone() throws CloneNotSupportedException {
+    	Contratacion clon=(Contratacion)super.clone();
+    	this.domicilio=(Domicilio)this.domicilio.clone();
+    	return clon;
+    }
 }
 

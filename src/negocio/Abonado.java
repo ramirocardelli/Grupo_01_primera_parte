@@ -36,12 +36,18 @@ public abstract class Abonado implements Cloneable{
         return dni;
     }
 
-    /** Metodo para clonar un abonado.
+    
+    @Override
+	public String toString() {
+		return "Abonado " + nombre + ", DNI: " + dni + "]";
+	}
+
+	/** Metodo para clonar un abonado.
      * @return : Se devuelve un clon del abonado correspondiente.
      * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jur�dica, la cual no puede aceptar clonacion.
      */
     public Object clon() throws CloneNotSupportedException{
     	Abonado clon= (Abonado)super.clone();
-    return clon;
+    	return clon;
     }
 }

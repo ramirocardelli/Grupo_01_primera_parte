@@ -1,6 +1,6 @@
 package negocio;
 
-/** Clase que representa una contrataci�n de monitoreo de alarmas para comercios.
+/** Clase que representa una contratacion de monitoreo de alarmas para comercios.
  */
 public class ContratacionComercio extends Contratacion {
     private static final double valorComercio = 10000;
@@ -25,7 +25,6 @@ public class ContratacionComercio extends Contratacion {
      * @return double con el valor del precio de la contratacion correspondiente. 
      */
     public double calculaPrecio(){ 
-    	
     	return valorComercio + super.calculaPrecio();
     }
     
@@ -42,4 +41,15 @@ public class ContratacionComercio extends Contratacion {
      public void aplicaPromocionPlatino(){
        this.precio *= 0.65;
      }
+
+	@Override
+	public String toString() {
+		return "Monitoreo de Alarmas de Comercio para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
+				+ "Agregados: \n "
+				+ " Cámaras: " + camaras + "\n"
+				+ " Botones Antipánico: " + botonesAntipanicos+ "\n"
+				+ " Movil/es de acompañamiento=" + movilAcompanamiento + " \n ";
+	}
+     
+     
 }

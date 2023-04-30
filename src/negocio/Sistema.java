@@ -1,5 +1,7 @@
 package negocio; // sistema ->invoca todos los metodos
 
+import java.util.Iterator;
+
 public class Sistema { //Singleton
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
@@ -29,7 +31,7 @@ public class Sistema { //Singleton
     	return this.datos.buscaFactura(dni);
     }
     
-    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargado, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoException, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
     	if(buscaAbonado(dni)==null) { //verifica que abonado no este cargado en la lista de abonados sin contratacion
     		FactoryAbonado FA=new FactoryAbonado();
     		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
@@ -38,13 +40,13 @@ public class Sistema { //Singleton
     			datos.agregaAbonadoSinFacctura(abonado);
     		}
     		else
-    			throw new AbonadoYaCargado(nombre,dni,true);
+    			throw new AbonadoYaCargadoException(nombre,dni,true);
     	}
     	else
-    		throw new AbonadoYaCargado(nombre,dni,false);
+    		throw new AbonadoYaCargadoException(nombre,dni,false);
     }
     
-    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, NoExisteFacturaException, TipoIncorrectoServicio { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
+    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, NoExisteFacturaException, TipoIncorrectoServicioException { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
     	FactoryContratacion FC=new FactoryContratacion();
     	Contratacion nuevaContratacion=FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
     	IFactura buscaFactura=datos.buscaFactura(dni);
@@ -61,7 +63,7 @@ public class Sistema { //Singleton
     		throw new NoExisteFacturaException(dni,nuevaContratacion);
     }
     
-    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargado, dniDesconocidoException{
+    public void nuevaFactura(String dni, String tipoPago,String tipoFactura) throws MetodoDePagoInvalidoException,TipoFacturaIncorrecto, AbonadoYaCargadoException, DniDesconocidoException{
     	Abonado buscaAbonado=datos.buscaAbonado(dni);
     	if(buscaAbonado!=null) {
     		FactoryFactura FF=new FactoryFactura();//crea la factura con factory y la inserta en la capa de datos
@@ -72,22 +74,22 @@ public class Sistema { //Singleton
     	else {
     		IFactura buscafactura=datos.buscaFactura(dni);
     		if(buscafactura!=null) {
-    			throw new AbonadoYaCargado(buscafactura.getAbonado().getNombre(),dni,true);
+    			throw new AbonadoYaCargadoException(buscafactura.getAbonado().getNombre(),dni,true);
     		}
     		else
-    			throw new dniDesconocidoException(dni);
+    			throw new DniDesconocidoException(dni);
     	}
     }
     
-    public void eliminarFactura(String dni) throws dniDesconocidoException {
+    public void eliminarFactura(String dni) throws DniDesconocidoException {
     	datos.eliminaFactura(dni);
     }
     
-    public void eliminaAbonadoSinContratacion(String dni)throws dniDesconocidoException, AbonadoYaCargado {
+    public void eliminaAbonadoSinContratacion(String dni)throws DniDesconocidoException, AbonadoYaCargadoException {
     	datos.eliminaAbonadoSinFactura(dni);
     }
     
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionException, dniDesconocidoException {
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
     	IFactura factura=datos.buscaFactura(dni);
     	if(factura!=null) {
     		factura.eliminarContratacion(domicilio);
@@ -97,27 +99,54 @@ public class Sistema { //Singleton
 	        }
     	}
     	else {
-    		throw new dniDesconocidoException(dni);
+    		throw new DniDesconocidoException(dni);
     	}
     }
     
-    public void aplicaPromoDorada(Contratacion contratacion) {
-        contratacion.aplicaPromocionDorada();
+    public void aplicaPromocion(Domicilio domicilio, Promo promocion) throws DomicilioSinContratacionException {
+        Contratacion contratacion=datos.buscaContratacion(domicilio);
+        if(contratacion!=null)
+        	contratacion.promo(promocion);
+        else
+        	throw new DomicilioSinContratacionException(domicilio);  
     }
 	
-    public void aplicaPromoPlatino(Contratacion contratacion) {
-        contratacion.aplicaPromocionPlatino();
+    public double calculaPrecioAPagar(String dni) throws DniDesconocidoException{ 
+    	IFactura factura=datos.buscaFactura(dni);
+    	double rta=0;
+    	if(factura!=null) {
+    		rta=factura.calcularTotalConDescuento();
+    	}
+    	else {
+    		throw new DniDesconocidoException(dni);
+    	}
+		return rta;
     }
 	
-    public void calculaPrecioAPagar(){ //de una factura especifica pasada por parametro
-    }
-	
-	public Factura clonacionFactura(Factura original) throws CloneNotSupportedException {
-		Factura clon=(Factura) original.clone(); //llama al metodo de factura para que devuelva su clonado
+	public IFactura clonacionFactura(String dni) throws CloneNotSupportedException,DniDesconocidoException {
+		IFactura original=datos.buscaFactura(dni);
+		IFactura clon=null;
+		if(original!=null) {
+			clon=(IFactura) original.clone();	
+		}
+		else {
+			throw new DniDesconocidoException(dni);
+		}
 		return clon;
 	}
 	
+	
+	/**
+	 * Muestra el contenido de todas las Facturas almacenadas junto con el detalle de cada una de <br>
+	 * las contrataciones que realizo el Abonado  
+	 **/
 	public void MuestraEstado() {
+		Iterator<IFactura> it = datos.iteratorFacturas();
+		System.out.println("Entro a metodo");
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
+		
 		//Recorre los 2 arreglos mostrando toda la informacion contenida en ellos (tostring)
 	}
 }                                               

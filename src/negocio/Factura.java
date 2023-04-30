@@ -63,7 +63,7 @@ public class Factura implements Cloneable, IFactura {
     	int i = 0;
     	Iterator<Contratacion>it = contrataciones.iterator();
     	while(it.hasNext()) {
-    		if(i > 3)
+    		if(i >=3)
     			res += it.next().getPrecio()*0.5;
     		else
     			res += it.next().getPrecio();
@@ -83,7 +83,7 @@ public class Factura implements Cloneable, IFactura {
     	clon.contrataciones.clear();
     	Iterator<Contratacion> it=this.contrataciones.iterator();
     	while(it.hasNext()) {
-    		clon.contrataciones.add(it.next());
+    		clon.contrataciones.add((Contratacion)it.next().clone());
     	}
 		return clon;
     }
@@ -92,22 +92,18 @@ public class Factura implements Cloneable, IFactura {
 		return abonado;
 	}
 	
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 		int i=buscaContratacion(domicilio);
     	if(i>-1) {
     		this.contrataciones.remove(i);
     	}
     	else
-    		throw new DomicilioSinContratacionException(domicilio,this.abonado);
+    		throw new DomicilioSinContratacionEnAbonadoException(domicilio,this.abonado);
 	}
 
 	@Override
 	public boolean sinContratacion() {
-		boolean rta=false;
-		if(this.contrataciones.size()==0) {
-			rta=true;
-		}
-		return rta;
+		return (this.contrataciones.size()==0);
 	}
 
 	private int buscaContratacion(Domicilio domicilio) {
@@ -132,6 +128,13 @@ public class Factura implements Cloneable, IFactura {
     	}
     	return rta;
 	}
+
+	@Override
+	public String toString() {
+		return "Factura de " + abonado + ", cuenta con las siguientes contrataciones: \n" + contrataciones + " \n ";
+	}
+	
+	
 	
 	
 }

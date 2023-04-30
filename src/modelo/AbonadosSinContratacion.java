@@ -23,10 +23,4 @@ public class AbonadosSinContratacion {
 	public boolean eliminaAbonado(Abonado abonado) {
 		return this.Abonados.remove(abonado);
 	}
-	
-	@Override
-	public String toString() {
-		return "AbonadosSinContratacion [Abonados=" + Abonados + "]"; //NO HECHO
-	}
 }
-//prueba commit - comentario jo

@@ -2,7 +2,6 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import negocio.IFactura;
 
 public class DatosFacturas {
@@ -23,10 +22,4 @@ public class DatosFacturas {
 	public boolean eliminaFacturas(IFactura factura) {
 		return this.facturas.remove(factura);
 	}
-	
-	@Override
-	public String toString() {
-		return "DatosFacturas [Facturas=" + this.facturas + "]"; //NO HECHO
-	}
-    
 }

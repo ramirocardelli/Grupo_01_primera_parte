@@ -2,7 +2,7 @@ package negocio;
 
 /** Clase que representa un domicilio de un abonado. Contiene un String para el nombre de la calle y un int para la altura. 
  */
-public class Domicilio {
+public class Domicilio implements Cloneable {
     private String calle;
     private int numero;
 
@@ -12,9 +12,17 @@ public class Domicilio {
      * <b> Pre: </b> calle no puede ser null ni " ", numero no puede ser negativo. <br>
      * <b> Post: </b> Se crea domicilio, que contiene la calle y el numero de la vivienda.
      */
-    public Domicilio(String calle, int numero) {
-        this.calle=calle;
-        this.numero=numero;
+    private Domicilio(String calle, int numero) {
+            this.calle=calle;
+            this.numero=numero;
+    }
+    
+    public static Domicilio generaDomicilio(String calle,int numero) { //no permite crear domicilios incorrectamente
+    	Domicilio rta=null;
+    	if(calle!=null && !calle.equals("") && numero<=9999) {
+    		rta=new Domicilio(calle, numero);
+    	}
+    	return rta;
     }
 
 	public String getCalle() {
@@ -26,18 +34,16 @@ public class Domicilio {
 	}
 	
 	public boolean equals(Domicilio domicilio) {
-		boolean rta=false;
-		if(this.calle.equals(domicilio.calle) && this.numero==domicilio.numero) {
-			rta=true;
-		}
-		return rta;
+		return (this.calle.equals(domicilio.calle) && this.numero==domicilio.numero);
 	}
 
 	@Override
 	public String toString() {
-		return "Domicilio con calle: " + calle + " y numero: " + numero ;
+		return "Calle: " + calle + " numero: " + numero ;
 	}
 	
-	
-    
+	public Object clone() throws CloneNotSupportedException {
+		Domicilio clon=(Domicilio)super.clone();
+		return clon;
+	}
 }

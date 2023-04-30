@@ -1,10 +1,10 @@
 package negocio;
 
-public class dniDesconocidoException extends Exception{
+public class DniDesconocidoException extends Exception{
 	private static final long serialVersionUID = 1L;
 	private String dni;
 	
-	public dniDesconocidoException(String dni) {
+	public DniDesconocidoException(String dni) {
 		super();
 		this.dni = dni;
 	}
