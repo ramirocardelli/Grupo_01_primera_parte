@@ -60,7 +60,10 @@ public abstract class Contratacion {
     public boolean isMovilAcompanamiento() {
         return movilAcompanamiento;
     }
-    
+
+    /** Metodo para aplicar una determinada promocion (platino/dorada) al servicio correspondiente. (Double dispatching)
+     * @param tipoPromo : tipo de promo que se quiera aplicar 
+     */
     public void promo(Promo tipoPromo){
         tipoPromo.promo(this);
     }
