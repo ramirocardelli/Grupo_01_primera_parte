@@ -2,7 +2,7 @@ package negocio;
 
 import java.util.Iterator;
 
-/** Clase que representa el sistema de gestión de facturas y abonados.
+/** Clase que representa el sistema de gestion de facturas y abonados.
  */
 public class Sistema { 
     private SubSistemaDatos datos;
@@ -15,7 +15,7 @@ public class Sistema {
         this.datos=new SubSistemaDatos();
     }
 
-    /** Constructor estatico para evitar que se cree más de una instancia del Sistema (patron Singleton)
+    /** Constructor estatico para evitar que se cree mas de una instancia del Sistema (patron Singleton)
      * @return instancia de Sistema
      */
     public static Sistema getInstance() {
@@ -81,7 +81,7 @@ public class Sistema {
     		Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
     		IFactura busquedaF=datos.buscaFactura(dni);
     		if(busquedaF==null) { //si no encuentra el abonado en las facturas lo guarda en la lista de abonados sin servicios
-    			datos.agregaAbonadoSinFacctura(abonado);
+    			datos.agregaAbonadoSinFactura(abonado);
     		}
     		else
     			throw new AbonadoYaCargadoException(nombre,dni,true);
@@ -176,7 +176,7 @@ public class Sistema {
     	if(factura!=null) {
     		factura.eliminarContratacion(domicilio);
 	        if(factura.sinContratacion()) {
-	        	datos.agregaAbonadoSinFacctura(factura.getAbonado());
+	        	datos.agregaAbonadoSinFactura(factura.getAbonado());
 	        	datos.eliminaFactura(dni);
 	        }
     	}
@@ -220,7 +220,7 @@ public class Sistema {
 		return rta;
     }
 
-    /** Metodo que realiza, cuando sea posible, la clonación de una factura.
+    /** Metodo que realiza, cuando sea posible, la clonaciï¿½n de una factura.
      * @param dni del abonado del que se quiere clonar la factura.
      * @return factura clonada.
      * @throws CloneNotSupportedException cuando no se pueda clonar la factura (cuando el abonado sea de tipo persona juridica.
