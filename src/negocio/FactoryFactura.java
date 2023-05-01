@@ -13,10 +13,10 @@ public class FactoryFactura {
      * @param tipo : tipo de factura<br>
      * @return IFactura creada<br>
      * @throws TipoFacturaIncorrecto excepcion que se lanza cuando el tipo de factura ingresado es incorrecto. <br>
-     * <b> Pre: </b> abonado no debe ser null, y tipo no debe ser " "<br>
+     * <b> Pre: </b> abonado no debe ser null, y tipo no debe ser vacio<br>
      * <b> Post: </b> Crea una factura segun el tipo recibido. 
      */
-    private IFactura factoryTipoFactura(Abonado abonado, String tipo) throws TipoFacturaIncorrecto {
+    protected IFactura factoryTipoFactura(Abonado abonado, String tipo) throws TipoFacturaIncorrecto {
     	IFactura creado=null;
     	if(tipo == null)
     		creado=new Factura(abonado);
@@ -32,7 +32,7 @@ public class FactoryFactura {
      * @return IFactura segun el metodo de pago.<br>
      * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.<br>
      * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.<br>
-     * <b> Pre: </b> abonado no puede ser null, y metodoPago no puede ser null ni " ". <br>
+     * <b> Pre: </b> abonado no puede ser null, metodoPago no puede ser null ni vacio y tipo no puede ser vacio. <br>
      * <b> Post: </b> Se crea factura segun el tipo, que contiene al abonado, y la decora segun el metodo de pago. 
      */
     public IFactura creaFactura(Abonado abonado, String metodoPago,String tipo) throws MetodoDePagoInvalidoException, TipoFacturaIncorrecto {
