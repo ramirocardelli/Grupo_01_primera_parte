@@ -7,28 +7,46 @@ import negocio.*;
 			Sistema sistema=Sistema.getInstance();
 			
 			System.out.println("Prueba Ingreso Abonados");
-			ingresaAbonado("Mateo","44235283","Juridica");//cargas correcta
-			ingresaAbonado("Joaquin","3434534354","Fisica");
-			ingresaAbonado("Augusto","44231231","Juridica");
-			ingresaAbonado("Nicolas","44667826","Fisica");
-			//errores
-			ingresaAbonado("Nicolas","44667826","Fisica");//carga por 2da vez el abonado
-			ingresaAbonado("Mariana","3215123","Astronauta");//carga con tipo desconocido
+			ingresaAbonado("Mateo", "44235283", "Juridica");	// Cargas correctas
+			ingresaAbonado("Joaquin", "3434534354", "Fisica");
+			ingresaAbonado("Augusto", "44231231", "Juridica");
+			ingresaAbonado("Nicolas", "44667826", "Fisica");
+			// Errores
+			ingresaAbonado(null, "44667826", "Fisica");	// Nombre null
+			ingresaAbonado("", "44667826", "Fisica");	// Nombre vacio
+			ingresaAbonado("Nicolas", null, "Fisica");	// DNI null
+			ingresaAbonado("Nicolas", "", "Fisica");	// DNI vacio
+			ingresaAbonado("Nicolas", "44667826", null);// Tipo persona null
+			ingresaAbonado("Nicolas", "44667826", "");	// Tipo persona vacio
+			ingresaAbonado("Nicolas", "44667826", "Fisica");	//carga por 2da vez el abonado
+			ingresaAbonado("Mariana", "3215123", "Astronauta");	//carga con tipo desconocido
 			
 			
 			System.out.println("\nPrueba Ingreso Facturas");
-			ingresaFactura("44667826", "Efectivo", null); //ingresa la factura de Nicolas
-			ingresaFactura("44235283", "Tarjeta", null);//ingresa la facutura de Mateo
-			//errores
-			ingresaFactura("44667826", "Efectivo", null);//ingresa por 2da vez la factura de nicolas
-			ingresaFactura("2", "Efectivo", null);	//ingresa dni no cargado como cliente
-			ingresaFactura("44231231", "Uala", null); //ingresa metodo de pago incorrecto
-			ingresaFactura("3434534354", "Tarjeta", "A");	//ingresa tipo de factura incorrecto
+			ingresaFactura("44667826", "Efectivo", null);	// Ingresa la factura de Nicolas
+			ingresaFactura("44235283", "Tarjeta", null);	// Ingresa la facutura de Mateo
+			// Errores
+			ingresaFactura(null, "Tarjeta", null);			// Ingresa DNI nulo
+			ingresaFactura("", "Tarjeta", null);			// Ingresa DNI vacio
+			ingresaFactura("44235283", null, null);			// Ingresa metodo de pago nulo
+			ingresaFactura("44235283", "", null);			// Ingresa metodo de pago vacio
+			ingresaFactura("44667826", "Efectivo", null);	// Ingresa por 2da vez la factura de nicolas
+			ingresaFactura("2", "Efectivo", null);			// Ingresa dni no cargado como cliente
+			ingresaFactura("44231231", "Uala", null);		// Ingresa metodo de pago incorrecto
+			ingresaFactura("3434534354", "Tarjeta", "A");	// Ingresa tipo de factura incorrecto
 			
 			
 			System.out.println("\nPrueba Ingreso Contrataciones");
 			ingresaContratacion("44667826", 1, 3, false,Domicilio.generaDomicilio("Moreno",2410), "Comercio");//carga correcta
 			ingresaContratacion("44235283", 1, 3, false,Domicilio.generaDomicilio("Garay",4504), "Comercio");
+			
+
+			ingresaContratacion(null, 1, 3, false,Domicilio.generaDomicilio("Garay",4504), "Comercio");	// Ingresa DNI nulo
+			ingresaContratacion("", 1, 3, false,Domicilio.generaDomicilio("Garay",4504), "Comercio");	// Ingresa DNI vacio
+			ingresaContratacion("44235283", -1, 3, false,Domicilio.generaDomicilio("Garay",4504), "Comercio");	// Ingresa camaras negativas
+			ingresaContratacion("44235283", 1, -3, false, null, "Comercio");									// Ingresa domicilio nulo
+			ingresaContratacion("44235283", 1, 3, false,Domicilio.generaDomicilio("Garay",4504), null);	// Ingresa tipo de contratacion nulo
+			ingresaContratacion("44235283", 1, 3, false,Domicilio.generaDomicilio("Garay",4504), "");	// Ingresa tipo de contratacion vacio
 			
 			ingresaContratacion("44231231", 1, 3, false,Domicilio.generaDomicilio("Moreno",2410), "Comercio");//no existe factura para el dni
 			ingresaContratacion("44667826", 1, 3, false,Domicilio.generaDomicilio("Moreno",2410), "lol");//tipo incorrecto de contratacion
@@ -36,15 +54,26 @@ import negocio.*;
 			
 			
 			System.out.println("\nPrueba eliminar factura");
-			eliminaFactura("44667826");//eliminacion correcta
-			ingresaFactura("44667826", "Efectivo", null);//se carga otra vez a la lista para verificar que se elimino
-			ingresaFactura("44667826", "Efectivo", null);//como se carga 2 veces error xq ya esta en factura
-			
+			eliminaFactura("44667826");	//eliminacion correcta
+
+			eliminaFactura("");			// DNI vacio
+			eliminaFactura(null);		// DNI nulo
 			eliminaFactura("3434534354"); //no existe este dni con factura
+			
+			ingresaFactura("44667826", "Efectivo", null);	// Se carga otra vez a la lista para verificar que se elimino
+			ingresaFactura("44667826", "Efectivo", null);	// Como se carga 2 veces error xq ya esta en factura
+			ingresaFactura(null, "Efectivo", null);		// DNI nulo
+			ingresaFactura("", "Efectivo", null);		// DNI vacio
+			ingresaFactura("44667826", null, null);		// tipo nulo 
+			ingresaFactura("44667826", "", null);		// tipo vacio
+			
 			
 			
 			System.out.println("\nPrueba eliminar abonado sin contratacion");
 			eliminaAbonadoSinContratacion("44231231"); //correcta eliminacion
+			eliminaAbonadoSinContratacion(null); 	// DNI nulo
+			eliminaAbonadoSinContratacion(""); 		// DNI vacio
+			
 			ingresaAbonado("Augusto","44231231","Juridica"); //se lo carga de nuevo para comprobar que si se elimino
 			ingresaAbonado("Augusto","44231231","Juridica"); //se carga por 2da vez y tira error xq ya esta cargado
 			
@@ -70,6 +99,12 @@ import negocio.*;
 			aplicaPromocion(Domicilio.generaDomicilio("Santa Fe",2410), new PromoDorada());
 			FacturaAPagar("44667826",false);
 			FacturaAPagar("44667826",true);
+			
+
+			FacturaAPagar(null,true);	// DNI nulo
+			FacturaAPagar("",true);		// DNI vacio
+			aplicaPromocion(null, new PromoDorada());	// Domicilio nulo
+			aplicaPromocion(Domicilio.generaDomicilio("Santa Fe",2410), null);	// Promocion nula
 			
 			ingresaFactura("3434534354", "Efectivo", null);
 			ingresaContratacion("3434534354", 3, 3, true,Domicilio.generaDomicilio("Tucuman",2312), "Vivienda");
@@ -114,7 +149,7 @@ import negocio.*;
 	* <b> Post: </b> Se agrega el abonado a la lista de abonados sin contratacion o sino se imprime por pantalla el problema surgido<br>
 	*/	
 	private static void ingresaAbonado(String nombre,String dni, String tipo) {
-		if(nombre!=null && !nombre.equals("") && dni!=null && !dni.equals("") && !tipo.equals("")) { //tipo si puede ser null, ya que implica que es la factura default
+		if(nombre!=null && !nombre.equals("") && dni!=null && !dni.equals("") && !tipo.equals("") && tipo != null) { //tipo si puede ser null, ya que implica que es la factura default
 			try {
 				Sistema.getInstance().nuevoAbonado(nombre, dni, tipo);
 			}
@@ -171,7 +206,7 @@ import negocio.*;
 	* <b> Post: </b> Se agrega la contratacion a la lista de contrataciones de la factura correspondiente al dni ingresado o sino se imprime por pantalla el problema surgido<br>
 	*/	
 	private static void ingresaFactura(String dni, String tipoPago, String tipoFactura) {
-		if(dni!=null && !dni.equals("")&& tipoPago!=null && !tipoPago.equals("")) { //el tipo de factura puede ser null, en tal caso la factura se crea de tipo default
+		if(dni!=null && !dni.equals("") && tipoPago!=null && !tipoPago.equals("")) { //el tipo de factura puede ser null, en tal caso la factura se crea de tipo default
 			try {
 				Sistema.getInstance().nuevaFactura(dni, tipoPago, tipoFactura);
 			}
