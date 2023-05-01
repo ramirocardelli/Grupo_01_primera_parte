@@ -9,11 +9,12 @@ public class FactoryFactura {
     }
 
     /** Metodo que crea una factura si el tipo ingresado es correcto, de otra forma lanza excepcion.
-     * @param abonado : abonado de quien se quire crear la factura
-     * @param tipo : tipo de factura
-     * @return IFactura creada
+     * @param abonado : abonado de quien se quire crear la factura<br>
+     * @param tipo : tipo de factura<br>
+     * @return IFactura creada<br>
      * @throws TipoFacturaIncorrecto excepcion que se lanza cuando el tipo de factura ingresado es incorrecto. <br>
-     * <b> Pre: </b> abonado no debe ser null, y tipo no debe ser " "
+     * <b> Pre: </b> abonado no debe ser null, y tipo no debe ser " "<br>
+     * <b> Post: </b> Crea una factura segun el tipo recibido. 
      */
     private IFactura factoryTipoFactura(Abonado abonado, String tipo) throws TipoFacturaIncorrecto {
     	IFactura creado=null;
@@ -25,14 +26,14 @@ public class FactoryFactura {
     }
     
     /** Metodo para crear la factura correspondiente dependiendo el metodo de pago solicitado.
-     * @param abonado : persona que contrata y abona los servicios.
-     * @param metodoPago : metodo de pago de la factura.
-     * @param tipo : tipo de factura
-     * @return IFactura segun el metodo de pago.
-     * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.
-     * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.
+     * @param abonado : persona que contrata y abona los servicios.<br>
+     * @param metodoPago : metodo de pago de la factura.<br>
+     * @param tipo : tipo de factura<br>
+     * @return IFactura segun el metodo de pago.<br>
+     * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.<br>
+     * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.<br>
      * <b> Pre: </b> abonado no puede ser null, y metodoPago no puede ser null ni " ". <br>
-     * <b> Post: </b> Se crea factura que contiene al abonado, y la decora segun el metodo de pago. 
+     * <b> Post: </b> Se crea factura segun el tipo, que contiene al abonado, y la decora segun el metodo de pago. 
      */
     public IFactura creaFactura(Abonado abonado, String metodoPago,String tipo) throws MetodoDePagoInvalidoException, TipoFacturaIncorrecto {
     	IFactura creado = factoryTipoFactura(abonado,tipo);
