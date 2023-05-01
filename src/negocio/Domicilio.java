@@ -17,9 +17,18 @@ public class Domicilio implements Cloneable {
             this.numero=numero;
     }
     
-    public static Domicilio generaDomicilio(String calle,int numero) { //no permite crear domicilios incorrectamente
+    /**
+     * 
+     * Metodo que se encarga de generar un Objeto de tipo Domicilio con los datos proporcionados.<br>
+     * No se permite la preacion de Domicilios incorrectos
+     * @param calle : String de calle del domicilio
+     * @param numero : int numero del domicilio 
+     * @return Domicilio. Se devuelve un Objeto de tipo Domicilio si los datos cargados cumplen con las condiciones
+     * <b> Post: </b> Se crea domicilio si cumple las condiciones, caso contrario devuelve null.
+     */
+    public static Domicilio generaDomicilio(String calle,int numero) {
     	Domicilio rta=null;
-    	if(calle!=null && !calle.equals("") && numero<=9999) {
+    	if(calle!=null && !calle.equals("") && numero<=9999 && numero>0) {
     		rta=new Domicilio(calle, numero);
     	}
     	return rta;
