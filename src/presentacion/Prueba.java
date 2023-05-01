@@ -149,7 +149,7 @@ import negocio.*;
 	* <b> Post: </b> Se agrega el abonado a la lista de abonados sin contratacion o sino se imprime por pantalla el problema surgido<br>
 	*/	
 	private static void ingresaAbonado(String nombre,String dni, String tipo) {
-		if(nombre!=null && !nombre.equals("") && dni!=null && !dni.equals("") && !tipo.equals("") && tipo != null) { //tipo si puede ser null, ya que implica que es la factura default
+		if(nombre!=null && !nombre.equals("") && dni!=null && !dni.equals("") && tipo != null) { //tipo si puede ser null, ya que implica que es la factura default
 			try {
 				Sistema.getInstance().nuevoAbonado(nombre, dni, tipo);
 			}
