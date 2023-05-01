@@ -27,6 +27,7 @@ public class FactoryFactura {
     /** Metodo para crear la factura correspondiente dependiendo el metodo de pago solicitado.
      * @param abonado : persona que contrata y abona los servicios.
      * @param metodoPago : metodo de pago de la factura.
+     * @param tipo : tipo de factura
      * @return IFactura segun el metodo de pago.
      * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.
      * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.

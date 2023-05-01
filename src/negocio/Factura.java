@@ -95,7 +95,8 @@ public class Factura implements Cloneable, IFactura {
     /** Metodo que elimina una contratacion de la lista.
      * @param domicilio : Domicilio del cual se quiere eliminar la contratacion.
      * @throws DomicilioSinContratacionEnAbonadoException cuando el domicilio no se encuentra en la lista de contrataciones. <br>
-     * <b> Pre: </b> domicilio no puede ser null
+     * <b> Pre: </b> domicilio no puede ser null<br>
+     *<b> Post: </b> elimina la contratacion de la lista de contrataciones<br>
      */
     public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
 		int i=buscaContratacion(domicilio);
