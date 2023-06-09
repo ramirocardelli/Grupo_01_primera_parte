@@ -1,6 +1,6 @@
 package negocio;
 
-public class AbonadoConFactura extends Abonado {
+/* public class AbonadoConFactura extends Abonado {
 
 	@Override
 	public double calcularTotal(Factura factura) {
@@ -9,3 +9,4 @@ public class AbonadoConFactura extends Abonado {
 	}
 
 }
+*/

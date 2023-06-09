@@ -1,10 +1,9 @@
 package vista;
 
-
+import java.awt.event.ActionListener;
 
 public interface IVista
 {
-public void setControlador();
-public void arranca(); //comienza visualizacion
+void setActionListener(ActionListener actionListener);
 
 }

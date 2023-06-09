@@ -18,8 +18,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import java.awt.TextArea;
 import javax.swing.DropMode;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
-public class Ventana extends JFrame implements IVista {
+public class Ventana extends JFrame implements IVista, KeyListener {
 
 	private JPanel contentPane;
 	private JTextField RtaDNI;
@@ -28,6 +30,16 @@ public class Ventana extends JFrame implements IVista {
 	private JTextField RtaBotones;
 	private JTextField RtaMovil;
 	private JTextField textFieldNombreTecnico;
+	private JButton botonPagar;
+	private JButton botonContratarServicio;
+	private JButton botonDarDeBaja;
+	private JButton botonHistorico;
+	private JButton botonGestionFact;
+	private JButton botonActualizarMes;
+	private JButton botonSolicitarTecnico;
+	private JButton botonDarDeAltaTecnico;
+	private ActionListener actionListener;
+	
 
 	/**
 	 * Launch the application.
@@ -77,6 +89,7 @@ public class Ventana extends JFrame implements IVista {
 		panelDNItextfield.add(panel);
 		
 		RtaDNI = new JTextField();
+		RtaDNI.addKeyListener(this);
 		panelDNItextfield.add(RtaDNI);
 		RtaDNI.setColumns(10);
 		
@@ -109,18 +122,22 @@ public class Ventana extends JFrame implements IVista {
 		panelRtaContratacion.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		RtaComercioVivienda = new JTextField();
+		RtaComercioVivienda.addKeyListener(this);
 		panelRtaContratacion.add(RtaComercioVivienda);
 		RtaComercioVivienda.setColumns(10);
 		
 		RtaCamaras = new JTextField();
+		RtaCamaras.addKeyListener(this);
 		panelRtaContratacion.add(RtaCamaras);
 		RtaCamaras.setColumns(10);
 		
 		RtaBotones = new JTextField();
+		RtaBotones.addKeyListener(this);
 		panelRtaContratacion.add(RtaBotones);
 		RtaBotones.setColumns(10);
 		
 		RtaMovil = new JTextField();
+		RtaMovil.addKeyListener(this);
 		panelRtaContratacion.add(RtaMovil);
 		RtaMovil.setColumns(10);
 		
@@ -128,22 +145,32 @@ public class Ventana extends JFrame implements IVista {
 		panelCentral.add(panelBotonesPagar_Contratar_Baja);
 		panelBotonesPagar_Contratar_Baja.setLayout(new GridLayout(2, 3, 0, 0));
 		
-		JButton botonPagar = new JButton("Pagar factura");
+		botonPagar = new JButton("Pagar factura");
+		botonPagar.setActionCommand("PAGAR");
+		botonPagar.setEnabled(false);
 		panelBotonesPagar_Contratar_Baja.add(botonPagar);
 		
-		JButton botonContratarServicio = new JButton("Contratar Servicio");
+		botonContratarServicio = new JButton("Contratar Servicio");
+		botonContratarServicio.setActionCommand("CONTRATAR");
+		botonContratarServicio.setEnabled(false);
 		panelBotonesPagar_Contratar_Baja.add(botonContratarServicio);
 		
-		JButton botonDarDeBaja = new JButton("Dar de baja servicio");
+		botonDarDeBaja = new JButton("Dar de baja servicio");
+		botonDarDeBaja.setActionCommand("DARBAJA");
+		botonDarDeBaja.setEnabled(false);
 		panelBotonesPagar_Contratar_Baja.add(botonDarDeBaja);
 		
-		JButton BotonHistorico = new JButton("Solicitar histórico");
-		panelBotonesPagar_Contratar_Baja.add(BotonHistorico);
+		botonHistorico = new JButton("Solicitar histórico");
+		botonHistorico.setActionCommand("HISTORICO");
+		botonHistorico.setEnabled(false);
+		panelBotonesPagar_Contratar_Baja.add(botonHistorico);
 		
-		JButton BotonGestionFact = new JButton("Gestionar Facturacion");
-		panelBotonesPagar_Contratar_Baja.add(BotonGestionFact);
+		botonGestionFact = new JButton("Gestionar Facturacion");
+		botonGestionFact.setActionCommand("FACTURACION");
+		panelBotonesPagar_Contratar_Baja.add(botonGestionFact);
 		
-		JButton botonActualizarMes = new JButton("Actualizar mes");
+		botonActualizarMes = new JButton("Actualizar mes");
+		botonActualizarMes.setActionCommand("ACTUALIZAR");
 		panelBotonesPagar_Contratar_Baja.add(botonActualizarMes);
 		
 		JPanel PanelTecnico = new JPanel();
@@ -157,7 +184,9 @@ public class Ventana extends JFrame implements IVista {
 		JPanel PanelDiseñoTecnico = new JPanel();
 		PanelSolicitarTecnico.add(PanelDiseñoTecnico);
 		
-		JButton botonSolicitarTecnico = new JButton("Solicitar técnico");
+		botonSolicitarTecnico = new JButton("Solicitar técnico");
+		botonSolicitarTecnico.setActionCommand("SOLICITARTECNICO");
+		botonSolicitarTecnico.setEnabled(false);
 		PanelSolicitarTecnico.add(botonSolicitarTecnico);
 		
 		JPanel PanelDarDeAltaTecnico = new JPanel();
@@ -176,11 +205,14 @@ public class Ventana extends JFrame implements IVista {
 		panel_2.add(LabelNombreTecnico);
 		
 		textFieldNombreTecnico = new JTextField();
+		textFieldNombreTecnico.addKeyListener(this);
 		panel_2.add(textFieldNombreTecnico);
 		textFieldNombreTecnico.setColumns(10);
 		
-		JButton BotonDarDeAltaTecnico = new JButton("Dar de alta tecnico");
-		PanelDarDeAltaTecnico.add(BotonDarDeAltaTecnico);
+		botonDarDeAltaTecnico = new JButton("Dar de alta tecnico");
+		botonDarDeAltaTecnico.setActionCommand("ALTATECNICO");
+		botonDarDeAltaTecnico.setEnabled(false);
+		PanelDarDeAltaTecnico.add(botonDarDeAltaTecnico);
 		
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
@@ -190,4 +222,55 @@ public class Ventana extends JFrame implements IVista {
 		panelSur.add(textArea_LOG);
 	}
 
+	public void keyPressed(KeyEvent e) {
+	}
+	
+	public void keyReleased(KeyEvent e) { // validacion de datos
+		
+		String dni;
+		String tipoServicio;
+		String movil;
+		String nombreTecnico="";
+		int cantBotones,cantCamaras;
+		boolean condicion, condicionDNI, condicionTecnico;
+		
+		cantBotones = Integer.parseInt(this.RtaBotones.getText());
+		cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+		dni = this.RtaDNI.getText();
+		tipoServicio = this.RtaComercioVivienda.getText();
+		movil = this.RtaMovil.getText();
+		nombreTecnico = this.textFieldNombreTecnico.getText();
+		
+		condicionDNI = !dni.equals("");
+		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
+		condicionTecnico = !(nombreTecnico.isBlank());
+		
+		this.botonPagar.setEnabled(condicionDNI); 
+		this.botonContratarServicio.setEnabled(condicion);
+		this.botonDarDeBaja.setEnabled(condicionDNI);
+		this.botonHistorico.setEnabled(condicionDNI); 
+		this.botonPagar.setEnabled(condicionDNI); 
+		this.botonDarDeAltaTecnico.setEnabled(condicionTecnico);
+		this.botonSolicitarTecnico.setEnabled(condicionDNI);
+	}
+	
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void setActionListener(ActionListener actionListener) {
+		this.ActionListener=actionListener;
+		this.botonActualizarMes.addActionListener(actionListener); 
+		this.botonContratarServicio.addActionListener(actionListener); 
+		this.botonDarDeAltaTecnico.addActionListener(actionListener); 
+		this.botonDarDeBaja.addActionListener(actionListener); 
+		this.botonGestionFact.addActionListener(actionListener); 
+		this.botonHistorico.addActionListener(actionListener); 
+		this.botonPagar.addActionListener(actionListener); 
+		this.botonSolicitarTecnico.addActionListener(actionListener); 
+		
+		
+	}
+	
+	
 }
