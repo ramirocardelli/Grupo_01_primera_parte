@@ -2,7 +2,11 @@ package negocio;
 
 import java.util.Iterator;
 
+<<<<<<< Updated upstream
 /** Clase que representa el sistema de gestion de facturas y abonados.
+=======
+/** Clase que representa el sistema de gesti�n de facturas y abonados.
+>>>>>>> Stashed changes
  */
 public class Sistema { 
     private SubSistemaDatos datos;
@@ -15,7 +19,11 @@ public class Sistema {
         this.datos=new SubSistemaDatos();
     }
 
+<<<<<<< Updated upstream
     /** Constructor estatico para evitar que se cree mas de una instancia del Sistema (patron Singleton)
+=======
+    /** Constructor estatico para evitar que se cree m�s de una instancia del Sistema (patron Singleton)
+>>>>>>> Stashed changes
      * @return instancia de Sistema
      */
     public static Sistema getInstance() {
@@ -250,8 +258,6 @@ public class Sistema {
 		while (it.hasNext()) {
 			System.out.println(it.next());
 		}
-		
-		//Recorre los 2 arreglos mostrando toda la informacion contenida en ellos (tostring)
 	}
 }                                               
 
