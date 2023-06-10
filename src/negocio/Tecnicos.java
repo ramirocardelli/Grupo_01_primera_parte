@@ -33,8 +33,8 @@ public class Tecnicos implements Serializable{
 	boolean atendido=false;
 	do {
 		int i=0;
-		while (i<tecnicos.size() && atendido==false) {
-			if (tecnicos.get(i).atender()==false) {
+		while (i<tecnicos.size() && atendido==false) { //recorre todos los tecnicos
+			if (tecnicos.get(i).atender()==false) { // Si el tecnico esta ocupado va al siguiente
 				i++;
 			}
 			else {
@@ -42,7 +42,7 @@ public class Tecnicos implements Serializable{
 				
 			}
 		}
-		if (atendido==false)
+		if (atendido==false) // si recorrio todos los tecnicos y todos estaban ocupados va al wait
 			synchronized(this) {
 				try {
 					wait();
@@ -52,7 +52,7 @@ public class Tecnicos implements Serializable{
 				}
 			}
 		else
-			notifyAll();
+			notifyAll(); //si el abonado fue atendido entonces un tecnico esta disponible y manda a un abonado en espera atenderse.
 	}while(atendido==false);
 }
 }
