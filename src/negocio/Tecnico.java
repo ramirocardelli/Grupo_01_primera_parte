@@ -1,28 +1,40 @@
 package negocio;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 public class Tecnico implements Serializable{
-	public Abonado atendiendo;
+	protected String nombre;
+	protected Semaphore semaforo=new Semaphore(1,true);
+
+	public Tecnico(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Tecnico tecnico;
+		if (obj instanceof Tecnico) {
+			tecnico=(Tecnico) obj;
+			return this.nombre.equalsIgnoreCase(tecnico.nombre);
+		}
+		return false;
+	}
 	
-	
-	public synchronized void solicitarTecnico() {
-		while (atendiendo!=null) {
-			System.out.println("Tecnico ocupado");
+	public boolean atender() {
+		if (semaforo.tryAcquire()==true) {
 			try {
-				wait();
+				TimeUnit.SECONDS.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return true;
 		}
-		try {
-			TimeUnit.SECONDS.sleep(20);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		notifyAll();
+		else
+			return false;
 	}
+	
+	
 }
