@@ -19,9 +19,11 @@ import javax.swing.JScrollPane;
 import java.awt.TextArea;
 import javax.swing.DropMode;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 
-public class Ventana extends JFrame implements IVista, KeyListener {
+public class Ventana extends JFrame implements IVista, KeyListener, MouseListener {
 
 	private JPanel contentPane;
 	private JTextField RtaDNI;
@@ -42,10 +44,9 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 	private JTextArea textArea_LOG;
 	
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	
+	 
+	public static void main(String[] args) { // DPS BORRAR ESTE MAIN
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -57,6 +58,8 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 			}
 		});
 	}
+	
+	
 
 	/**
 	 * Create the frame.
@@ -89,8 +92,8 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		JPanel panel = new JPanel();
 		panelDNItextfield.add(panel);
 		
-		RtaDNI = new JTextField();
-		RtaDNI.addKeyListener(this);
+		this.RtaDNI = new JTextField();
+		this.RtaDNI.addKeyListener(this);
 		panelDNItextfield.add(RtaDNI);
 		RtaDNI.setColumns(10);
 		
@@ -122,23 +125,23 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		panelDatosContratacion.add(panelRtaContratacion);
 		panelRtaContratacion.setLayout(new GridLayout(4, 1, 0, 0));
 		
-		RtaComercioVivienda = new JTextField();
-		RtaComercioVivienda.addKeyListener(this);
+		this.RtaComercioVivienda = new JTextField();
+		this.RtaComercioVivienda.addKeyListener(this);
 		panelRtaContratacion.add(RtaComercioVivienda);
 		RtaComercioVivienda.setColumns(10);
 		
-		RtaCamaras = new JTextField();
-		RtaCamaras.addKeyListener(this);
+		this.RtaCamaras = new JTextField();
+		this.RtaCamaras.addKeyListener(this);
 		panelRtaContratacion.add(RtaCamaras);
 		RtaCamaras.setColumns(10);
 		
-		RtaBotones = new JTextField();
-		RtaBotones.addKeyListener(this);
+		this.RtaBotones = new JTextField();
+		this.RtaBotones.addKeyListener(this);
 		panelRtaContratacion.add(RtaBotones);
 		RtaBotones.setColumns(10);
 		
-		RtaMovil = new JTextField();
-		RtaMovil.addKeyListener(this);
+		this.RtaMovil = new JTextField();
+		this.RtaMovil.addKeyListener(this);
 		panelRtaContratacion.add(RtaMovil);
 		RtaMovil.setColumns(10);
 		
@@ -147,8 +150,8 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		panelBotonesPagar_Contratar_Baja.setLayout(new GridLayout(2, 3, 0, 0));
 		
 		botonPagar = new JButton("Pagar factura");
-		botonPagar.setActionCommand("PAGAR");
 		botonPagar.setEnabled(false);
+		botonPagar.setActionCommand("PAGAR");
 		panelBotonesPagar_Contratar_Baja.add(botonPagar);
 		
 		botonContratarServicio = new JButton("Contratar Servicio");
@@ -171,7 +174,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		panelBotonesPagar_Contratar_Baja.add(botonGestionFact);
 		
 		botonActualizarMes = new JButton("Actualizar mes");
-		botonActualizarMes.setActionCommand("ACTUALIZAR");
+		botonActualizarMes.setActionCommand("ACTUALIZARMES");
 		panelBotonesPagar_Contratar_Baja.add(botonActualizarMes);
 		
 		JPanel PanelTecnico = new JPanel();
@@ -205,8 +208,8 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		LabelNombreTecnico.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(LabelNombreTecnico);
 		
-		textFieldNombreTecnico = new JTextField();
-		textFieldNombreTecnico.addKeyListener(this);
+		this.textFieldNombreTecnico = new JTextField();
+		this.textFieldNombreTecnico.addKeyListener(this);
 		panel_2.add(textFieldNombreTecnico);
 		textFieldNombreTecnico.setColumns(10);
 		
@@ -218,32 +221,42 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		textArea_LOG = new JTextArea();
-		textArea_LOG.setEditable(false);
+		this.textArea_LOG = new JTextArea();
+		this.textArea_LOG.setBounds(0, 0, 1, 1);
+		this.textArea_LOG.setEditable(false);
 		panelSur.add(textArea_LOG);
+		
+		this.muestraMensaje("---------- Aqui se mostrarán los mensajes del sistema -----------");
+		
+		// this.setVisible(true);
 	}
 
 	public void keyPressed(KeyEvent e) {
 	}
 	
-	public void keyReleased(KeyEvent e) { // validacion de datos
+	public void keyReleased(KeyEvent e) { // validacion de datos - FUNCIONA OK
 		
-		String dni;
-		String tipoServicio;
-		String movil;
+		String dni="";
+		String tipoServicio="";
+		String movil="";
 		String nombreTecnico;
-		int cantBotones,cantCamaras;
+		int cantBotones=-1,cantCamaras=-1;
 		boolean condicion, condicionDNI, condicionTecnico;
 		
-		cantBotones = Integer.parseInt(this.RtaBotones.getText());
-		cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+		try{
+			cantBotones = Integer.parseInt(this.RtaBotones.getText());
+			cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+		}
+		catch (NumberFormatException exec) {
+		}
+		
 		dni = this.RtaDNI.getText();
 		tipoServicio = this.RtaComercioVivienda.getText();
 		movil = this.RtaMovil.getText();
 		nombreTecnico = this.textFieldNombreTecnico.getText();
 		
 		condicionDNI = !dni.equals("");
-		condicion = cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
+		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
 		condicionTecnico = !(nombreTecnico.isBlank());
 		
 		this.botonPagar.setEnabled(condicionDNI); 
@@ -253,8 +266,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		this.botonPagar.setEnabled(condicionDNI); 
 		this.botonDarDeAltaTecnico.setEnabled(condicionTecnico);
 		this.botonSolicitarTecnico.setEnabled(condicionDNI);
-		
-		// this.setVisible(true);
+
 	}
 	
 	public void keyTyped(KeyEvent e) {
@@ -275,8 +287,53 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		
 	}
 	
-	public void muestra (String mensaje) {
+	public void muestraMensaje (String mensaje) {
 		textArea_LOG.setText(mensaje);
+	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) 
+	{
+		ActionEvent event;
+		JButton botonApretado = (JButton)e.getSource();
+		String command = botonApretado.getActionCommand(); // lo que se debe hacer
+		event = new ActionEvent(botonApretado,0,command);
+		if (e.getButton() == 1) //boton izq
+			this.actionListener.actionPerformed(event);
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
