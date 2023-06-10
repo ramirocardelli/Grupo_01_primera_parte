@@ -3,6 +3,7 @@ package negocio;
 /** Clase que representa un abonado que es de tipo persona fisica. Puede aceptar clonacion.
  */
 public class PersonaFisica extends Abonado {
+	private IState estado = new SinContratacionState(this);
 
     /** Constructor de 2 parametros String que crea un abonado de tipo persona fisica.
      * @param nombre : nombre de la persona fisica

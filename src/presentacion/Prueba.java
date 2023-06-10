@@ -1,10 +1,16 @@
 package presentacion;
 
+import controlador.Controlador;
 import negocio.*;
+import persistencia.IPersistencia;
+import persistencia.Persistencia;
 
 	public class Prueba {
 		public static void main(String[] args)  {
 			Sistema sistema=Sistema.getInstance();
+			IPersistencia persistencia = new Persistencia();
+			Controlador controlador = new Controlador();
+			
 			
 			System.out.println("Prueba Ingreso Abonados");
 			ingresaAbonado("Mateo", "44235283", "Juridica");	// Cargas correctas

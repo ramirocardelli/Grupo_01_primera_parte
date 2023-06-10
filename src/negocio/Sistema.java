@@ -1,14 +1,12 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 
 /** Clase que representa el sistema de gestion de facturas y abonados.
-=======
-/** Clase que representa el sistema de gesti�n de facturas y abonados.
->>>>>>> Stashed changes
  */
-public class Sistema { 
+public class Sistema implements Serializable { 
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
 

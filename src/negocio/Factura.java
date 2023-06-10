@@ -1,11 +1,12 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 /** Clase que representa una factura en el sistema de contrataciones. 
  */
-public class Factura implements Cloneable, IFactura {
+public class Factura implements Cloneable, IFactura, Serializable {
     private Abonado abonado;
     private ArrayList<Contratacion> contrataciones = new ArrayList<Contratacion>();
 

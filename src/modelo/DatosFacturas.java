@@ -1,12 +1,13 @@
 package modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import negocio.IFactura;
 
 /** Clase que representa una base de datos con la informacion de las facturas.
  */
-public class DatosFacturas {
+public class DatosFacturas implements Serializable{
     public ArrayList<IFactura> facturas=new ArrayList<IFactura>();
     
     public DatosFacturas() {

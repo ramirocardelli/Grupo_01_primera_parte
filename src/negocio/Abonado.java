@@ -1,11 +1,15 @@
 package negocio;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
- * Contiene informaci�n sobre su nombre y su dni.
+ * Contiene informacion sobre nombre, dni y una lista con el historico de sus facturas.
  */
-public abstract class Abonado implements Cloneable{  
+public abstract class Abonado implements Cloneable, Serializable{  
     private String nombre;
     private String dni;
+    private ArrayList<IFactura> historicoFacturas = new ArrayList<IFactura>();
 
 
     /** Constructor de 2 parametros String para crear un nuevo abonado.

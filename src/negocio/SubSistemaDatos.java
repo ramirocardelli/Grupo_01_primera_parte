@@ -1,9 +1,11 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import modelo.AbonadosSinContratacion;
 import modelo.DatosFacturas;
+import modelo.Tecnicos;
 
 /**
  * Clase que funciona como interfaz entre Sistema y los Datos
@@ -14,9 +16,10 @@ import modelo.DatosFacturas;
  *
  *
  */
-public class SubSistemaDatos {
+public class SubSistemaDatos implements Serializable {
 	private AbonadosSinContratacion abonadosSinContratacion;
 	private DatosFacturas datosFacturas;
+	private Tecnicos tecnicos;
 	
 	/**
 	 * Constructor de la clase instancia los ArrayList de la clase
@@ -24,6 +27,7 @@ public class SubSistemaDatos {
 	public SubSistemaDatos() {
 		datosFacturas=new DatosFacturas();
 		abonadosSinContratacion=new AbonadosSinContratacion();
+		tecnicos=new Tecnicos();
 	}
 	
 	

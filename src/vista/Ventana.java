@@ -39,6 +39,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 	private JButton botonSolicitarTecnico;
 	private JButton botonDarDeAltaTecnico;
 	private ActionListener actionListener;
+	private JTextArea textArea_LOG;
 	
 
 	/**
@@ -217,7 +218,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
-		JTextArea textArea_LOG = new JTextArea();
+		textArea_LOG = new JTextArea();
 		textArea_LOG.setEditable(false);
 		panelSur.add(textArea_LOG);
 	}
@@ -230,7 +231,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		String dni;
 		String tipoServicio;
 		String movil;
-		String nombreTecnico="";
+		String nombreTecnico;
 		int cantBotones,cantCamaras;
 		boolean condicion, condicionDNI, condicionTecnico;
 		
@@ -242,7 +243,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		nombreTecnico = this.textFieldNombreTecnico.getText();
 		
 		condicionDNI = !dni.equals("");
-		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
+		condicion = cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
 		condicionTecnico = !(nombreTecnico.isBlank());
 		
 		this.botonPagar.setEnabled(condicionDNI); 
@@ -252,6 +253,8 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		this.botonPagar.setEnabled(condicionDNI); 
 		this.botonDarDeAltaTecnico.setEnabled(condicionTecnico);
 		this.botonSolicitarTecnico.setEnabled(condicionDNI);
+		
+		// this.setVisible(true);
 	}
 	
 	public void keyTyped(KeyEvent e) {
@@ -259,7 +262,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 
 	@Override
 	public void setActionListener(ActionListener actionListener) {
-		this.ActionListener=actionListener;
+		
 		this.botonActualizarMes.addActionListener(actionListener); 
 		this.botonContratarServicio.addActionListener(actionListener); 
 		this.botonDarDeAltaTecnico.addActionListener(actionListener); 
@@ -268,8 +271,12 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		this.botonHistorico.addActionListener(actionListener); 
 		this.botonPagar.addActionListener(actionListener); 
 		this.botonSolicitarTecnico.addActionListener(actionListener); 
+		this.actionListener=actionListener;
 		
-		
+	}
+	
+	public void muestra (String mensaje) {
+		textArea_LOG.setText(mensaje);
 	}
 	
 	
