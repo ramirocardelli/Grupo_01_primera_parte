@@ -35,7 +35,12 @@ public class Controlador implements ActionListener, Observer
 
 	@Override
 	public void update(Observable o, Object arg) { //modelo envia mensaje
-		// TODO Auto-generated method stub
+		if (o != this.)
+			throw new InvalidParameterException();
+		
+		if (arg.toString().contentEquals("MENSAJE")) {
+			this.vista.muestraMensaje();
+		}
 		
 	}
 
