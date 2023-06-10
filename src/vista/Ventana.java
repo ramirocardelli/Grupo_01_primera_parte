@@ -19,9 +19,11 @@ import javax.swing.JScrollPane;
 import java.awt.TextArea;
 import javax.swing.DropMode;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 
-public class Ventana extends JFrame implements IVista, KeyListener {
+public class Ventana extends JFrame implements IVista, KeyListener, MouseListener {
 
 	private JPanel contentPane;
 	private JTextField RtaDNI;
@@ -172,7 +174,7 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 		panelBotonesPagar_Contratar_Baja.add(botonGestionFact);
 		
 		botonActualizarMes = new JButton("Actualizar mes");
-		botonActualizarMes.setActionCommand("ACTUALIZAR");
+		botonActualizarMes.setActionCommand("ACTUALIZARMES");
 		panelBotonesPagar_Contratar_Baja.add(botonActualizarMes);
 		
 		JPanel PanelTecnico = new JPanel();
@@ -287,6 +289,51 @@ public class Ventana extends JFrame implements IVista, KeyListener {
 	
 	public void muestraMensaje (String mensaje) {
 		textArea_LOG.setText(mensaje);
+	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) 
+	{
+		ActionEvent event;
+		JButton botonApretado = (JButton)e.getSource();
+		String command = botonApretado.getActionCommand(); // lo que se debe hacer
+		event = new ActionEvent(botonApretado,0,command);
+		if (e.getButton() == 1) //boton izq
+			this.actionListener.actionPerformed(event);
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
