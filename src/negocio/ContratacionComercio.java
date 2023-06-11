@@ -32,26 +32,14 @@ public class ContratacionComercio extends Contratacion {
      * Modifica el precio de la contratacion con un descuento de $2500.
      */
     public void aplicaPromocionDorada(){
-    	 if(this.promocion!=1) {
-        	 if(this.promocion==2) {
-        	   calculaPrecio();
-        	 }
-        	 this.promocion=1;
-        	 this.precio -= 2500;
-           }
+       this.precio -= 2500;
      }
 
     /** Metodo que aplica la promocion platino para comercios.
      * Modifica el precio de la contratacion con un descuento del 35%.
      */
      public void aplicaPromocionPlatino(){
-    	if(this.promocion!=2) {
-        	if(this.promocion==1) {
-        	  calculaPrecio();
-        	}
-        	this.promocion=2;
-        	this.precio *= 0.65;
-    	}
+       this.precio *= 0.65;
      }
 
 	@Override
@@ -62,35 +50,6 @@ public class ContratacionComercio extends Contratacion {
 				+ " \t\t\tBotones Antipánico: " + botonesAntipanicos+ "\n"
 				+ " \t\t\tMovil/es de acompanamiento=" + movilAcompanamiento + " \n ";
 	}
-
-	@Override
-	public void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento) {
-		this.camaras += camaras;
-        if(this.camaras<0) {
-        	this.camaras=0;
-        }
-        this.botonesAntipanicos += botonesAntipanicos;
-        if(this.botonesAntipanicos<0) {
-        	this.botonesAntipanicos=0;
-        }
-        if(movilAcompanamiento==0) //cualquier otro valorque no sea 1 o 0 no modifica atributo
-        	this.movilAcompanamiento=false;
-        else
-        	if(movilAcompanamiento==1)
-        		this.movilAcompanamiento=true;
-        this.precio=calculaPrecio(); //recalcula el precio actualizado
-        if(this.promocion==1) {
-        	this.promocion=0;
-        	this.aplicaPromocionDorada();
-        }
-        else {
-        	if(this.promocion==2) {
-        		this.promocion=0;
-        		this.aplicaPromocionPlatino();
-        	}
-        }
-        
-    }
      
      
 }

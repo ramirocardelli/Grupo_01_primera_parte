@@ -190,24 +190,6 @@ public class Sistema {
     		throw new DniDesconocidoException(dni);
     	}
     }
-    
-    
-    public void actualizaContratacion(String dni, Domicilio domicilio,int camaras, int botonesAntipanicos, int movilAcompanamiento) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
-    	IFactura factura=datos.buscaFactura(dni);
-    	if(factura!=null) {
-    		Contratacion contratacion=factura.getContratacion(domicilio);
-    		if(contratacion!=null) {
-    			contratacion.actualizaContratacion(camaras, botonesAntipanicos, movilAcompanamiento);
-    		}
-    		else {
-    			throw new DomicilioSinContratacionEnAbonadoException(domicilio,factura.getAbonado());
-    		}
-    	}
-    	else {
-    		throw new DniDesconocidoException(dni);
-    	}
-    }
-    
 
     /** Metodo que aplica una promocion (dorada o platino).
      * @param domicilio : de la contratacion a la que se quiere aplicar la promocion.
