@@ -39,7 +39,7 @@ public class Controlador implements ActionListener, Observer
 			throw new InvalidParameterException();
 		
 		if (arg.toString().contentEquals("MENSAJE")) {
-			this.vista.muestraMensaje(String);
+			this.vista.muestraMensaje();
 		}
 		
 	}

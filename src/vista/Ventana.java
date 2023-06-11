@@ -42,6 +42,8 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JButton botonDarDeAltaTecnico;
 	private ActionListener actionListener;
 	private JTextArea textArea_LOG;
+	private JTextField textFieldCalle;
+	private JTextField textFieldNumero;
 	
 
 	
@@ -79,23 +81,42 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		
 		JPanel panelDNI = new JPanel();
 		panelCentral.add(panelDNI);
-		panelDNI.setLayout(new GridLayout(1, 2, 0, 0));
+		panelDNI.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel panel = new JPanel();
+		panelDNI.add(panel);
+		panel.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		JLabel LabelDNI = new JLabel("DNI:");
+		panel.add(LabelDNI);
 		LabelDNI.setHorizontalAlignment(SwingConstants.CENTER);
-		panelDNI.add(LabelDNI);
+		
+		JLabel LabelCalle = new JLabel("Calle:");
+		LabelCalle.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(LabelCalle);
+		
+		JLabel LabelNumero = new JLabel("Numero:");
+		LabelNumero.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(LabelNumero);
 		
 		JPanel panelDNItextfield = new JPanel();
 		panelDNI.add(panelDNItextfield);
 		panelDNItextfield.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		JPanel panel = new JPanel();
-		panelDNItextfield.add(panel);
-		
 		this.RtaDNI = new JTextField();
 		this.RtaDNI.addKeyListener(this);
 		panelDNItextfield.add(RtaDNI);
 		RtaDNI.setColumns(10);
+		
+		textFieldCalle = new JTextField();
+		textFieldCalle.addKeyListener(this);
+		panelDNItextfield.add(textFieldCalle);
+		textFieldCalle.setColumns(10);
+		
+		textFieldNumero = new JTextField();
+		textFieldNumero.addKeyListener(this);
+		panelDNItextfield.add(textFieldNumero);
+		textFieldNumero.setColumns(10);
 		
 		JPanel panelDatosContratacion = new JPanel();
 		panelCentral.add(panelDatosContratacion);
@@ -239,13 +260,16 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		String dni="";
 		String tipoServicio="";
 		String movil="";
+		String calle="";
+		int numero=-1;
 		String nombreTecnico;
 		int cantBotones=-1,cantCamaras=-1;
-		boolean condicion, condicionDNI, condicionTecnico;
+		boolean condicion, condicionDNI, condicionTecnico, condicioncalle;
 		
 		try{
 			cantBotones = Integer.parseInt(this.RtaBotones.getText());
 			cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+			numero = Integer.parseInt(this.textFieldNumero.getText());
 		}
 		catch (NumberFormatException exec) {
 		}
@@ -254,10 +278,13 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		tipoServicio = this.RtaComercioVivienda.getText();
 		movil = this.RtaMovil.getText();
 		nombreTecnico = this.textFieldNombreTecnico.getText();
+		calle = this.textFieldCalle.getText();
 		
 		condicionDNI = !dni.equals("");
-		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
+		condicioncalle = !calle.equals("");
+		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && numero>=0 && condicioncalle && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
 		condicionTecnico = !(nombreTecnico.isBlank());
+		
 		
 		this.botonPagar.setEnabled(condicionDNI); 
 		this.botonContratarServicio.setEnabled(condicion);
