@@ -12,6 +12,7 @@ public abstract class Contratacion implements Cloneable{
     protected int id;
     protected static int numeroId=0;
     protected double precio;
+    protected int promocion=0; //evita que se apliquen mas de 2 promociones simultaneamente (0=no/1=dorada/2=platino)
 
     protected static final double valorUnidadCamara = 3000;
     protected static final double valorUnidadBotAntipanico = 2000;
@@ -74,7 +75,8 @@ public abstract class Contratacion implements Cloneable{
     
     public Domicilio getDomicilio() {
 		return domicilio;
-	}
+	}    
+    
 
     /** Se aplica la promocion platino a la contratacion correspondiente.
      */
@@ -83,6 +85,8 @@ public abstract class Contratacion implements Cloneable{
     /** Se aplica la promocion dorada a la contratacion correspondiente. 
      */
     public abstract void aplicaPromocionDorada();
+    
+    public abstract void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento);
     
     public abstract String toString();
     
