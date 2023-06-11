@@ -1,5 +1,7 @@
 package presentacion;
 
+import java.io.IOException;
+
 import controlador.Controlador;
 import negocio.*;
 import persistencia.IPersistencia;
@@ -9,6 +11,22 @@ import persistencia.Persistencia;
 		public static void main(String[] args)  {
 			Sistema sistema=Sistema.getInstance();
 			IPersistencia persistencia = new Persistencia();
+			// Esto iría al momento de cerrar la ventana, persistir todo
+			/*try {
+				persistencia.abrirOutput("sistema.bin");
+				persistencia.escribir(sistema);
+				persistencia.cerrarOutput();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
+			// Esto iría al momento de abrir la ventana, leer todo
+			/*try {
+				persistencia.abrirInput("sistema.bin");
+				persistencia.escribir(sistema);
+				persistencia.cerrarInput();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}*/
 			Controlador controlador = new Controlador();
 			
 			
