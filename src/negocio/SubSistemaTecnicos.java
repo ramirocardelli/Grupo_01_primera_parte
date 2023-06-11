@@ -28,31 +28,27 @@ public class SubSistemaTecnicos implements Serializable{
 		tecnicos.remove(tecnico);
 	}
 	
-	
-	public void solicitarTecnico(Abonado solicitante) {
-	boolean atendido=false;
+	public synchronized Tecnico solicitarTecnico() {
+	int i;
+	Tecnico rta=null;
 	do {
-		int i=0;
-		while (i<tecnicos.size() && atendido==false) { //recorre todos los tecnicos
-			if (tecnicos.get(i).atender()==false) { // Si el tecnico esta ocupado va al siguiente
-				i++;
+		i=0;
+		while (i<tecnicos.size() && tecnicos.get(i).atendiendo==true) //recorre todos los tecnicos
+			i++;
+		if (i<tecnicos.size()==true){//encontro un tecnico libre
+			tecnicos.get(i).atendiendo=true;
+			rta=tecnicos.get(i);
+		} else
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			else {
-				atendido=true;
-				
-			}
-		}
-		if (atendido==false) // si recorrio todos los tecnicos y todos estaban ocupados va al wait
-			synchronized(this) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		else
-			notifyAll(); //si el abonado fue atendido entonces un tecnico esta disponible y manda a un abonado en espera atenderse.
-	}while(atendido==false);
-}
+	}while(rta!=null);
+	
+	return rta;
+	
+	
+	}
 }
