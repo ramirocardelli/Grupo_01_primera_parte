@@ -3,7 +3,6 @@ package negocio;
 /** Clase que representa un abonado que es de tipo persona juridica. No puede aceptar clonacion.
  */
 public class PersonaJuridica extends Abonado {
-	
     /** Constructor de 2 parametros String que crea un abonado de tipo persona juridica.
      * @param nombre : nombre de la persona juridica
      * @param dni : numero de documento de la persona jurdica. <br>

@@ -13,7 +13,15 @@ public class DAObject implements Serializable{
 		this.listaAbonados = listaAbonados;
 	}
 	
-
+	
+	
+	public FacturaDTO FacturaAFacturaDTO(Factura factura) {
+		
+		
+		
+	}
+	
+	public Factura FacturaDTOAFactura(FacturaDTO facturadto) {}
 	
 	
 	

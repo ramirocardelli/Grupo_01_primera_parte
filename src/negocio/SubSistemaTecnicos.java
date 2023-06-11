@@ -18,15 +18,14 @@ public class SubSistemaTecnicos implements Serializable{
 	 */
 	public void agregarTecnico(Tecnico tecnico) {//Habria que poner semaforos para controlar acceso al mismo tiempo al arreglo
 		tecnicos.add(tecnico);
+		notifyAll();//notifica a todos q hay un nuevo tecnico disponible
 	}
 	/**
 	 * 
 	 * Pre: tecnico!=null
 	 * @param tecnico
 	 */
-	public void eliminarTecnico(Tecnico tecnico) {
-		tecnicos.remove(tecnico);
-	}
+
 	
 	public synchronized Tecnico solicitarTecnico() {
 	int i;
@@ -50,5 +49,10 @@ public class SubSistemaTecnicos implements Serializable{
 	return rta;
 	
 	
+	}
+	
+	public synchronized void liberarTecnico(Tecnico tecnico) {
+		tecnico.atendiendo=false;
+		notifyAll();
 	}
 }

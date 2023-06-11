@@ -3,15 +3,16 @@ package negocio;
 /** Clase que representa un abonado que es de tipo persona fisica. Puede aceptar clonacion.
  */
 public class PersonaFisica extends Abonado {
-
+	private IEstadoAbonado estado;
     /** Constructor de 2 parametros String que crea un abonado de tipo persona fisica.
      * @param nombre : nombre de la persona fisica
      * @param dni : numero de documento de la persona fisica. <br>
      * <b> Pre: </b> nombre y dni no pueden ser null ni " ". 
-     * <b> Pre: </b> Se crea una persona fisica.
+     * <b> Post: </b> Se crea una persona fisica.
      */
     public PersonaFisica(String nombre, String dni) {
 		super(nombre, dni);
+		estado=new SinContratacionState(this);
 	}
 
     /** Metodo que invoca a la factura de la persona fisica para calcular el monto total que se debe abonar ya que hay un descuento dependiendo del tipo de persona que es el abonado.
@@ -25,6 +26,6 @@ public class PersonaFisica extends Abonado {
     	return factura.getPrecioPersonaFisica();
     }
     
-    //No es necesario sobreescribir el clon() xq no cambia del ya creado en la clase padre (como se extiende ya lo tiene)
+    //DUDOSO No es necesario sobreescribir el clon() xq no cambia del ya creado en la clase padre (como se extiende ya lo tiene)
 
 }
