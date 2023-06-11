@@ -2,11 +2,12 @@ package negocio;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.Observable;
 
 
 /** Clase que representa el sistema de gestion de facturas y abonados.
  */
-public class Sistema implements Serializable { 
+public class Sistema extends Observable implements Serializable { 
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
 

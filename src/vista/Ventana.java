@@ -302,9 +302,10 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 
 
 	@Override
-	public void mousePressed(MouseEvent e) 
+	public void mousePressed(MouseEvent e) //pasarle todos los textfields
 	{
 		ActionEvent event;
+		String dni;
 		JButton botonApretado = (JButton)e.getSource();
 		String command = botonApretado.getActionCommand(); // lo que se debe hacer
 		event = new ActionEvent(botonApretado,0,command);

@@ -12,7 +12,7 @@ import vista.Ventana;
 public class Controlador implements ActionListener, Observer
 {
 	private IVista vista; //vista
-	private Sistema sistema; //modelo no se si va sistema aca- el que vaya tiene que implementar Observable
+	private Sistema sistema; 
 	
 	
 	public Controlador() {
@@ -39,7 +39,7 @@ public class Controlador implements ActionListener, Observer
 			throw new InvalidParameterException();
 		
 		if (arg.toString().contentEquals("MENSAJE")) {
-			this.vista.muestraMensaje();
+			this.vista.muestraMensaje(String);
 		}
 		
 	}
@@ -49,7 +49,7 @@ public class Controlador implements ActionListener, Observer
 	{
 		String comando = e.getActionCommand();
 		if (comando.equalsIgnoreCase("PAGAR")) {
-			
+			//modelo que el abonado del dni que se ingreso quiere pagar
 		}
 		else if (comando.equalsIgnoreCase("CONTRATAR")) {
 				

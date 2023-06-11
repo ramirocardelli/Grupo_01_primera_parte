@@ -10,7 +10,7 @@ public abstract class Abonado implements Cloneable, Serializable{
     private String nombre;
     private String dni;
     private ArrayList<IFactura> historicoFacturas = new ArrayList<IFactura>();
-
+    private Factura factura; //actual
 
     /** Constructor de 2 parametros String para crear un nuevo abonado.
      * @param nombre : Nombre del abonado.
