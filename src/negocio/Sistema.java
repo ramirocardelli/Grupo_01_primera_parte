@@ -44,7 +44,23 @@ public class Sistema extends Observable implements Serializable {
     	}
     	return rta;
     }
-
+    
+    public void actualizaContratacion(String dni, Domicilio domicilio,int camaras, int botonesAntipanicos, int movilAcompanamiento) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
+    	IFactura factura=datos.buscaFactura(dni);
+    	if(factura!=null) {
+    		Contratacion contratacion=factura.getContratacion(domicilio);
+    		if(contratacion!=null) {
+    			contratacion.actualizaContratacion(camaras, botonesAntipanicos, movilAcompanamiento);
+    		}
+    		else {
+    			throw new DomicilioSinContratacionEnAbonadoException(domicilio,factura.getAbonado());
+    		}
+    	}
+    	else {
+    		throw new DniDesconocidoException(dni);
+    	}
+    }
+    
     /** Metodo para buscar una contratacion en la lista de contrataciones en base a un domicilio dado.
      * @param domicilio : domicilio de la contratacion a buscar.
      * @return Contratacion del domicilio correspondiente.
