@@ -8,19 +8,20 @@ public class SinContratacionState implements IState{
 	}
 	
 	@Override
-	public void ContratarServicio() {
-		
+	public void contratarServicio(Contratacion contratacion) throws PagoException {
+		this.persona.addContratacion(contratacion);
 		
 	}
 
 	@Override
-	public void BajaServicio() {
-		//controlador.getVista().muestra("No puede dar de baja porque no tiene ningun servicio.");
+	public void bajaServicio(Domicilio domicilio) throws PagoException {
+		throw new PagoException("No puede dar de baja porque no tiene ningun servicio");
 	}
 
 	@Override
-	public void PagaFactura() {
+	public void pagaFactura(IFactura factura) throws PagoException {
 		// no puede
+		throw new PagoException("No puede pagar factura si no tiene contrataciones");
 	}
 	
 

@@ -13,12 +13,10 @@ public class DecoratorPagoTarjeta extends DecoratorPago {
         super(encapsulado);
     }
     
-    /** Metodo para calcular el monto total a pagar de una factura aplicando el incremento del 5% por pagar con tarjeta.
-     * @return double con el valor del monto total a abonar.
-     */	
-    public double calcularTotalConDescuento() {
-            return encapsulado.calcularTotalSinDescuento() * factor;
-    }
+    @Override
+	public double valorConDesc() {
+		return encapsulado.valorConDesc()*factor;
+	}
     
     @Override
 	public String toString() {

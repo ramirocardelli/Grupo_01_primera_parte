@@ -13,12 +13,10 @@ public class DecoratorPagoEfectivo extends DecoratorPago {
         super(encapsulado);
     }
     
-    /** Metodo para calcular el monto total a pagar de una factura aplicando el descuento del 20% por abonar con efectivo.
-     * @return double con el valor del monto total a abonar.
-     */	
-    public double calcularTotalConDescuento() {
-        return encapsulado.calcularTotalSinDescuento() * factor;
-    }
+    @Override
+	public double valorConDesc() {
+		return encapsulado.valorConDesc()*factor;
+	}
     
     @Override
 	public String toString() {

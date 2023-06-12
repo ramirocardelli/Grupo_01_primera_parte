@@ -1,34 +1,12 @@
 package presentacion;
 
-import java.io.IOException;
+import java.util.GregorianCalendar;
 
-import controlador.Controlador;
 import negocio.*;
-import persistencia.IPersistencia;
-import persistencia.Persistencia;
 
 	public class Prueba {
 		public static void main(String[] args)  {
 			Sistema sistema=Sistema.getInstance();
-			IPersistencia persistencia = new Persistencia();
-			// Esto iría al momento de cerrar la ventana, persistir todo
-			/*try {
-				persistencia.abrirOutput("sistema.bin");
-				persistencia.escribir(sistema);
-				persistencia.cerrarOutput();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}*/
-			// Esto iría al momento de abrir la ventana, leer todo
-			/*try {
-				persistencia.abrirInput("sistema.bin");
-				persistencia.escribir(sistema);
-				persistencia.cerrarInput();
-			}catch(IOException e) {
-				e.printStackTrace();
-			}*/
-			Controlador controlador = new Controlador();
-			
 			
 			System.out.println("Prueba Ingreso Abonados");
 			ingresaAbonado("Mateo", "44235283", "Juridica");	// Cargas correctas
@@ -101,8 +79,8 @@ import persistencia.Persistencia;
 			ingresaAbonado("Augusto","44231231","Juridica"); //se lo carga de nuevo para comprobar que si se elimino
 			ingresaAbonado("Augusto","44231231","Juridica"); //se carga por 2da vez y tira error xq ya esta cargado
 			
-			eliminaAbonadoSinContratacion("44667826"); //abonado que tiene una factura vigente
-			eliminaAbonadoSinContratacion("2"); //abonado no existente
+			eliminaAbonado("44667826"); //abonado que tiene una factura vigente
+			eliminaAbonado("2"); //abonado no existente
 			
 			
 			System.out.println("\nPrueba eliminar contrataciones");
@@ -179,10 +157,6 @@ import persistencia.Persistencia;
 			}
 			catch(AbonadoYaCargadoException e){
 				String print="El abonado "+e.getNombre()+" con dni "+e.getDni()+" ya se encuentra cargado";
-				if(e.isFactura())
-					print+=" con una factura a su nombre";
-				else
-					print+=" sin una factura a su nombre";
 				System.out.println(print);
 			}
 			catch(TipoIncorrectoPersonaException e) {
@@ -212,8 +186,8 @@ import persistencia.Persistencia;
 			catch(DomicilioYaConContratacionExcepcion e) {
 				System.out.println(e.getDomicilio().toString()+" ya se encuentra con una servicio contratado");
 			}
-			catch(NoExisteFacturaException e) { 
-				System.out.println("No existe una factura para el dni ingresado('"+e.getdni()+"')");
+			catch(DniDesconocidoException e) { 
+				System.out.println("Ningun cliente registrado posee como dni "+e.getDni());
 			}
 			catch(TipoIncorrectoServicioException e){
 				System.out.println("El tipo de servicio ingresado ('"+e.getTipo()+"') no coincide con ninguno de los disponibles");
@@ -222,68 +196,22 @@ import persistencia.Persistencia;
 		else
 			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");	
 	}
-	/** Metodo que envia a sistema el mensaje de cargar una factura en el sistema.
-	* @param dni: el dni de un abonado sin contratacion al que se le creara una factura.<br>
-	* @param tipoPago: metodo de pago seleccionado para la factura nueva.<br>
-	* @param tipoFactura: el tipo de la nueva factura creada.<br>
-	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
-	* <b> Post: </b> Se agrega la contratacion a la lista de contrataciones de la factura correspondiente al dni ingresado o sino se imprime por pantalla el problema surgido<br>
-	*/	
-	private static void ingresaFactura(String dni, String tipoPago, String tipoFactura) {
-		if(dni!=null && !dni.equals("") && tipoPago!=null && !tipoPago.equals("")) { //el tipo de factura puede ser null, en tal caso la factura se crea de tipo default
-			try {
-				Sistema.getInstance().nuevaFactura(dni, tipoPago, tipoFactura);
-			}
-			catch(MetodoDePagoInvalidoException e) {
-				System.out.println("El metodo de pago ingresado ('"+e.getMetododePago()+"') no se encuentra disponible'");
-			}
-			catch(TipoFacturaIncorrecto e) {
-				System.out.println("El tipo de factura ingresada ('"+e.getTipo()+"') no coincide con ninguna factura disponible");
-			}
-			catch(AbonadoYaCargadoException e) {
-				System.out.println("El Abonado '"+e.getNombre()+"' asociado con el dni "+e.getDni()+" ya dispone de una factura");
-			}
-			catch(DniDesconocidoException e) {
-				System.out.println("Ningun cliente registrado posee como dni "+e.getDni());
-			}
-		}
-		else
-			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");	
-	}
 	
-	/** Metodo que envia a sistema el mensaje de eliminar una factura de su base de datos.
-	* @param dni: el dni de la factura que se quiere eliminar.<br>
-	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
-	* <b> Post: </b>Se elimina la factura seleccionada de la lista de facturas en base al dni recibido por parametro o sino se imprime por pantalla el problema surgido  <br>
-	*/
-	private static void eliminaFactura(String dni) {
-		if(dni!=null && !dni.equals("")) {
-			try {
-				Sistema.getInstance().eliminarFactura(dni);
-			}
-			catch(DniDesconocidoException e) {
-				System.out.println("El dni ingresado: "+e.getDni()+" no se corresponde con ningun cliente asociado factura");
-			}
-		}
-		else {
-			System.out.println("Parametros incorrectos, por favor reingresar informacion correctamente");
-		}
-	}
 	/**Metodo que envia a sistema el mensaje de eliminar un abonado sin contratacion de su base de datos.
 	* @param dni: el dni del abonado que se quiere eliminar.<br>
 	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
 	* <b> Post: </b>Se elimina el abonado seleccionado de la lista de abonados sin contratacion en base al dni recibido por parametro o sino se imprime por pantalla el problema surgido  <br>
 	*/
-	private static void eliminaAbonadoSinContratacion(String dni) {
+	private static void eliminaAbonado(String dni) {
 		if(dni!=null && !dni.equals("")) {
 			try {
-				Sistema.getInstance().eliminaAbonadoSinContratacion(dni);
+				Sistema.getInstance().eliminaAbonado(dni);
 			}
 			catch(DniDesconocidoException e) {
 				System.out.println("El dni ingresado: '"+e.getDni()+"' no se encuentra cargado como cliente sin contratacion");
 			}
-			catch(AbonadoYaCargadoException e) {
-				System.out.println("El abonado ingresado ('"+e.getNombre()+"'/'"+e.getDni()+"') dispone de una contratacion y por lo tanto no puede ser eliminado");
+			catch(AbonadoConFacturaException e) {
+				System.out.println("El dni ingresado para eliminar: '"+e.getDni()+"' corresponde a un abonado con una factura pendiente de pago ");
 			}
 		}
 		else {
@@ -338,17 +266,10 @@ import persistencia.Persistencia;
 	* <b> Pre: </b> No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
 	* <b> Post: </b> Imprime por pantalla el precio (con o sin descuento) de la factura asociada al dni o sino se imprime por pantalla el problema surgido<br>
 	*/
-	private static void FacturaAPagar(String dni,boolean descuento) {
+	private static void FacturaX(String dni,int mes,int anio) {
 		if(dni!=null && !dni.equals("")){
 			try {
-				double precio= Sistema.getInstance().calculaPrecioAPagar(dni,descuento);
-				String conosindesc=null;
-				if(descuento) {
-					conosindesc="con";
-				}
-				else
-					conosindesc="sin";
-				System.out.println("La factura a pagar "+conosindesc+" descuento por el abonado con dni: '"+dni+"' es de: $"+precio);
+				System.out.println(Sistema.getInstance().buscaFactura(dni, new GregorianCalendar(anio,mes,0)));
 			}
 			catch(DniDesconocidoException e) {
 				System.out.println("El dni '"+e.getDni()+"' no dispone de factura");
@@ -363,11 +284,11 @@ import persistencia.Persistencia;
 	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
 	* <b> Post: </b> Imprime por pantalla el precio (con o sin descuento) de la factura asociada al dni  o sino muestra por pantalla el problema surgido<br>
 	*/
-	private static IFactura clonaFactura(String dni) {
+	private static IFactura clonaFactura(String dni,int mes, int anio) {
 		IFactura clon=null;
 		if(dni!=null && !dni.equals("")){
 			try {
-				clon=Sistema.getInstance().clonacionFactura(dni);
+				clon=Sistema.getInstance().clonacionFactura(dni,new GregorianCalendar(anio,mes,0));
 			}
 			catch(CloneNotSupportedException e) {
 				System.out.println(e.getMessage());
@@ -385,10 +306,10 @@ import persistencia.Persistencia;
 	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
 	* <b> Post: </b> Imprime por pantalla la factura asociada al dni especificado o sino muestra por pantalla el problema surgido<br>
 	*/
-	private static void MuestraFactura(String dni) {
+	private static void MuestraFactura(String dni,int mes, int anio) {
 		if(dni!=null && !dni.equals("")){
 				try {
-					System.out.println(Sistema.getInstance().buscaFactura(dni));
+					System.out.println(Sistema.getInstance().buscaFactura(dni,new GregorianCalendar(anio,mes,0)));
 				}
 				catch(DniDesconocidoException e) {
 					System.out.println("El dni ingresado: '"+e.getDni()+"' no puede indentificarse con ningun abonado asociado factura");
@@ -402,7 +323,7 @@ import persistencia.Persistencia;
 	* <b> Pre: </b>  No cuenta con precondiciones(esto xq se controlan con excepciones o condicionales) <br>
 	* <b> Post: </b> Imprime por pantalla el abonado sin factura especificado por su dni o sino muestra por pantalla el problema surgido<br>
 	*/
-	private static void MuestraAbonadoSinFactura(String dni) {
+	private static void MuestraAbonado(String dni) {
 		if(dni!=null && !dni.equals("")){
 				try {
 					System.out.println(Sistema.getInstance().buscaAbonado(dni));

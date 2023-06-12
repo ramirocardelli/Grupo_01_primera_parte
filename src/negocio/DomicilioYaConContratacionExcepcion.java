@@ -5,8 +5,8 @@ public class DomicilioYaConContratacionExcepcion extends Exception{
 	private Domicilio domicilio;
 	private Contratacion nuevacontratacion,contratacionexistente;
 	
-	public DomicilioYaConContratacionExcepcion(Domicilio domicilio,Contratacion nuevaContratacion, Contratacion contratacionexistente) {
-		this.domicilio=domicilio;
+	public DomicilioYaConContratacionExcepcion(Contratacion nuevaContratacion, Contratacion contratacionexistente) {
+		
 		this.contratacionexistente=contratacionexistente;
 		this.nuevacontratacion=nuevaContratacion;
 	}

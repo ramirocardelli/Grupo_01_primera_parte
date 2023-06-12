@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.GregorianCalendar;
 
 /** Clase abstracta que representa el comportamiento de una factura segun su metodo de pago.
  */
@@ -16,42 +17,18 @@ public abstract class DecoratorPago implements IFactura,Cloneable{
         this.encapsulado = encapsulado;
     }
 
-    /** Metodo que se encarga de agregar una contratacion a la factura correspondiente. 
-     * @param contratacion : contratacion que se desea agregar a la factura. <br>
-     * <b> Pre: </b> contratacion no puede ser null. <br>
-     * <b> Post: </b> Se ha agregado a la lista de contrataciones una nueva contratacion.
-     */
-    public void agregarContratacion(Contratacion contratacion) {
-        encapsulado.agregarContratacion(contratacion);
-	}
 
-    /** Metodo para calcular el monto total de la factura (con todas sus contrataciones) sin aplicar el descuento por el medio de pago.
-     * @return double con el valor total de una factura.
-     */
-    public double calcularTotalSinDescuento() {
-            return encapsulado.calcularTotalSinDescuento();
+    public double valorSinDesc() {
+    	return this.encapsulado.valorSinDesc();
     }
-   
-    @Override
-	public void eliminarContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
-			this.encapsulado.eliminarContratacion(domicilio);
-	}
+    public abstract double valorConDesc() ;
     
+   
     @Override
 	public boolean sinContratacion() {
 		return this.encapsulado.sinContratacion();
 	}
-    
-    @Override
-	public Abonado getAbonado() {
-		return this.encapsulado.getAbonado();
-	}
-
-	@Override
-	public Contratacion getContratacion(Domicilio domicilio) {
-		return this.encapsulado.getContratacion(domicilio);
-	}
-
+  
 	@Override
 	public abstract String toString();
 	
@@ -60,5 +37,8 @@ public abstract class DecoratorPago implements IFactura,Cloneable{
 		clon.encapsulado=(IFactura)this.encapsulado.clone();
 		return clon;
 	}
-
+	
+	public GregorianCalendar getMesYAnio() {
+		return encapsulado.getMesYAnio();
+	}
 }

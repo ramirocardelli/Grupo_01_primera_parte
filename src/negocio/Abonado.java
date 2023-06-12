@@ -1,16 +1,20 @@
 package negocio;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
- * Contiene informacion sobre nombre, dni y una lista con el historico de sus facturas.
+ * Contiene informaci�n sobre su nombre y su dni.
  */
-public abstract class Abonado implements Cloneable, Serializable{  
+public abstract class Abonado implements Cloneable{  
     private String nombre;
     private String dni;
-    private ArrayList<IFactura> historicoFacturas = new ArrayList<IFactura>();
-    private Factura factura; //actual
+    HashMap<Domicilio, Contratacion>contrataciones= new HashMap<Domicilio, Contratacion>();
+    HashMap<GregorianCalendar, IFactura>historicoFacturas= new HashMap<GregorianCalendar, IFactura>();
+    LinkedList<Factura> facturaPendiente=new LinkedList<Factura>();
 
     /** Constructor de 2 parametros String para crear un nuevo abonado.
      * @param nombre : Nombre del abonado.
@@ -24,14 +28,11 @@ public abstract class Abonado implements Cloneable, Serializable{
 		this.dni = dni;
 	}
 
-    /** Calculo del monto total entre todos las contrataciones correspondientes a un abonado.
-     * @param factura : Factura para la cual se quiere calcular el monto total.
-     * @return El resultado de la suma del precio de cada contratacion. <br>
-     * <b> Pre: </b> Factura no puede ser null. <br>
-     * <b> Post: </b> El resultado no puede ser menor a 0.
-     */
-    public abstract double calcularTotal(Factura factura);
+    public abstract void contratarServicio(Contratacion contratacion) throws PagoException;
+    public abstract void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;
+    public abstract void pagaFactura(IFactura factura) throws PagoException;
 
+    
     public String getNombre() {
         return nombre;
     }
@@ -39,19 +40,91 @@ public abstract class Abonado implements Cloneable, Serializable{
     public String getDni() {
         return dni;
     }
-
     
-    @Override
-	public String toString() {
-		return "Abonado " + nombre + " con DNI: " + dni ;
-	}
-
-	/** Metodo para clonar un abonado.
+    public Contratacion getContratacion(Domicilio domicilio) {
+    	return contrataciones.get(domicilio);
+    }
+    
+    public void addContratacion(Contratacion contratacion) {
+    	contrataciones.put(contratacion.getDomicilio(), contratacion);
+    }
+    
+    public void eliminaContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
+    	if(this.contrataciones.remove(domicilio)==null) {
+    		throw new DomicilioSinContratacionEnAbonadoException(domicilio, this);
+    	}
+    }
+    
+    public IFactura getFactura(GregorianCalendar mesYanio) {
+    	IFactura rta=null;
+    	if(mesYanio==null) {//obtiene la sig factura a pagar
+    		rta=this.facturaPendiente.getFirst();
+    	}
+    	else
+    		rta=this.historicoFacturas.get(mesYanio);
+		return rta;
+    }
+    
+    /** Metodo para clonar un abonado.
      * @return : Se devuelve un clon del abonado correspondiente.
      * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jur�dica, la cual no puede aceptar clonacion.
      */
     public Object clon() throws CloneNotSupportedException{
+    	Contratacion poneC;
+    	IFactura poneF;
     	Abonado clon= (Abonado)super.clone();
-    	return clon;
+    	
+    	clon.facturaPendiente=(LinkedList<Factura>)this.facturaPendiente.clone();
+    	clon.facturaPendiente.clear();
+    	Iterator<Factura> itPendientes= facturaPendiente.iterator();
+    	while(itPendientes.hasNext()) {
+    		clon.facturaPendiente.add(itPendientes.next());
+    	}
+    	
+    	clon.contrataciones=(HashMap<Domicilio, Contratacion>)this.contrataciones.clone();
+    	clon.contrataciones.clear();
+    	Iterator<Contratacion> it=this.contrataciones.values().iterator();
+    	while(it.hasNext()) {
+    		poneC=(Contratacion)it.next().clone();
+    		clon.contrataciones.put(poneC.getDomicilio(), poneC);
+    	}
+    	
+    	clon.historicoFacturas=(HashMap<GregorianCalendar, IFactura>)this.historicoFacturas.clone();
+    	clon.historicoFacturas.clear();
+    	Iterator<IFactura> itF= this.historicoFacturas.values().iterator();
+    	while(itF.hasNext()) {
+    		poneF=(IFactura)itF.next();
+    		clon.historicoFacturas.put(poneF.getMesYAnio(),poneF);
+    	}
+    	
+		return clon;
     }
+    
+    public Object clonFactura(GregorianCalendar mesYanio) throws CloneNotSupportedException {
+    	IFactura clon=(IFactura)this.historicoFacturas.get(mesYanio).clone();
+		return clon;
+    }
+    
+	public void findeMes(Factura factura) {
+		this.facturaPendiente.add(factura);
+	}
+	
+	public void abonarFactura(IFactura factura){
+		this.historicoFacturas.put(factura.getMesYAnio(),factura);
+		this.facturaPendiente.removeFirst();
+	}
+	
+	public Iterator<Contratacion> getContrataciones(){
+		return contrataciones.values().iterator();
+	}
+	
+	
+	
+	 @Override
+		public String toString() {
+			return "Abonado " + nombre + " con DNI: " + dni ;
+		}
+
+	
+	
 }

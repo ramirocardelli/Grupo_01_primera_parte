@@ -1,13 +1,14 @@
 package negocio;
 
-/** Clase que representa una excepcion que se lanza cuando el abonado que se quiere cargar a la lista ya existe.
- */
-public class AbonadoYaCargadoException extends Exception {
+public class AbonadoConFacturaException extends Throwable {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private String dni;
 	
-	public AbonadoYaCargadoException(String nombre,String dni) {
+	public AbonadoConFacturaException(String nombre,String dni) {
 		this.nombre=nombre;
 		this.dni=dni;
     }

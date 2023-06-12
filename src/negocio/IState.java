@@ -2,7 +2,7 @@ package negocio;
 
 public interface IState {
 
-	void ContratarServicio();
-	void BajaServicio();
-	void PagaFactura();
+	void contratarServicio(Contratacion contratacion) throws PagoException;
+	void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;
+	void pagaFactura(IFactura factura) throws PagoException;
 }
