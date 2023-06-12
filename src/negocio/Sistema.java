@@ -201,6 +201,18 @@ public class Sistema extends Observable implements Serializable {
 		datos.muestraEstado();
 	}
 
+	
+	public void enviarMensaje(String mensaje) {
+		setChanged();
+		notifyObservers(mensaje);
+	}
+	
+	
+	
+	public SubSistemaTecnicos getTecnicos() {
+		return tecnicos;
+	}
+
 	public void historico(String dNI) { //MUESTRA ESTADO
 		// TODO Auto-generated method stub
 		
@@ -215,5 +227,6 @@ public class Sistema extends Observable implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }                                               
 

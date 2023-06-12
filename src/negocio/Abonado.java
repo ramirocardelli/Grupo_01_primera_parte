@@ -140,8 +140,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 		String texto;
 		Tecnico tecnico=Sistema.getInstance().getTecnicos().solicitarTecnico();
 		texto="El tecnico"+tecnico.nombre+"esta atendiendo al abonado "+this.nombre;
-		setChanged();
-		notifyObservers(texto);
+		Sistema.getInstance().enviarMensaje(texto);
 		try {
 			TimeUnit.SECONDS.sleep(10);
 		} catch (InterruptedException e) {
@@ -151,8 +150,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 		
 		Sistema.getInstance().getTecnicos().liberarTecnico(tecnico);
 		texto="El tecnico"+tecnico.nombre+" termino de atender abonado "+this.nombre;
-		setChanged();
-		notifyObservers(texto);
+		Sistema.getInstance().enviarMensaje(texto);
 	}
 	 @Override
 	public String toString() {
