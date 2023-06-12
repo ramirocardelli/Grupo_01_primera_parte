@@ -52,23 +52,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JTextField RtaMetodoPago;
 	private JTextArea textArea_LOG;
 
-	
-	 
-	public static void main(String[] args) { // DPS BORRAR ESTE MAIN
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Ventana frame = new Ventana();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
-
 	/**
 	 * Create the frame.
 	 */
