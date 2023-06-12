@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Tecnico implements Serializable{
 	protected String nombre;
-	protected boolean atendiendo;
+	protected transient boolean atendiendo=false;
 
 	public Tecnico(String nombre) {
 		super();
@@ -24,4 +24,11 @@ public class Tecnico implements Serializable{
 		return false;
 	}
 	
+	
+	@Override
+	public int hashCode() {
+		int hash=1;
+		hash=hash*12+this.nombre.hashCode();
+		return 1;
+	}
 }
