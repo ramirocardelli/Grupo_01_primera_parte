@@ -38,7 +38,7 @@ public class PersonaFisica extends Abonado {
 	}
 
 	@Override
-	public void bajaServicio(Domicilio domicilio) throws PagoException {
+	public void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException {
 		// TODO Auto-generated method stub
 		this.estado.bajaServicio(domicilio);
 		
