@@ -14,7 +14,7 @@ import persistencia.DAO;
 /** Clase que representa el sistema de gesti�n de facturas y abonados.
 >>>>>>> Stashed changes
  */
-public class Sistema extends Observable { 
+public class Sistema extends Observable implements Serializable{ 
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
     private GregorianCalendar fechaAct;
