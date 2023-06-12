@@ -17,13 +17,19 @@ public abstract class DecoratorPago implements IFactura,Cloneable{
         this.encapsulado = encapsulado;
     }
 
-
+    /** @return valor del pago total sin descuento
+     */
     public double valorSinDesc() {
     	return this.encapsulado.valorSinDesc();
     }
+
+    /** @return valor del pago total con descuento
+     */
     public abstract double valorConDesc() ;
     
-   
+
+    /** @return si el encapsulado tiene contrataciones
+     */
     @Override
 	public boolean sinContratacion() {
 		return this.encapsulado.sinContratacion();

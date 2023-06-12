@@ -80,12 +80,6 @@ public class Factura implements Cloneable, IFactura {
 		return clon;
     }
 	
-	
-	
-	
-	 
-
-	
     @Override
 	public String toString() {
 		return "Factura del " + "\n\t Contrataciones: \n" + contrataciones + " \n";

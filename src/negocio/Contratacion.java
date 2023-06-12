@@ -86,7 +86,41 @@ public abstract class Contratacion implements Cloneable{
      */
     public abstract void aplicaPromocionDorada();
     
-    public abstract void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento);
+    /**
+     * Método con 3 parametros (3 int) para actualizar una contratacion.
+     * @param camaras : Cantidad de camaras que se contratan.
+     * @param botonesAntipanico : Cantidad de botones antipanico que se contratan.
+     * @param movilAcompanamiento : 0 = falso. 1 = verdadero. Cualquier otro número no modifica. <br>
+     * <b> Pre: </b> camaras, botonesAntipanicos y movilAcompanamiento no deben ser menores a 0.<br>
+     * <b> Post: </b> Se actualiza la contratacion.
+     */
+	public void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento) {
+		this.camaras += camaras;
+        if(this.camaras<0) {
+        	this.camaras=0;
+        }
+        this.botonesAntipanicos += botonesAntipanicos;
+        if(this.botonesAntipanicos<0) {
+        	this.botonesAntipanicos=0;
+        }
+        if(movilAcompanamiento==0) //cualquier otro valorque no sea 1 o 0 no modifica atributo
+        	this.movilAcompanamiento=false;
+        else
+        	if(movilAcompanamiento==1)
+        		this.movilAcompanamiento=true;
+        this.precio=calculaPrecio(); //recalcula el precio actualizado
+        if(this.promocion==1) {
+        	this.promocion=0;
+        	this.aplicaPromocionDorada();
+        }
+        else {
+        	if(this.promocion==2) {
+        		this.promocion=0;
+        		this.aplicaPromocionPlatino();
+        	}
+        }
+        
+    }
     
     public abstract String toString();
     

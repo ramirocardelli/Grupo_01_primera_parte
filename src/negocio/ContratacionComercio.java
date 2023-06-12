@@ -13,7 +13,6 @@ public class ContratacionComercio extends Contratacion {
       * @param domicilio Domicilio del abonado, quien hara la contratacion. <br>
       * <b> Pre: </b> camaras y botonesAntipanicos no deben ser menores a 0, movilAcompanamiento no puede ser null, Domicilio no puede ser null.<br>
       * <b> Post: </b> Se crea una nueva contratacion.
-      * 
       */
     public ContratacionComercio(int camaras, int botonesAntipanico, boolean movilAcompanamiento, Domicilio domicilio){
         super(camaras, botonesAntipanico, movilAcompanamiento, domicilio);
@@ -63,34 +62,6 @@ public class ContratacionComercio extends Contratacion {
 				+ " \t\t\tMovil/es de acompanamiento=" + movilAcompanamiento + " \n ";
 	}
 
-	@Override
-	public void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento) {
-		this.camaras += camaras;
-        if(this.camaras<0) {
-        	this.camaras=0;
-        }
-        this.botonesAntipanicos += botonesAntipanicos;
-        if(this.botonesAntipanicos<0) {
-        	this.botonesAntipanicos=0;
-        }
-        if(movilAcompanamiento==0) //cualquier otro valorque no sea 1 o 0 no modifica atributo
-        	this.movilAcompanamiento=false;
-        else
-        	if(movilAcompanamiento==1)
-        		this.movilAcompanamiento=true;
-        this.precio=calculaPrecio(); //recalcula el precio actualizado
-        if(this.promocion==1) {
-        	this.promocion=0;
-        	this.aplicaPromocionDorada();
-        }
-        else {
-        	if(this.promocion==2) {
-        		this.promocion=0;
-        		this.aplicaPromocionPlatino();
-        	}
-        }
-        
-    }
      
      
 }

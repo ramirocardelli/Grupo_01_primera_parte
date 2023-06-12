@@ -28,36 +28,7 @@ public class ContratacionVivienda extends Contratacion {
     public double calculaPrecio(){ 
              return valorVivienda + super.calculaPrecio();
         }
-      
-    public void actualizaContratacion(int camaras, int botonesAntipanicos, int movilAcompanamiento) {
-        this.camaras += camaras;
-        if(this.camaras<0) {
-        	this.camaras=0;
-        }
-        this.botonesAntipanicos += botonesAntipanicos;
-        if(this.botonesAntipanicos<0) {
-        	this.botonesAntipanicos=0;
-        }
-        if(movilAcompanamiento==0) //cualquier otro valorque no sea 1 o 0 no modifica atributo
-        	this.movilAcompanamiento=false;
-        else
-        	if(movilAcompanamiento==1)
-        		this.movilAcompanamiento=true;
-        this.precio=calculaPrecio(); //recalcula el precio actualizado
-        if(this.promocion==1) {
-        	this.promocion=0;
-        	this.aplicaPromocionDorada();
-        }
-        else {
-        	if(this.promocion==2) {
-        		this.promocion=0;
-        		this.aplicaPromocionPlatino();
-        	}
-        }
-    }
-    
-    
-
+       
     /** Metodo que aplica la promocion dorada para viviendas.
      * Modifica el precio de la contratacion con un descuento de $1500.
      */
