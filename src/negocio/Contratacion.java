@@ -63,9 +63,11 @@ public abstract class Contratacion implements Cloneable{
     }
 
     /** Metodo para aplicar una determinada promocion (platino/dorada) al servicio correspondiente. (Double dispatching)
-     * @param tipoPromo : tipo de promo que se quiera aplicar 
+     * @param tipoPromo : tipo de promo que se quiera aplicar
+     * <b>Pre: </b> el tipo de promo no puede ser nulo <br> 
      */
     public void promo(Promo tipoPromo){
+    	assert tipoPromo != null : "Tipo promo nulo";
         tipoPromo.promo(this);
     }
     

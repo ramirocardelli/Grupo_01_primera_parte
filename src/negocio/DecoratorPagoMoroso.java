@@ -9,6 +9,7 @@ public class DecoratorPagoMoroso extends DecoratorPago implements IFactura {
      */
     public DecoratorPagoMoroso(IFactura encapsulado) {
         super(encapsulado);
+    	assert encapsulado != null : "Encapsulado nulo";
     }
 
 	@Override

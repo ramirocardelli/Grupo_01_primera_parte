@@ -11,12 +11,15 @@ public class ContratacionComercio extends Contratacion {
       * @param botonesAntipanico Cantidad de botones antipanico que se contratan.
       * @param movilAcompanamiento Se determina si o no si se adquiere el movil de acompanamiento.
       * @param domicilio Domicilio del abonado, quien hara la contratacion. <br>
-      * <b> Pre: </b> camaras y botonesAntipanicos no deben ser menores a 0, movilAcompanamiento no puede ser null, Domicilio no puede ser null.<br>
+      * <b> Pre: </b> camaras y botonesAntipanicos no deben ser menores a 0, Domicilio no puede ser null.<br>
       * <b> Post: </b> Se crea una nueva contratacion.
       * 
       */
     public ContratacionComercio(int camaras, int botonesAntipanico, boolean movilAcompanamiento, Domicilio domicilio){
         super(camaras, botonesAntipanico, movilAcompanamiento, domicilio);
+    	assert camaras < 0 : "Numero de camaras menor a cero";
+    	assert botonesAntipanico < 0 : "Numero de botones antipanicomenor a cero";
+    	assert domicilio != null : "Domicilio nulo";
         this.precio = this.calculaPrecio();
     }
 

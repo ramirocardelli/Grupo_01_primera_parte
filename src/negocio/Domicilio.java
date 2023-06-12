@@ -13,8 +13,10 @@ public class Domicilio implements Cloneable {
      * <b> Post: </b> Se crea domicilio, que contiene la calle y el numero de la vivienda.
      */
     public Domicilio(String calle, int numero) {
-            this.calle=calle;
-            this.numero=numero;
+    	assert calle != null : "Calle nula";
+    	assert numero > 0 : "Altura incorrecta";
+        this.calle=calle;
+        this.numero=numero;
     }
     
     /**
@@ -27,6 +29,8 @@ public class Domicilio implements Cloneable {
      * <b> Post: </b> Se crea domicilio si cumple las condiciones, caso contrario devuelve null.
      */
     public static Domicilio generaDomicilio(String calle,int numero) {
+    	assert calle != null : "Calle nula";
+    	assert numero > 0 : "Altura incorrecta";
     	Domicilio rta=null;
     	if(calle!=null && !calle.equals("") && numero<=9999 && numero>0) {
     		rta=new Domicilio(calle, numero);
@@ -43,6 +47,7 @@ public class Domicilio implements Cloneable {
 	}
 	
 	public boolean equals(Domicilio domicilio) {
+    	assert domicilio != null : "Domicilio nulo";
 		return (this.calle.equals(domicilio.calle) && this.numero==domicilio.numero);
 	}
 

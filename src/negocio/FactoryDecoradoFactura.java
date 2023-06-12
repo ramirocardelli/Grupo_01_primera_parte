@@ -13,12 +13,15 @@ public class FactoryDecoradoFactura {
      * @param metodoPago : metodo de pago de la factura.<br>
      * @param tipo : tipo de factura<br>
      * @return IFactura segun el metodo de pago.<br>
-     * @throws TipoFacturaIncorrecto cuando el tipo de factura es incorrecto.<br>
+     * @throws TipoFacturaIncorrectoException cuando el tipo de factura es incorrecto.<br>
      * @throws MetodoDePagoInvalidoException cuando el metodo de pago ingresado no es valido.<br>
      * <b> Pre: </b> abonado no puede ser null, metodoPago no puede ser null ni vacio y tipo no puede ser vacio. <br>
      * <b> Post: </b> Se crea factura segun el tipo, que contiene al abonado, y la decora segun el metodo de pago. 
      */
     public IFactura creaFactura(IFactura factura, String metodoPago) throws MetodoDePagoInvalidoException {
+    	assert factura != null: "Factura nula";
+    	assert metodoPago != null : "Metodo de pago nulo";
+    	assert metodoPago != "" : "Metodo de pago vacio";
     	if(metodoPago.equalsIgnoreCase("EFECTIVO"))
     		factura = new DecoratorPagoEfectivo(factura);
     	else if (metodoPago.equalsIgnoreCase("TARJETA"))

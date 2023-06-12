@@ -23,6 +23,7 @@ public class SubSistemaTecnicos implements Serializable{
 	 * @param tecnico
 	 */
 	public void agregarTecnico(Tecnico tecnico) {//Habria que poner semaforos para controlar acceso al mismo tiempo al arreglo
+    	assert tecnico != null: "Tecnico nulo";
 		tecnicos.add(tecnico);
 		notifyAll();
 	}
@@ -32,6 +33,7 @@ public class SubSistemaTecnicos implements Serializable{
 	 * @param tecnico
 	 */
 	public void eliminarTecnico(Tecnico tecnico) {
+    	assert tecnico != null: "Tecnico nulo";
 		tecnicos.remove(tecnico);
 	}
 	
@@ -43,6 +45,7 @@ public class SubSistemaTecnicos implements Serializable{
 	 * @param tecnico
 	 */
 	public synchronized void liberarTecnico(String tecnico) {
+    	assert tecnico != null: "Tecnico nulo";
 		int i=0;
 		while(i<tecnicos.size()&& !tecnicos.get(0).getNombre().equals(tecnico))
 			i++;
@@ -62,6 +65,8 @@ public class SubSistemaTecnicos implements Serializable{
 	 * @return
 	 */
 	public synchronized String solicitarTecnico(String nombre) {
+    	assert nombre != null: "Nombre nulo";
+    	assert nombre != "": "Nombre vacio";
 		Tecnico rta=tecnicoLibre();
 		while(tecnicoLibre()==null) { //si no se encontro un tecnico libre se espera
 			try {

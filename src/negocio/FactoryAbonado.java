@@ -14,6 +14,12 @@ public class FactoryAbonado {
      * <b> Post: </b> Se crea un abonado segun el tipo. 
      */
 	public Abonado creaAbonado(String nombre,String dni,String tipo) throws TipoIncorrectoPersonaException {
+    	assert nombre != null : "Nombre nulo";
+    	assert nombre != "" : "Nombre nulo";
+    	assert dni != null : "DNI nulo";
+    	assert dni != "" : "DNI nulo";
+    	assert tipo != null : "tipo nulo";
+    	assert tipo != "" : "tipo nulo";
 		Abonado creado=null;
 		if(tipo.equalsIgnoreCase("Juridica")) 
 			creado=new PersonaJuridica(nombre, dni);

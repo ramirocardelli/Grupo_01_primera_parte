@@ -12,6 +12,10 @@ public class PersonaJuridica extends Abonado {
      */
     public PersonaJuridica(String nombre, String dni) {
 		super(nombre, dni);
+    	assert nombre != null: "Nombre nulo";
+    	assert nombre != "": "Nombre vacio";
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
 	}
 
 
@@ -24,6 +28,7 @@ public class PersonaJuridica extends Abonado {
 
 	@Override
 	public void findeMes(Factura factura) {
+    	assert factura != null: "Factura nula";
 		factura.setPersonaJ(true);
 		this.facturaPendiente.add(factura); //no cambia de estado y no pasa a moroso (no posee estados)
 	}
@@ -31,6 +36,7 @@ public class PersonaJuridica extends Abonado {
 
 	@Override
 	public void contratarServicio(Contratacion contratacion) {
+    	assert contratacion != null: "Contratacion nula";
 		// TODO Auto-generated method stub
 		this.addContratacion(contratacion);
 		
@@ -39,12 +45,14 @@ public class PersonaJuridica extends Abonado {
 
 	@Override
 	public void bajaServicio(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
+    	assert domicilio != null: "Domicilio nulo";
 		this.eliminaContratacion(domicilio);
 	}
 
 
 	@Override
 	public void pagaFactura(IFactura factura) {
+    	assert factura != null: "Factura nula";
 		// TODO Auto-generated method stub
 		this.abonarFactura(factura);
 		

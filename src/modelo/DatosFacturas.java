@@ -26,14 +26,17 @@ public class DatosFacturas implements Serializable{
      * <b> Pre: </b> factura no puede ser null, ni tampoco puede ya encontrarse en la lista.
      */
     public void agregaFactura(IFactura factura) {
-            this.facturas.add(factura);
+    	assert factura != null : "Factura nula";
+        this.facturas.add(factura);
     }
 	
     /** Metodo para eliminar una factura de la lista.
      * @param factura : factura que se desea eliminar de la lista.
      * @return boolean para informar si se pudo eliminar la factura.
+     * <b> Pre: </b> facutra no puede ser null
      */
     public boolean eliminaFacturas(IFactura factura) {
-            return this.facturas.remove(factura);
+    	assert factura != null : "Factura nula";
+        return this.facturas.remove(factura);
     }
 }

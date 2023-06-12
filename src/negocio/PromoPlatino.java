@@ -12,6 +12,7 @@ public class PromoPlatino extends Promo{
       * <b> Pre: </b> contratacion no puede ser null.
       */
     public void promo(Contratacion contratacion){
+    	assert contratacion != null: "Contratacion nula";
         contratacion.aplicaPromocionPlatino();
     }
 }

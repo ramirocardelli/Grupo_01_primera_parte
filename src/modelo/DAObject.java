@@ -11,11 +11,5 @@ public class DAObject implements Serializable{
 	public DAObject(ArrayList<Abonado> listaAbonados) {
 		super();
 		this.listaAbonados = listaAbonados;
-	}
-	
-
-	
-	
-	
-	
+	}	
 }

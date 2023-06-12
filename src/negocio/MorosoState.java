@@ -3,13 +3,14 @@ package negocio;
 /**
  * Clase que implementa IState para modificar el comportamiento del Abonado cuando este es considerado
  * Moroso. 
- * @author Joaquin
+ * @author 	
  *
  */
 public class MorosoState implements IState {
 	private PersonaFisica persona;
 
 	public MorosoState(PersonaFisica persona) {
+    	assert persona != null: "Persona nula";
 		this.persona = persona;
 	}
 	
@@ -26,6 +27,7 @@ public class MorosoState implements IState {
 	@Override
 	public void pagaFactura(IFactura factura) throws PagoException {
 		//puede y 30% recargo
+    	assert factura != null: "Factura nula";
 		this.persona.abonarFactura(new DecoratorPagoMoroso(factura));
 	}
 	

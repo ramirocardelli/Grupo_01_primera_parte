@@ -18,6 +18,8 @@ public class Factura implements Cloneable, IFactura {
      */
     public Factura(GregorianCalendar mesYanio,ArrayList<Contratacion> contrataciones) {
         super();
+    	assert mesYanio != null: "Fecha nula";
+    	assert contrataciones != null : "Contrataciones nulas";
         this.mesYanio=mesYanio;
         this.contrataciones=contrataciones;
     }
