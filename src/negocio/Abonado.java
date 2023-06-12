@@ -123,7 +123,9 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
     }
     
 	public void findeMes(Factura factura) {
-		this.facturaPendiente.add(factura);
+		if(this.contrataciones.size()!=0) { //no agrega facturas si no hay contrataciones
+			this.facturaPendiente.add(factura);
+		}
 	}
 	
 	public void abonarFactura(IFactura factura){
