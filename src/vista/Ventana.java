@@ -73,10 +73,10 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public Ventana() {
 		
 		ActionEvent event = new ActionEvent(this,0,"DESPERSISTIR");
-		this.actionListener.actionPerformed(event);
+		//this.actionListener.actionPerformed(event);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -93,7 +93,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		
 		JPanel panel = new JPanel();
 		panelDNI.add(panel);
-		panel.setLayout(new GridLayout(3, 1, 0, 0));
+		panel.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		JLabel LabelDNI = new JLabel("DNI:");
 		panel.add(LabelDNI);
@@ -107,9 +107,13 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		LabelNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(LabelNumero);
 		
+		JLabel TipoContratacion = new JLabel("Comercio/vivienda:");
+		panel.add(TipoContratacion);
+		TipoContratacion.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		JPanel panelDNItextfield = new JPanel();
 		panelDNI.add(panelDNItextfield);
-		panelDNItextfield.setLayout(new GridLayout(3, 1, 0, 0));
+		panelDNItextfield.setLayout(new GridLayout(4, 1, 0, 0));
 		
 		this.RtaDNI = new JTextField();
 		this.RtaDNI.addKeyListener(this);
@@ -126,6 +130,11 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		panelDNItextfield.add(textFieldNumero);
 		textFieldNumero.setColumns(10);
 		
+		this.RtaComercioVivienda = new JTextField();
+		panelDNItextfield.add(RtaComercioVivienda);
+		this.RtaComercioVivienda.addKeyListener(this);
+		RtaComercioVivienda.setColumns(10);
+		
 		JPanel panelDatosContratacion = new JPanel();
 		panelCentral.add(panelDatosContratacion);
 		panelDatosContratacion.setLayout(new GridLayout(0, 2, 0, 0));
@@ -133,10 +142,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		JPanel panelLabelsContratacion = new JPanel();
 		panelDatosContratacion.add(panelLabelsContratacion);
 		panelLabelsContratacion.setLayout(new GridLayout(0, 1, 0, 0));
-		
-		JLabel TipoContratacion = new JLabel("Comercio/vivienda:");
-		TipoContratacion.setHorizontalAlignment(SwingConstants.CENTER);
-		panelLabelsContratacion.add(TipoContratacion);
 		
 		JLabel CantCamaras = new JLabel("Cantidad de cámaras:");
 		CantCamaras.setHorizontalAlignment(SwingConstants.CENTER);
@@ -150,14 +155,13 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		MovilAcomp.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLabelsContratacion.add(MovilAcomp);
 		
+		JLabel LabelMetodoPago = new JLabel("Efectivo/cheque/tarjeta");
+		LabelMetodoPago.setHorizontalAlignment(SwingConstants.CENTER);
+		panelLabelsContratacion.add(LabelMetodoPago);
+		
 		JPanel panelRtaContratacion = new JPanel();
 		panelDatosContratacion.add(panelRtaContratacion);
 		panelRtaContratacion.setLayout(new GridLayout(4, 1, 0, 0));
-		
-		this.RtaComercioVivienda = new JTextField();
-		this.RtaComercioVivienda.addKeyListener(this);
-		panelRtaContratacion.add(RtaComercioVivienda);
-		RtaComercioVivienda.setColumns(10);
 		
 		this.RtaCamaras = new JTextField();
 		this.RtaCamaras.addKeyListener(this);
@@ -173,6 +177,11 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.RtaMovil.addKeyListener(this);
 		panelRtaContratacion.add(RtaMovil);
 		RtaMovil.setColumns(10);
+		
+		RtaMetodoPago = new JTextField();
+		panelRtaContratacion.add(RtaMetodoPago);
+		RtaMetodoPago.addKeyListener(this);
+		RtaMetodoPago.setColumns(10);
 		
 		JPanel panelBotonesPagar_Contratar_Baja = new JPanel();
 		panelCentral.add(panelBotonesPagar_Contratar_Baja);
@@ -213,17 +222,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		JPanel PanelSolicitarTecnico = new JPanel();
 		PanelTecnico.add(PanelSolicitarTecnico);
 		PanelSolicitarTecnico.setLayout(new GridLayout(3, 1, 0, 0));
-		
-		JPanel PanelMetodoPago = new JPanel();
-		PanelSolicitarTecnico.add(PanelMetodoPago);
-		
-		JLabel LabelMetodoPago = new JLabel("Efectivo/cheque/tarjeta");
-		PanelMetodoPago.add(LabelMetodoPago);
-		
-		RtaMetodoPago = new JTextField();
-		RtaMetodoPago.addKeyListener(this);
-		PanelSolicitarTecnico.add(RtaMetodoPago);
-		RtaMetodoPago.setColumns(10);
 		
 		JPanel PanelDarDeAltaTecnico = new JPanel();
 		PanelTecnico.add(PanelDarDeAltaTecnico);
