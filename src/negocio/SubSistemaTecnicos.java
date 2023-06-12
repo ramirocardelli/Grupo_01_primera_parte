@@ -18,6 +18,7 @@ public class SubSistemaTecnicos implements Serializable{
 	 */
 	public void agregarTecnico(Tecnico tecnico) {//Habria que poner semaforos para controlar acceso al mismo tiempo al arreglo
 		tecnicos.add(tecnico);
+		notifyAll();
 	}
 	/**
 	 * 

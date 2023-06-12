@@ -207,8 +207,19 @@ public class Sistema extends Observable implements Serializable {
 		notifyObservers(mensaje);
 	}
 	
-	
-	
+	public SubSistemaDatos getDatos() {
+		return datos;
+	}
+
+	public void setDatos(SubSistemaDatos datos) {
+		this.datos = datos;
+	}
+
+
+	public void setTecnicos(SubSistemaTecnicos tecnicos) {
+		this.tecnicos = tecnicos;
+	}
+
 	public SubSistemaTecnicos getTecnicos() {
 		return tecnicos;
 	}
@@ -219,12 +230,11 @@ public class Sistema extends Observable implements Serializable {
 	}
 
 	public void solicitarTecnico(String dNI) {
-		// TODO Auto-generated method stub
-		
+		this.datos.buscaAbonado(dNI).solicitarTecnico();
 	}
 
 	public void altaTecnico(String nombreTecnico) {
-		// TODO Auto-generated method stub
+		this.tecnicos.agregarTecnico(new Tecnico(nombreTecnico));
 		
 	}
 	

@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import negocio.Sistema;
+
 public class Persistencia implements IPersistencia
 {
 
@@ -57,6 +59,20 @@ public class Persistencia implements IPersistencia
             p = (Serializable) objectinput.readObject();
         return p;
     }
-
+    
+    
+    public SistemaDTO sistemaAsistemaDTO(Sistema sistema) {
+    	SistemaDTO nuevoSistemaDTO=new SistemaDTO();
+    	nuevoSistemaDTO.setDatos(sistema.getDatos());
+    	nuevoSistemaDTO.setTecnicos(sistema.getTecnicos());
+    	return nuevoSistemaDTO;
+    }
+    
+    
+    public void inicializaSistemaConDTO(SistemaDTO sistemaDTO) {
+    	Sistema nuevoSistema=Sistema.getInstance();
+    	nuevoSistema.setDatos(sistemaDTO.getDatos());
+    	nuevoSistema.setTecnicos(sistemaDTO.getTecnicos());    	
+    }
 
 }
