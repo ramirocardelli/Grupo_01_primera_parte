@@ -51,7 +51,7 @@ public class Persistencia implements IPersistencia
 			try {
 				objectinput.close();
 			} catch (IOException e) {
-			}
+		}
 
     }
 
@@ -70,7 +70,7 @@ public class Persistencia implements IPersistencia
     public Serializable leer() 
     {
         Serializable p = null;
-        if (objectinput != null)
+        if (objectinput != null) {
 			try {
 				p = (Serializable) objectinput.readObject();
 			} catch (ClassNotFoundException e) {
@@ -80,6 +80,9 @@ public class Persistencia implements IPersistencia
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+        }
+        if (this.objectinput==null)
+        	System.out.println("error al leer");
         return p;
     }
 

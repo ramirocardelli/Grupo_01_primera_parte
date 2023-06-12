@@ -64,8 +64,11 @@ public class Controlador implements ActionListener, Observer
 	
 	public void actionPerformed(ActionEvent a) //ventana lanza eventos
 	{
-		
-		ActionEventExtended e = (ActionEventExtended) a;
+		System.out.println("entre");
+		ActionEventExtended e;
+		if (a instanceof ActionEventExtended) {
+			System.out.println("Hice algo");
+			e = (ActionEventExtended) a;
 		String comando = e.getActionCommand();
 		if (comando.equalsIgnoreCase("PAGAR")) {
 			this.sistema.PagarFactura(e.DNI,e.metodoPago);
@@ -96,12 +99,13 @@ public class Controlador implements ActionListener, Observer
 					try {
 						System.out.println(e.nombreCliente+e.DNI+e.tipoPersona);
 						this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
-					} catch (AbonadoYaCargadoException | TipoIncorrectoPersonaException e1) {
+					} catch (/*AbonadoYaCargadoException |*/ TipoIncorrectoPersonaException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 				 
+	}
 	}
 				
 		public void serializar() {

@@ -238,7 +238,7 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> nombre, dni y tipo no pueden ser null.
      * @throws  
      */
-    public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoException, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    public void nuevoAbonado(String nombre,String dni,String tipo) throws TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
     	assert nombre != null: "nombre nulo";
     	assert nombre != "": "nombre vacio";
     	assert dni != null: "dni nulo";
@@ -247,9 +247,16 @@ public class Sistema extends Observable implements Serializable{
     	assert tipo != "": "tipo vacio";
     	FactoryAbonado FA=new FactoryAbonado();
     	Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
-    	datos.agregaAbonado(abonado);
+    	try {
+			datos.agregaAbonado(abonado);
+		} catch (AbonadoYaCargadoException e) {
+			Estado estado=new Estado("Abonado ya cargado","SISTEMA"); 
+			setChanged();
+			notifyObservers(estado);
+		}
     }
-
+ 
+    
     public void eliminaAbonado(String dni) throws DniDesconocidoException,AbonadoConFacturaException {
     	assert dni != null: "dni nulo";
     	assert dni != "": "dni vacio";
@@ -309,9 +316,12 @@ public class Sistema extends Observable implements Serializable{
 		try {
 			String muestraHistorico=datos.historico(dni);
 			estado=new Estado(muestraHistorico,"SISTEMA"); 
+			
 		} catch (DniDesconocidoException e) {
 			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
 		}
+		setChanged();
+		notifyObservers(estado);
 	}
 
 	public String muestraEstadoSist() {
@@ -331,9 +341,11 @@ public class Sistema extends Observable implements Serializable{
 		Abonado aux=this.datos.buscaAbonado(dni);
 		if (aux!=null)
 			aux.solicitarTecnico();
-		else
+		else {
 			estado= new Estado("Ningun cliente registrado posee como dni "+dni,"EXCEPCION");
-
+			setChanged();
+			notifyObservers(estado);
+		}
 	}
 
 	public void altaTecnico(String nombreTecnico) {
