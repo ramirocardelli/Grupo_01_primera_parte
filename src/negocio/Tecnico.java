@@ -25,6 +25,19 @@ public class Tecnico implements Serializable{
 	}
 	
 	
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public boolean isAtendiendo() {
+		return atendiendo;
+	}
+
+	public void setAtendiendo(boolean atendiendo) {
+		this.atendiendo = atendiendo;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash=1;

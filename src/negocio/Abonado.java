@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
@@ -145,19 +146,22 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 	@Override
 	public void run() {
 		String texto;
-		Tecnico tecnico=Sistema.getInstance().getTecnicos().solicitarTecnico();
-		texto="El tecnico"+tecnico.nombre+"esta atendiendo al abonado "+this.nombre;
-		Sistema.getInstance().muestraThread(texto);
+		Random rand=new Random();
 		try {
-			TimeUnit.SECONDS.sleep(10);
+			Thread.sleep(200+rand.nextInt(300));//tiempo de concurrencia
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Sistema.getInstance().getTecnicos().liberarTecnico(tecnico);
-		texto="El tecnico"+tecnico.nombre+" termino de atender abonado "+this.nombre;
+		} 
+		texto="El abonado: "+this.nombre+ "solicita la atencion de un tecnico";
 		Sistema.getInstance().muestraThread(texto);
+		String tecnico=Sistema.getInstance().getTecnicos().solicitarTecnico(this.nombre);
+		try {
+			Thread.sleep(2000+rand.nextInt(2000)); // el tiempo de atencion es de unos seg(entre 2 y 4)
+		} catch (InterruptedException e) {
+		}
+		texto="El tecnico"+tecnico+" termina de atender abonado "+this.nombre;
+		Sistema.getInstance().muestraThread(texto);
+		Sistema.getInstance().getTecnicos().liberarTecnico(tecnico);
+		
 	}
 
 	

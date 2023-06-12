@@ -42,8 +42,16 @@ public class SubSistemaTecnicos implements Serializable{
 	 * para ser utilizado por otro thread.
 	 * @param tecnico
 	 */
-	public synchronized void liberarTecnico(Tecnico tecnico) {
-		tecnico.atendiendo=false;
+	public synchronized void liberarTecnico(String tecnico) {
+		int i=0;
+		while(i<tecnicos.size()&& !tecnicos.get(0).getNombre().equals(tecnico))
+			i++;
+		if(i<tecnicos.size())
+			tecnicos.get(i).setAtendiendo(false);
+		else
+			//se ingreso un nombre de un tecnico desconocido, no hace nada (seria un error del programador obt nombres de otro lado que no sea el recurso compartido o modificar su nombre en su uso)
+
+		Sistema.getInstance().muestraThread("El tecnico "+tecnico+" finaliza su trabajo y se dispone a seguir trabajando");
 		notifyAll();
 	}
 	
@@ -53,27 +61,28 @@ public class SubSistemaTecnicos implements Serializable{
 	 * Post: Devuelve un Tecnico que esta atendiendo a ese thread
 	 * @return
 	 */
-	public synchronized Tecnico solicitarTecnico() {
-	int i;
-	Tecnico rta=null;
-	do {
-		i=0;
-		while (i<tecnicos.size() && tecnicos.get(i).atendiendo==true) //recorre todos los tecnicos
-			i++;
-		if (i<tecnicos.size()==true){//encontro un tecnico libre
-			tecnicos.get(i).atendiendo=true;
-			rta=tecnicos.get(i);
-		} else
+	public synchronized String solicitarTecnico(String nombre) {
+		Tecnico rta=tecnicoLibre();
+		while(tecnicoLibre()==null) { //si no se encontro un tecnico libre se espera
 			try {
-				wait();
+				this.wait();
+				rta=tecnicoLibre();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-	}while(rta!=null);
+		}
+		Sistema.getInstance().muestraThread("El tecnico "+rta.getNombre()+" atiende al abonado "+ nombre);
+		return rta.getNombre();
+	}
 	
-	return rta;
-	
-	
+	private synchronized Tecnico tecnicoLibre() {
+		Tecnico rta=null;
+		int i=0;
+		while (i<tecnicos.size() && tecnicos.get(i).isAtendiendo()==true) //recorre todos los tecnicos
+			i++;
+		if (i<tecnicos.size()){//encontro un tecnico libre
+			rta=tecnicos.get(i);
+			rta.setAtendiendo(true);
+		}
+		return rta;
 	}
 }
