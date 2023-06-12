@@ -73,7 +73,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public Ventana() {
 		
 		ActionEvent event = new ActionEvent(this,0,"DESPERSISTIR");
-		this.actionListener.actionPerformed(event);
+		//this.actionListener.actionPerformed(event);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 800);
