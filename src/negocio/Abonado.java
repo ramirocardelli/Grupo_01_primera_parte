@@ -5,12 +5,14 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 /** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
  * Contiene informaci�n sobre su nombre y su dni.
  */
-public abstract class Abonado implements Cloneable,Runnable{  
+public abstract class Abonado extends Observable implements Cloneable,Runnable{  
     private String nombre;
     private String dni;
     HashMap<Domicilio, Contratacion>contrataciones= new HashMap<Domicilio, Contratacion>();
@@ -125,19 +127,35 @@ public abstract class Abonado implements Cloneable,Runnable{
     	t1.start();	
     }
 
+
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
 	@Override
 	public void run() {
+		String texto;
 		Tecnico tecnico=Sistema.getInstance().getTecnicos().solicitarTecnico();
+		texto="El tecnico"+tecnico.nombre+"esta atendiendo al abonado "+this.nombre;
+		setChanged();
+		notifyObservers(texto);
 		try {
 			TimeUnit.SECONDS.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		Sistema.getInstance().getTecnicos().liberarTecnico(tecnico);
+		texto="El tecnico"+tecnico.nombre+" termino de atender abonado "+this.nombre;
+		setChanged();
+		notifyObservers(texto);
 	}
 	 @Override
-		public String toString() {
+	public String toString() {
 			return "Abonado " + nombre + " con DNI: " + dni ;
 		}
 
