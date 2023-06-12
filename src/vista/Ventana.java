@@ -313,7 +313,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public void keyTyped(KeyEvent e) {
 	}
 
-	@Override
 	public void setActionListener(ActionListener actionListener) {
 		
 		this.botonActualizarMes.addActionListener(actionListener); 

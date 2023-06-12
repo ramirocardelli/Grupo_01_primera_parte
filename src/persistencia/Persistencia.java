@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Persistencia implements IPersistencia
+
 {
 
     private FileOutputStream fileoutput;
@@ -15,23 +16,20 @@ public class Persistencia implements IPersistencia
     private ObjectOutputStream objectoutput;
     private ObjectInputStream objectinput;
 
-    public void abrirInput(String nombre) 
+    public void abrirInput(String nombre) throws IOException
     {
-        try {
+        
 			fileinput = new FileInputStream(nombre);
 			objectinput = new ObjectInputStream(fileinput);
-		} catch (IOException e) {
-		}
+		
     }
 
-    public void abrirOutput(String nombre)
+    public void abrirOutput(String nombre) throws IOException
     {
-        try {
+  
         	fileoutput = new FileOutputStream(nombre);
 			objectoutput = new ObjectOutputStream(fileoutput);
-		} catch (IOException e) {
-			
-		}
+		
 
     }
 

@@ -26,13 +26,13 @@ public class Sistema extends Observable implements Serializable{
      */
     private Sistema() { 
         super();
+        fechaAct= new GregorianCalendar(); 
         this.datos=new SubSistemaDatos();
+        this.tecnicos=new SubSistemaTecnicos();
         GregorianCalendar aux= new GregorianCalendar(); //se obtiene la hr act del sistema
         fechaAct.set(aux.get(Calendar.YEAR), aux.get(Calendar.MONTH), 0);
-        this.tecnicos=new SubSistemaTecnicos();
     }
     
-    /** Constructor estatico para evitar que se cree mas de una instancia del Sistema (patron Singleton)
     /** Constructor estatico para evitar que se cree m�s de una instancia del Sistema (patron Singleton)
      * @return instancia de Sistema
      */

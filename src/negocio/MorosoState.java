@@ -1,12 +1,17 @@
 package negocio;
 
+/**
+ * Clase que implementa IState para modificar el comportamiento del Abonado cuando este es considerado
+ * Moroso. 
+ * @author Joaquin
+ *
+ */
 public class MorosoState implements IState {
 	private PersonaFisica persona;
 
 	public MorosoState(PersonaFisica persona) {
 		this.persona = persona;
 	}
-	
 	
 	@Override
 	public void contratarServicio(Contratacion contratacion) throws PagoException {
