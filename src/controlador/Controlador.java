@@ -85,40 +85,38 @@ public class Controlador implements ActionListener, Observer
 				else if (comando.equalsIgnoreCase("ALTATECNICO")){
 					this.sistema.altaTecnico(e.nombreTecnico); //AGREGAR
 				}
-				else if (comando.equalsIgnoreCase("SERIALIZAR")){
-					try {
+				else if (comando.equalsIgnoreCase("PERSISTIR")){
 						this.serializar();
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 				}
-				else {
-					try {
+				else if (comando.equalsIgnoreCase("DESPERSISTIR")){
+
 						this.deserializar();
-					} catch (ClassNotFoundException | IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} // DESERIALIZAR
 				}
 	}
 					
 
-		public void serializar() throws IOException {
+		public void serializar() {
 			IPersistencia persistencia = new Persistencia();
-			
-			persistencia.abrirOutput("sistema.bin");
-			persistencia.escribir(sistema);
-			persistencia.cerrarOutput();
+
+			try {
+				persistencia.abrirOutput("sistema.bin");
+				persistencia.escribir(sistema);
+				persistencia.cerrarOutput();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			
 		}
 		
-		public void deserializar() throws IOException, ClassNotFoundException {
+		public void deserializar() {
 			IPersistencia persistencia = new Persistencia();
-			
-			persistencia.abrirInput("sistema.bin");
-			this.sistema = (Sistema) persistencia.leer();
-			persistencia.cerrarInput();
+			try {
+				persistencia.abrirInput("sistema.bin");
+				this.sistema = (Sistema) persistencia.leer();
+				persistencia.cerrarInput();
+			} catch (ClassNotFoundException | IOException e1) {
+				e1.printStackTrace();
+			}
 			
 		}
 
