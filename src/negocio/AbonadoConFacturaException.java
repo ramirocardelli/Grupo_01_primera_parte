@@ -1,6 +1,8 @@
 package negocio;
 
-public class AbonadoConFacturaException extends Throwable {
+import java.io.Serializable;
+
+public class AbonadoConFacturaException extends Throwable implements Serializable{
 	/**
 	 * 
 	 */

@@ -1,6 +1,8 @@
 package negocio;
 
-public interface IState {
+import java.io.Serializable;
+
+public interface IState extends Serializable{
 
 	void contratarServicio(Contratacion contratacion) throws PagoException;
 	void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;

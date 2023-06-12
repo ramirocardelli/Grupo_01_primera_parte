@@ -1,6 +1,8 @@
 package negocio;
 
-public class ConContratacionState implements IState {
+import java.io.Serializable;
+
+public class ConContratacionState implements IState,Serializable{
 	private PersonaFisica persona;
 
 	public ConContratacionState(PersonaFisica persona) {

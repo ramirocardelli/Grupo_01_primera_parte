@@ -81,8 +81,7 @@ public class Persistencia implements IPersistencia
 				e.printStackTrace();
 			}
         }
-        if (this.objectinput==null)
-        	System.out.println("error al leer");
+        
         return p;
     }
 

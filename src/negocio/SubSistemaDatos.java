@@ -1,5 +1,6 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Iterator;
  *
  *
  */
-public class SubSistemaDatos {
+public class SubSistemaDatos implements Serializable{
 	private HashMap<String, Abonado>abonados=new HashMap<String, Abonado>();
 	
 	

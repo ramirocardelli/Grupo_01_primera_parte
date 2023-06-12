@@ -1,8 +1,8 @@
 package negocio;
-
+import java.io.Serializable;
 /** Clase que representa un domicilio de un abonado. Contiene un String para el nombre de la calle y un int para la altura. 
  */
-public class Domicilio implements Cloneable {
+public class Domicilio implements Cloneable,Serializable{
     private String calle;
     private int numero;
 

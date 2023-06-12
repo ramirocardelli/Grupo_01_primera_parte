@@ -1,8 +1,10 @@
 package negocio;
 
+import java.io.Serializable;
+
 /** Clase que representa una contrataci�n de monitoreo de alarmas para viviendas.
  */
-public class ContratacionVivienda extends Contratacion {
+public class ContratacionVivienda extends Contratacion implements Serializable  {
     private static final double valorVivienda=8500;
    
     

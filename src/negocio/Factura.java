@@ -1,5 +1,6 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -7,7 +8,7 @@ import java.util.Iterator;
 
 /** Clase que representa una factura en el sistema de contrataciones. 
  */
-public class Factura implements Cloneable, IFactura {
+public class Factura implements Cloneable, IFactura,Serializable {
     private ArrayList<Contratacion> contrataciones = new ArrayList<Contratacion>();
     private GregorianCalendar mesYanio;
     private boolean personaJ=false; //F=Fisica-V=Juridica

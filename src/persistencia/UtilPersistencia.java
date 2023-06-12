@@ -16,7 +16,7 @@ public class UtilPersistencia {
 		SistemaDTO sistemaDTO= new SistemaDTO();
 		sistemaDTO.setDatos(sistema.getDatos());
 		sistemaDTO.setTecnicos(sistema.getTecnicos());
-		return null;
+		return sistemaDTO;
 	}
 	/**
      * Funcion que inicializa la clase Sistema

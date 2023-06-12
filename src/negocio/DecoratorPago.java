@@ -1,10 +1,11 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /** Clase abstracta que representa el comportamiento de una factura segun su metodo de pago.
  */
-public abstract class DecoratorPago implements IFactura,Cloneable{
+public abstract class DecoratorPago implements IFactura,Cloneable, Serializable {
     protected IFactura encapsulado;
 
     /** Constructor de un parametro IFactura que crea un nuevo objeto DecoratorPago con una IFactura como encapsulado.

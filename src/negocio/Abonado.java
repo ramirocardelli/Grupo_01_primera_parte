@@ -1,5 +1,6 @@
 package negocio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /** Esta clase representa un abonado dentro de un sistema de contrataci�n de un servicios de seguridad.
  * Contiene informaci�n sobre su nombre y su dni.
  */
-public abstract class Abonado extends Observable implements Cloneable,Runnable{  
+public abstract class Abonado extends Observable implements Cloneable,Runnable,Serializable{  
     protected String nombre;
     protected String dni;
     protected HashMap<Domicilio, Contratacion>contrataciones= new HashMap<Domicilio, Contratacion>();

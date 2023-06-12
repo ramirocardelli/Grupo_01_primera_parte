@@ -1,8 +1,9 @@
 package negocio;
 
+
 /** Clase que representa una factura cuyo metodo de pago es cheque.
  */
-public class DecoratorPagoCheque extends DecoratorPago{
+public class DecoratorPagoCheque extends DecoratorPago {
 	private static final double factor = 1.1;
 
     /** Constructor para crear una factura que se abonara con cheque.

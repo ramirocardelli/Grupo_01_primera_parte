@@ -1,8 +1,10 @@
 package negocio;
 
+import java.io.Serializable;
+
 /** Clase que representa una promo que ocasionalmente brinda el sistema.
  */
-public abstract class Promo {
+public abstract class Promo implements Serializable {
     public Promo() {
         super();
     }
