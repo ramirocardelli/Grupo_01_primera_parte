@@ -305,7 +305,7 @@ public class Sistema extends Observable implements Serializable{
 	}
 	
 	public void despersistir() {
-		this.dao.persistir();
+		this.dao.despersistir();
 	}
 }                                               
 
