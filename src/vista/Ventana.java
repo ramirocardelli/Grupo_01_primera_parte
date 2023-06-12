@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
@@ -44,11 +45,10 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JButton botonSolicitarTecnico;
 	private JButton botonDarDeAltaTecnico;
 	private ActionListener actionListener;
-	private JTextArea textArea_LOG;
 	private JTextField RtaCalle;
 	private JTextField textFieldNumero;
 	private JTextField RtaMetodoPago;
-	
+	private JTextArea textArea_LOG;
 
 	
 	 
@@ -252,17 +252,18 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		botonSolicitarTecnico.setActionCommand("SOLICITARTECNICO");
 		botonSolicitarTecnico.setEnabled(false);
 		
-		JPanel panelSur = new JPanel();
-		contentPane.add(panelSur, BorderLayout.SOUTH);
+		JScrollPane scrollPanelSur = new JScrollPane();
+		contentPane.add(scrollPanelSur, BorderLayout.SOUTH);
 		
 		this.textArea_LOG = new JTextArea();
-		this.textArea_LOG.setBounds(0, 0, 1, 1);
+		this.textArea_LOG.setRows(10);
 		this.textArea_LOG.setEditable(false);
-		panelSur.add(textArea_LOG);
+		this.textArea_LOG.setTabSize(25);
+		scrollPanelSur.setViewportView(textArea_LOG);
 		
+		this.setVisible(true);
 		this.muestraMensaje("---------- Aqui se mostrarán los mensajes del sistema -----------");
 		
-		// this.setVisible(true);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -330,7 +331,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	}
 	
 	public void muestraMensaje (String mensaje) {
-		textArea_LOG.setText(mensaje);
+		this.textArea_LOG.append(mensaje+"\n");
 	}
 
 
