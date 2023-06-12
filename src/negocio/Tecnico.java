@@ -24,4 +24,11 @@ public class Tecnico implements Serializable{
 		return false;
 	}
 	
+	
+	@Override
+	public int hashCode() {
+		int hash=1;
+		hash=hash*12+this.nombre.hashCode();
+		return 1;
+	}
 }
