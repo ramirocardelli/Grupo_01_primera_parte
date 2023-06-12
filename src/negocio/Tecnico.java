@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Tecnico implements Serializable{
 	protected String nombre;
-	protected boolean atendiendo;
+	protected transient boolean atendiendo=false;
 
 	public Tecnico(String nombre) {
 		super();
