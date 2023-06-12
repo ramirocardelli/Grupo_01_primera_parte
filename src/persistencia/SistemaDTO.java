@@ -1,7 +1,13 @@
 package persistencia;
 
 import negocio.*;
-
+/**
+ * Clase que permite serializar un objeto que implementa el patron Singleton, en nuestro programa la clase
+ * "Sistema".
+ * 
+ * @author Joaquin
+ *
+ */
 public class SistemaDTO {
 	private SubSistemaDatos datos;
 	private SubSistemaTecnicos tecnicos;

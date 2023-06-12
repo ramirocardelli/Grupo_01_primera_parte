@@ -121,7 +121,9 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 		return contrataciones.values().iterator();
 	}
 	
-	
+	/**
+	 * Funcion que permite que un abonado solicite un tecnico al azar de forma concurrente.
+	 */
 	public void solicitarTecnico() {
     	Thread t1=new Thread(this);
     	t1.start();	

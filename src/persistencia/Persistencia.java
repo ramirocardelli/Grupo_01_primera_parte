@@ -60,7 +60,13 @@ public class Persistencia implements IPersistencia
         return p;
     }
     
-    
+    /**
+     * Funcion que permite crear un DTO de la clase sistema.
+     * Pre: sistema!=null
+     * Post: Objeto de tipo DTO emparentado con la clase Sistema
+     * @param sistema
+     * @return
+     */
     public SistemaDTO sistemaAsistemaDTO(Sistema sistema) {
     	SistemaDTO nuevoSistemaDTO=new SistemaDTO();
     	nuevoSistemaDTO.setDatos(sistema.getDatos());
@@ -68,7 +74,12 @@ public class Persistencia implements IPersistencia
     	return nuevoSistemaDTO;
     }
     
-    
+    /**
+     * Funcion que inicializa la clase Sistema
+     * Pre: sistemaDTO!=null
+     * Post: Clase Sistema incializada
+     * @param sistemaDTO
+     */
     public void inicializaSistemaConDTO(SistemaDTO sistemaDTO) {
     	Sistema nuevoSistema=Sistema.getInstance();
     	nuevoSistema.setDatos(sistemaDTO.getDatos());

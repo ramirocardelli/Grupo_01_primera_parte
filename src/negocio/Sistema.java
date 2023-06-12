@@ -201,7 +201,11 @@ public class Sistema extends Observable implements Serializable {
 		datos.muestraEstado();
 	}
 
-	
+	/**
+	 * Funcion que hace de pasamanos para mandar mensajes a la Vista
+	 * Post: Ventana notificada
+	 * @param mensaje
+	 */
 	public void enviarMensaje(String mensaje) {
 		setChanged();
 		notifyObservers(mensaje);
@@ -229,8 +233,19 @@ public class Sistema extends Observable implements Serializable {
 		
 	}
 
-	public void solicitarTecnico(String dNI) {
-		this.datos.buscaAbonado(dNI).solicitarTecnico();
+	/**
+	  * Dado un dni de un abonado se solicita un tecnico para ese Abonado
+	 *  Pre:-
+	 *  Post:-
+	 * @param dNI
+	 * @throws DniDesconocidoException: Si no existe un Abonado para ese DNI se lanza una excepcion
+	 */
+	public void solicitarTecnico(String dNI) throws DniDesconocidoException{
+		Abonado aux=this.datos.buscaAbonado(dNI);
+		if (aux!=null)
+			aux.solicitarTecnico();
+		else
+			throw new DniDesconocidoException(dNI);
 	}
 
 	public void altaTecnico(String nombreTecnico) {

@@ -12,8 +12,10 @@ public class SubSistemaTecnicos implements Serializable{
 		super();
 	}
 	/**
-	 * 
+	 * Funcion que agrega un tecnico a la lista de tecnicos y notifica a todos los thread de que hay un nuevo recurso
+	 * disponible.
 	 * Pre: tecnico!=null
+	 * Post: Tecnico agregado a la lista
 	 * @param tecnico
 	 */
 	public void agregarTecnico(Tecnico tecnico) {//Habria que poner semaforos para controlar acceso al mismo tiempo al arreglo
@@ -29,12 +31,24 @@ public class SubSistemaTecnicos implements Serializable{
 		tecnicos.remove(tecnico);
 	}
 	
-	
+	/**
+	 * 
+	 * 
+	 * Funcion interna que libera un tecnico y notifique a todos los threads que ese tecnico ahora se encuentra libre
+	 * para ser utilizado por otro thread.
+	 * @param tecnico
+	 */
 	public synchronized void liberarTecnico(Tecnico tecnico) {
 		tecnico.atendiendo=false;
 		notifyAll();
 	}
 	
+	/**
+	 * Funcion interna que administra los threads para asignarle a cada uno un tecnico o si no hubiera tecnicos disponibles
+	 * se los pone en espera. 
+	 * Post: Devuelve un Tecnico que esta atendiendo a ese thread
+	 * @return
+	 */
 	public synchronized Tecnico solicitarTecnico() {
 	int i;
 	Tecnico rta=null;
