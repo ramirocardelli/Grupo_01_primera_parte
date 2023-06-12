@@ -45,33 +45,40 @@ public class Controlador implements ActionListener, Observer
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) //ventana lanza eventos
+	public void actionPerformed(ActionEventExtended e) //ventana lanza eventos
 	{
 		String comando = e.getActionCommand();
 		if (comando.equalsIgnoreCase("PAGAR")) {
-			//modelo que el abonado del dni que se ingreso quiere pagar
+			this.sistema.PagarFactura(e.DNI,e.metodoPago);
 		}
 		else if (comando.equalsIgnoreCase("CONTRATAR")) {
-				
+				this.sistema.nuevaContratacion(e.dni,e.cantCamaras,e.cantBotones,e.movil.equalsIgnoreCase("Si"),new Domicilio(e.calle,e.numero),e.tipoServicio);
 			}
 			else if (comando.equalsIgnoreCase("DARBAJA")) {
-					
+					this.sistema.eliminaContratacionAbonado(e.dni,new Domicilio(e.calle,e.num));
 				}
 				else if (comando.equalsIgnoreCase("HISTORICO")) {
-						
+						this.sistema.
 					}
-				else if (comando.equalsIgnoreCase("FACTURACION")) {
-					
-				}
+	
 				else if (comando.equalsIgnoreCase("ACTUALIZARMES")) {
-					
+					this.sistema.findeMes();
 				}
 				else if (comando.equalsIgnoreCase("SOLICITARTECNICO")) {
 					
 				}
-				else { //ALTA TECNICO
+				else if (comando.equalsIgnoreCase("ALTATECNICO")){
 					
 				}
-	}
+				else if (comando.equalsIgnoreCase("SERIALIZAR"){
+					this.serializar();
+				}
+				else {
+					this.deserializar();// DESERIALIZAR
+				}
+					
 
+		public void serializar() {
+			
+		}
 }

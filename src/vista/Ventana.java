@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import negocio.ActionEventExtended;
+
 import java.awt.BorderLayout;
 import javax.swing.JTextArea;
 import java.awt.GridLayout;
@@ -31,7 +34,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JTextField RtaCamaras;
 	private JTextField RtaBotones;
 	private JTextField RtaMovil;
-	private JTextField textFieldNombreTecnico;
+	private JTextField RtaNombreTecnico;
 	private JButton botonPagar;
 	private JButton botonContratarServicio;
 	private JButton botonDarDeBaja;
@@ -42,8 +45,9 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JButton botonDarDeAltaTecnico;
 	private ActionListener actionListener;
 	private JTextArea textArea_LOG;
-	private JTextField textFieldCalle;
+	private JTextField RtaCalle;
 	private JTextField textFieldNumero;
+	private JTextField RtaMetodoPago;
 	
 
 	
@@ -67,6 +71,10 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	 * Create the frame.
 	 */
 	public Ventana() {
+		
+		ActionEvent event = new ActionEvent(this,0,"DESPERSISTIR");
+		this.actionListener.actionPerformed(event);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -108,10 +116,10 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		panelDNItextfield.add(RtaDNI);
 		RtaDNI.setColumns(10);
 		
-		textFieldCalle = new JTextField();
-		textFieldCalle.addKeyListener(this);
-		panelDNItextfield.add(textFieldCalle);
-		textFieldCalle.setColumns(10);
+		RtaCalle = new JTextField();
+		RtaCalle.addKeyListener(this);
+		panelDNItextfield.add(RtaCalle);
+		RtaCalle.setColumns(10);
 		
 		textFieldNumero = new JTextField();
 		textFieldNumero.addKeyListener(this);
@@ -206,20 +214,20 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		PanelTecnico.add(PanelSolicitarTecnico);
 		PanelSolicitarTecnico.setLayout(new GridLayout(3, 1, 0, 0));
 		
-		JPanel PanelDiseñoTecnico = new JPanel();
-		PanelSolicitarTecnico.add(PanelDiseñoTecnico);
+		JPanel PanelMetodoPago = new JPanel();
+		PanelSolicitarTecnico.add(PanelMetodoPago);
 		
-		botonSolicitarTecnico = new JButton("Solicitar técnico");
-		botonSolicitarTecnico.setActionCommand("SOLICITARTECNICO");
-		botonSolicitarTecnico.setEnabled(false);
-		PanelSolicitarTecnico.add(botonSolicitarTecnico);
+		JLabel LabelMetodoPago = new JLabel("Efectivo/cheque/tarjeta");
+		PanelMetodoPago.add(LabelMetodoPago);
+		
+		RtaMetodoPago = new JTextField();
+		RtaMetodoPago.addKeyListener(this);
+		PanelSolicitarTecnico.add(RtaMetodoPago);
+		RtaMetodoPago.setColumns(10);
 		
 		JPanel PanelDarDeAltaTecnico = new JPanel();
 		PanelTecnico.add(PanelDarDeAltaTecnico);
 		PanelDarDeAltaTecnico.setLayout(new GridLayout(3, 1, 0, 0));
-		
-		JPanel panel_aux_darDeAltaTecnico = new JPanel();
-		PanelDarDeAltaTecnico.add(panel_aux_darDeAltaTecnico);
 		
 		JPanel panel_2 = new JPanel();
 		PanelDarDeAltaTecnico.add(panel_2);
@@ -229,15 +237,20 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		LabelNombreTecnico.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(LabelNombreTecnico);
 		
-		this.textFieldNombreTecnico = new JTextField();
-		this.textFieldNombreTecnico.addKeyListener(this);
-		panel_2.add(textFieldNombreTecnico);
-		textFieldNombreTecnico.setColumns(10);
+		this.RtaNombreTecnico = new JTextField();
+		this.RtaNombreTecnico.addKeyListener(this);
+		panel_2.add(RtaNombreTecnico);
+		RtaNombreTecnico.setColumns(10);
 		
 		botonDarDeAltaTecnico = new JButton("Dar de alta tecnico");
 		botonDarDeAltaTecnico.setActionCommand("ALTATECNICO");
 		botonDarDeAltaTecnico.setEnabled(false);
 		PanelDarDeAltaTecnico.add(botonDarDeAltaTecnico);
+		
+		botonSolicitarTecnico = new JButton("Solicitar técnico");
+		PanelDarDeAltaTecnico.add(botonSolicitarTecnico);
+		botonSolicitarTecnico.setActionCommand("SOLICITARTECNICO");
+		botonSolicitarTecnico.setEnabled(false);
 		
 		JPanel panelSur = new JPanel();
 		contentPane.add(panelSur, BorderLayout.SOUTH);
@@ -261,6 +274,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		String tipoServicio="";
 		String movil="";
 		String calle="";
+		String metodoPago="";
 		int numero=-1;
 		String nombreTecnico;
 		int cantBotones=-1,cantCamaras=-1;
@@ -277,12 +291,13 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		dni = this.RtaDNI.getText();
 		tipoServicio = this.RtaComercioVivienda.getText();
 		movil = this.RtaMovil.getText();
-		nombreTecnico = this.textFieldNombreTecnico.getText();
-		calle = this.textFieldCalle.getText();
+		nombreTecnico = this.RtaNombreTecnico.getText();
+		calle = this.RtaCalle.getText();
+		metodoPago = this.RtaMetodoPago.getText();
 		
 		condicionDNI = !dni.equals("");
 		condicioncalle = !calle.equals("");
-		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && numero>=0 && condicioncalle && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no"));
+		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && numero>=0 && condicioncalle && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no")) && (metodoPago.equalsIgnoreCase("Efectivo")||metodoPago.equalsIgnoreCase("Cheque")||metodoPago.equalsIgnoreCase("Tarjeta"));
 		condicionTecnico = !(nombreTecnico.isBlank());
 		
 		
@@ -310,7 +325,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.botonHistorico.addActionListener(actionListener); 
 		this.botonPagar.addActionListener(actionListener); 
 		this.botonSolicitarTecnico.addActionListener(actionListener); 
-		this.actionListener=actionListener;
+		this.actionListener = actionListener;
 		
 	}
 	
@@ -329,15 +344,30 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 
 
 	@Override
-	public void mousePressed(MouseEvent e) //pasarle todos los textfields
+	public void mousePressed(MouseEvent e) //
 	{
-		ActionEvent event;
-		String dni;
+		ActionEventExtended event;
+		String dni = this.RtaDNI.getText();
+		String tipoServicio = this.RtaComercioVivienda.getText();
+		String movil = this.RtaMovil.getText();
+		String nombreTecnico = this.RtaNombreTecnico.getText();
+		String calle = this.RtaCalle.getText();
+		String metodoPago = this.RtaMetodoPago.getText();
+		int cantBotones = Integer.parseInt(this.RtaBotones.getText());
+		int cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+		int numero = Integer.parseInt(this.textFieldNumero.getText());
+		
 		JButton botonApretado = (JButton)e.getSource();
 		String command = botonApretado.getActionCommand(); // lo que se debe hacer
-		event = new ActionEvent(botonApretado,0,command);
+		event = new ActionEventExtended(botonApretado,0,command,dni,calle,numero,tipoServicio,cantBotones,cantCamaras,movil,nombreTecnico,metodoPago);
 		if (e.getButton() == 1) //boton izq
 			this.actionListener.actionPerformed(event);
+		
+		if (!this.isShowing()) { //FIN JORNADA - PERSISTIR
+			event = new ActionEvent(this,0,"PERSISTIR");
+			this.actionListener.actionPerformed(event);
+		}
+			
 	}
 
 
