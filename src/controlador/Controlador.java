@@ -102,7 +102,7 @@ public class Controlador implements ActionListener, Observer
 			SistemaDTO sistemaDTO;
 			try {
 				persistencia.abrirOutput("sistema.bin");
-				sistemaDTO=UtilPersistencia.sistemaDTOFromSistema(sistema)
+				sistemaDTO=UtilPersistencia.sistemaDTOFromSistema(sistema);
 				persistencia.escribir(sistemaDTO);
 				persistencia.cerrarOutput();
 			} catch (IOException e1) {

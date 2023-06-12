@@ -25,9 +25,11 @@ import javax.swing.DropMode;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.event.KeyEvent;
 
-public class Ventana extends JFrame implements IVista, KeyListener, MouseListener {
+public class Ventana extends JFrame implements IVista, KeyListener, MouseListener, WindowListener {
 
 	private JPanel contentPane;
 	private JTextField RtaDNI;
@@ -258,8 +260,16 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.textArea_LOG.setEditable(false);
 		this.textArea_LOG.setTabSize(25);
 		scrollPanelSur.setViewportView(textArea_LOG);
-		
+		this.botonActualizarMes.addMouseListener(this);
+		this.botonContratarServicio.addMouseListener(this);
+		this.botonDarDeAltaTecnico.addMouseListener(this);
+		this.botonDarDeBaja.addMouseListener(this);
+		this.botonGestionFact.addMouseListener(this);
+		this.botonHistorico.addMouseListener(this);
+		this.botonPagar.addMouseListener(this);
+		this.botonSolicitarTecnico.addMouseListener(this);
 		this.setVisible(true);
+		this.addWindowListener(this);
 		this.muestraMensaje("---------- Aqui se mostrarán los mensajes del sistema -----------");
 		
 	}
@@ -344,6 +354,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	@Override
 	public void mousePressed(MouseEvent e) //
 	{
+		System.out.println("hiceClick");
 		ActionEventExtended event;
 		String dni = this.RtaDNI.getText();
 		String tipoServicio = this.RtaComercioVivienda.getText();
@@ -361,10 +372,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		if (e.getButton() == 1) //boton izq
 			this.actionListener.actionPerformed(event);
 		
-		if (!this.isShowing()) { //FIN JORNADA - PERSISTIR
-			event = new ActionEventExtended(this,0,"PERSISTIR");
-			this.actionListener.actionPerformed(event);
-		}
+		
 			
 	}
 
@@ -388,6 +396,65 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		ActionEventExtended event = new ActionEventExtended(this,0,"PERSISTIR");
+		this.actionListener.actionPerformed(event);
+		System.out.println("Cerre");
+		System.exit(0);
+		
+	}
+
+
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+
+		
+	}
+
+
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
