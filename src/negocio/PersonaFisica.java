@@ -38,7 +38,7 @@ public class PersonaFisica extends Abonado {
 	}
 
 	@Override
-	public void bajaServicio(Domicilio domicilio) throws PagoException {
+	public void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException {
 		// TODO Auto-generated method stub
 		this.estado.bajaServicio(domicilio);
 		
@@ -51,6 +51,12 @@ public class PersonaFisica extends Abonado {
 		
 	}
     
+	
+	@Override
+	public String toString() {
+		return "Persona Fisica: "+ nombre + ", DNI:" + dni + "\n\tcontrataciones:" + contrataciones+ "\n\t historicoFacturas=" + historicoFacturas + "\n\t facturaPendiente=" + facturaPendiente+"\n";	
+	}
+	
     //No es necesario sobreescribir el clon() xq no cambia del ya creado en la clase padre (como se extiende ya lo tiene)
 
 }

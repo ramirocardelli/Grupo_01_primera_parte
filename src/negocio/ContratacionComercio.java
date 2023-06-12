@@ -56,7 +56,7 @@ public class ContratacionComercio extends Contratacion {
 
 	@Override
 	public String toString() {
-		return "\t\tMonitoreo de Alarmas de Comercio para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
+		return "\t\t* Monitoreo de Alarmas de Comercio para Domicilio: " + domicilio + ". ID: "+ id +". Precio total: " + precio + " \n"
 				+ "\t\t\tAgregados: \n "
 				+ " \t\t\tCamaras: " + camaras + "\n"
 				+ " \t\t\tBotones Antipánico: " + botonesAntipanicos+ "\n"

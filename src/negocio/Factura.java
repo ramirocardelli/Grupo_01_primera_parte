@@ -1,6 +1,7 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 
@@ -88,7 +89,7 @@ public class Factura implements Cloneable, IFactura {
 	
     @Override
 	public String toString() {
-		return "Factura del " + "\n\t Contrataciones: \n" + contrataciones + " \n";
+		return "Factura del "+ mesYanio.get(Calendar.MONTH)+"/"+ mesYanio.get(Calendar.YEAR)+"\n\t\t Contrataciones: \n" + contrataciones + " \n";
 	}
     
 }

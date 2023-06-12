@@ -13,11 +13,11 @@ import java.util.concurrent.TimeUnit;
  * Contiene informaci�n sobre su nombre y su dni.
  */
 public abstract class Abonado extends Observable implements Cloneable,Runnable{  
-    private String nombre;
-    private String dni;
-    HashMap<Domicilio, Contratacion>contrataciones= new HashMap<Domicilio, Contratacion>();
-    HashMap<GregorianCalendar, IFactura>historicoFacturas= new HashMap<GregorianCalendar, IFactura>();
-    LinkedList<Factura> facturaPendiente=new LinkedList<Factura>();
+    protected String nombre;
+    protected String dni;
+    protected HashMap<Domicilio, Contratacion>contrataciones= new HashMap<Domicilio, Contratacion>();
+    protected HashMap<GregorianCalendar, IFactura>historicoFacturas= new HashMap<GregorianCalendar, IFactura>();
+    protected LinkedList<Factura> facturaPendiente=new LinkedList<Factura>();
 
     /** Constructor de 2 parametros String para crear un nuevo abonado.
      * @param nombre : Nombre del abonado.
@@ -72,7 +72,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
      * @return : Se devuelve un clon del abonado correspondiente.
      * @throws CloneNotSupportedException : Se lanza una excepcion cuando el abonado es de tipo persona jur�dica, la cual no puede aceptar clonacion.
      */
-    public Object clon() throws CloneNotSupportedException{
+    public Object clone() throws CloneNotSupportedException{
     	Contratacion poneC;
     	IFactura poneF;
     	Abonado clon= (Abonado)super.clone();
@@ -108,6 +108,19 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 		return clon;
     }
     
+    public ArrayList<Contratacion> copiaContrataciones() {
+    	ArrayList<Contratacion> contrataciones=new ArrayList<Contratacion>();
+    	Iterator<Contratacion> it=this.contrataciones.values().iterator();
+    	while(it.hasNext()) {
+    		try {
+				contrataciones.add((Contratacion)it.next().clone());
+			} catch (CloneNotSupportedException e) {
+				//las contrataciones son siempre clonables
+			}
+    	}
+		return contrataciones;
+    }
+    
 	public void findeMes(Factura factura) {
 		this.facturaPendiente.add(factura);
 	}
@@ -129,20 +142,12 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
     	t1.start();	
     }
 
-
-
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
-	}
-
 	@Override
 	public void run() {
 		String texto;
 		Tecnico tecnico=Sistema.getInstance().getTecnicos().solicitarTecnico();
 		texto="El tecnico"+tecnico.nombre+"esta atendiendo al abonado "+this.nombre;
-		Sistema.getInstance().enviarMensaje(texto);
+		Sistema.getInstance().muestraThread(texto);
 		try {
 			TimeUnit.SECONDS.sleep(10);
 		} catch (InterruptedException e) {
@@ -152,13 +157,17 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable{
 		
 		Sistema.getInstance().getTecnicos().liberarTecnico(tecnico);
 		texto="El tecnico"+tecnico.nombre+" termino de atender abonado "+this.nombre;
-		Sistema.getInstance().enviarMensaje(texto);
+		Sistema.getInstance().muestraThread(texto);
 	}
-	 @Override
-	public String toString() {
-			return "Abonado " + nombre + " con DNI: " + dni ;
-		}
 
+	
+	@Override
+	public abstract String toString();
+
+	protected String historico() {
+		return "El historico de facturas para el abonado: " + this.nombre +" es: "+this.historicoFacturas.toString();
+	}
+	
 	
 	
 }

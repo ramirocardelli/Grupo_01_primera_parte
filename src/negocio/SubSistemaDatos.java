@@ -104,25 +104,21 @@ public class SubSistemaDatos {
 	
 	public void findeMes(GregorianCalendar fecha) {
 		Iterator<Abonado> itAbonados= this.abonados.values().iterator();
-		ArrayList<Contratacion> listaContrataciones=new ArrayList<Contratacion>();
+		Abonado abonado;
 		while(itAbonados.hasNext()) { //clona las contrataciones para que estan permanezcan constantes en el historico (no son referencias)
-			Abonado abonado=itAbonados.next();
-			listaContrataciones.clear();
-			Iterator<Contratacion> itContrataciones= abonado.getContrataciones();
-			while(itContrataciones.hasNext()) {
-				listaContrataciones.add(itContrataciones.next());
-			}
-			abonado.findeMes(new Factura(fecha,listaContrataciones));//MAL ABONADO TIENE QUE CLONAR LAS CONTRATACIONES
+				abonado=itAbonados.next();
+				abonado.findeMes(new Factura(fecha,abonado.copiaContrataciones()));
 		}
 	}
 	
-	public void pagaFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException,noHayFacturaAPagarException, PagoException {
+	public IFactura pagaFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException,noHayFacturaAPagarException, PagoException {
 		Abonado abonado=this.abonados.get(dni);
+		IFactura factura=null;
 		if(abonado!=null) {
 			IFactura aPagar=abonado.getFactura(null);
 			if(aPagar!=null) {
 				FactoryDecoradoFactura Fa= new FactoryDecoradoFactura();
-				IFactura factura=Fa.creaFactura(aPagar, metodoPago); //obtiene la factura a pagar
+				factura=Fa.creaFactura(aPagar, metodoPago); //obtiene la factura a pagar
 				abonado.pagaFactura(factura);
 			}
 			else
@@ -130,13 +126,25 @@ public class SubSistemaDatos {
 		}
 		else
 			throw new DniDesconocidoException(dni);
+		return factura; //devuelve la factura a pagar
 	}
 	
-	public void muestraEstado() {
+	public String muestraEstadoSistema() {
+		String rta = "Abonados del Sistema: \n";
 		Iterator<Abonado> it=this.abonados.values().iterator();
-		System.out.println("El sistema cuenta con las siguientes facturas:\n");
 		while (it.hasNext()) {
-			System.out.println(it.next());
+			rta+= "  * "+it.next().toString();
 		}
+		return rta;
+	}
+	public String historico(String dni) throws DniDesconocidoException {
+		Abonado abonado=this.abonados.get(dni);
+		String rta=null;
+		if(abonado!=null) {
+			rta=abonado.historico();
+		}
+		else
+			throw new DniDesconocidoException(dni);
+		return rta;
 	}
 }

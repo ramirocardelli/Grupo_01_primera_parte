@@ -49,4 +49,9 @@ public class PersonaJuridica extends Abonado {
 		this.abonarFactura(factura);
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "Persona Fisica: "+ nombre + ", DNI:" + dni + "\n\tcontrataciones:" + contrataciones+ "\n\t historicoFacturas=" + historicoFacturas + "\n\t facturaPendiente=" + facturaPendiente+"\n";	
+	}
 }

@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import negocio.ActionEventExtended;
 import negocio.Domicilio;
+import negocio.Estado;
 import negocio.Sistema;
 import persistencia.IPersistencia;
 import persistencia.Persistencia;
@@ -45,9 +46,15 @@ public class Controlador implements ActionListener, Observer
 		if (o != this.sistema) {
 			throw new InvalidParameterException();
 		}
-		String mensaje;
-		mensaje = (String) arg;
-		this.vista.muestraMensaje(mensaje);
+		Estado estado=(Estado)arg;
+		if(estado.getQueSoy()=="SISTEMA")
+			this.vista.muestraMensaje(estado.getMensaje());
+		else
+			if(estado.getQueSoy()=="EXCEPCION")
+				this.vista.muestraMensaje(estado.getMensaje());
+			else
+				if(estado.getQueSoy()=="THREAD")
+					this.vista.muestraMensaje(estado.getMensaje());
 		}
 
 	@Override

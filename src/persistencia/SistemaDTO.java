@@ -1,5 +1,7 @@
 package persistencia;
 
+import java.io.Serializable;
+
 import negocio.*;
 /**
  * Clase que permite serializar un objeto que implementa el patron Singleton, en nuestro programa la clase
@@ -8,7 +10,7 @@ import negocio.*;
  * @author Joaquin
  *
  */
-public class SistemaDTO {
+public class SistemaDTO implements Serializable {
 	private SubSistemaDatos datos;
 	private SubSistemaTecnicos tecnicos;
 	

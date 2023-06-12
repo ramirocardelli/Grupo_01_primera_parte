@@ -6,17 +6,20 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Observable;
 
+import persistencia.DAO;
+
 
 /** Clase que representa el sistema de gestion de facturas y abonados.
 =======
 /** Clase que representa el sistema de gesti�n de facturas y abonados.
 >>>>>>> Stashed changes
  */
-public class Sistema extends Observable implements Serializable { 
+public class Sistema extends Observable { 
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
     private GregorianCalendar fechaAct;
     private SubSistemaTecnicos tecnicos;
+    private transient DAO dao=new DAO("nombredelarchpersist.txt");
     
 
     /** Constructor privado para evitar que se creen muchas instancias del Sistema
@@ -43,11 +46,28 @@ public class Sistema extends Observable implements Serializable {
     public void findeMes() {
     	datos.findeMes(this.fechaAct);
     	fechaAct.add(Calendar.MONTH, 1);
+    	this.persistir(); //persiste una vez se cierra el mes
     }
     
-    public void PagarFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException, noHayFacturaAPagarException, PagoException {
-    	datos.pagaFactura(dni,metodoPago);
-    	//deberia notificarle a la vista quien y el precio de la factura (se puede hacer q el metodo devuelva esos datos y se hace un notify obeserver)
+    public void PagarFactura(String dni,String metodoPago) { //metodo invocado por ventana
+    	Estado estado=null;
+    	try {
+			IFactura Fpagada=datos.pagaFactura(dni,metodoPago);
+			Abonado abonado=datos.buscaAbonado(dni);
+			String mensaje="El abonado "+abonado.nombre+" paga correctamente su factura del "+ Fpagada.getMesYAnio().get(Calendar.MONTH)+"/"+ Fpagada.getMesYAnio().get(Calendar.YEAR)+" por un importe de: $"+ Fpagada.valorConDesc();
+			estado= new Estado(mensaje,"SISTEMA");
+		} catch (DniDesconocidoException e) {
+			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
+		} catch (PagoException e) {
+			estado=new Estado(e.getMessage(),"EXCEPCION");
+		} catch (MetodoDePagoInvalidoException e) {
+			estado= new Estado("El metodo de pago ingresado no coincide con los disponibles","EXCEPCION");
+		} catch (noHayFacturaAPagarException e) {
+			estado= new Estado("El abonado con dni: "+ e.getDni()+ " no dispone de facturas pendientes de pago","EXCEPCION");
+		}
+    	setChanged();
+    	notifyObservers(estado);
+    	
     }
     
     
@@ -64,10 +84,25 @@ public class Sistema extends Observable implements Serializable {
      * @throws DniDesconocidoException 
      * @throws PagoException 
      */
-    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, TipoIncorrectoServicioException, DniDesconocidoException, PagoException { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
-    	FactoryContratacion FC=new FactoryContratacion();
-    	Contratacion nuevaContratacion=FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
-    	this.datos.nuevaContratacion(dni,nuevaContratacion);
+    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) {
+    	Estado estado=null;
+		try {
+			FactoryContratacion FC=new FactoryContratacion();
+			Contratacion nuevaContratacion = FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
+			this.datos.nuevaContratacion(dni,nuevaContratacion);
+			Abonado abonado=datos.buscaAbonado(dni);
+			estado=new Estado("El abonado "+ abonado.getNombre()+ " contrata un nuevo sistema de "+tipo+ "para su domicilio: "+ domicilio.toString(),"SISTEMA");
+		} catch (TipoIncorrectoServicioException e) {
+			estado=new Estado("El tipo de servicio ingresado es invalido","EXCEPTION");
+		} catch (DomicilioYaConContratacionExcepcion e) {
+			estado=new Estado("El domicilio: "+ e.getDomicilio().toString()+ " ya se encuentra con una contratacion","EXCEPTION");
+		} catch (DniDesconocidoException e) {
+			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
+		} catch (PagoException e) {
+			
+		}
+		setChanged();
+    	notifyObservers(estado);
     }
     
     /** Metodo para eliminar una contratacion de un abonado.
@@ -78,8 +113,21 @@ public class Sistema extends Observable implements Serializable {
      * <b> Pre: </b> dni no puede ser " " ni null y domicilio no puede ser null.
      * @throws PagoException 
      */
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DniDesconocidoException, DomicilioSinContratacionEnAbonadoException, PagoException {
-    	this.datos.eliminarContratacion(dni, domicilio);
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio)  {
+    	Estado estado=null;
+    	try {
+			this.datos.eliminarContratacion(dni, domicilio);
+			Abonado abonado= datos.buscaAbonado(dni);
+			estado= new Estado("El abonado "+ abonado.getNombre()+ "da de baja su contratacion en: "+domicilio.toString(),"SISTEMA" );
+		} catch (DomicilioSinContratacionEnAbonadoException e) {
+			estado=new Estado("El abonado con DNI: "+e.getAbonado().getDni()+" no posee ninguna contratacion en el domicilio:" +e.getDomicilio() , "EXCEPCION");
+		} catch (DniDesconocidoException e) {
+			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
+		} catch (PagoException e) {
+			estado=new Estado(e.getMessage(),"EXCEPTION");
+		}
+    	setChanged();
+    	notifyObservers(estado);
     }
     
     /** Metodo para buscar un abonado en la base de datos dado un dni. 
@@ -123,9 +171,6 @@ public class Sistema extends Observable implements Serializable {
     	return rta;
     }
     
-    public double ValorFactura(String dni, GregorianCalendar mesYanio) {
-		return 0;
-    }
     
     /** Metodo que realiza, cuando sea posible, la clonaci�n de una factura.
      * @param dni del abonado del que se quiere clonar la factura.
@@ -191,25 +236,12 @@ public class Sistema extends Observable implements Serializable {
     		throw new DniDesconocidoException(dni);
     	}
     }
-    
-    
-	/**
-	 * Muestra el contenido de todas las facturas almacenadas junto con el detalle de cada una de <br>
-	 * las contrataciones que realizo el Abonado  
-	 **/
-	public void MuestraEstado() {
-		datos.muestraEstado();
-	}
 
 	/**
 	 * Funcion que hace de pasamanos para mandar mensajes a la Vista
 	 * Post: Ventana notificada
 	 * @param mensaje
 	 */
-	public void enviarMensaje(String mensaje) {
-		setChanged();
-		notifyObservers(mensaje);
-	}
 	
 	public SubSistemaDatos getDatos() {
 		return datos;
@@ -228,11 +260,19 @@ public class Sistema extends Observable implements Serializable {
 		return tecnicos;
 	}
 
-	public void historico(String dNI) { //MUESTRA ESTADO
-		// TODO Auto-generated method stub
-		
+	public void historico(String dni) { //MUESTRA ESTADO
+		Estado estado;
+		try {
+			String muestraHistorico=datos.historico(dni);
+			estado=new Estado(muestraHistorico,"SISTEMA"); 
+		} catch (DniDesconocidoException e) {
+			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
+		}
 	}
 
+	public String muestraEstadoSist() {
+		return datos.muestraEstadoSistema();
+	}
 	/**
 	  * Dado un dni de un abonado se solicita un tecnico para ese Abonado
 	 *  Pre:-
@@ -240,12 +280,14 @@ public class Sistema extends Observable implements Serializable {
 	 * @param dNI
 	 * @throws DniDesconocidoException: Si no existe un Abonado para ese DNI se lanza una excepcion
 	 */
-	public void solicitarTecnico(String dNI) throws DniDesconocidoException{
-		Abonado aux=this.datos.buscaAbonado(dNI);
+	public void solicitarTecnico(String dni) {
+		Estado estado=null;
+		Abonado aux=this.datos.buscaAbonado(dni);
 		if (aux!=null)
 			aux.solicitarTecnico();
 		else
-			throw new DniDesconocidoException(dNI);
+			estado= new Estado("Ningun cliente registrado posee como dni "+dni,"EXCEPCION");
+
 	}
 
 	public void altaTecnico(String nombreTecnico) {
@@ -253,5 +295,17 @@ public class Sistema extends Observable implements Serializable {
 		
 	}
 	
+	public void muestraThread(String mnsg) {
+		setChanged();
+		notifyObservers(new Estado(mnsg,"THREAD"));
+	}
+	
+	public void persistir() {
+		this.dao.persistir();
+	}
+	
+	public void despersistir() {
+		this.dao.persistir();
+	}
 }                                               
 

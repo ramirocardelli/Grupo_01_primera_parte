@@ -7,8 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import negocio.Sistema;
-
 public class Persistencia implements IPersistencia
 {
 
@@ -17,73 +15,74 @@ public class Persistencia implements IPersistencia
     private ObjectOutputStream objectoutput;
     private ObjectInputStream objectinput;
 
-    public void abrirInput(String nombre) throws IOException
+    public void abrirInput(String nombre) 
     {
-        fileinput = new FileInputStream(nombre);
-        objectinput = new ObjectInputStream(fileinput);
+        try {
+			fileinput = new FileInputStream(nombre);
+			objectinput = new ObjectInputStream(fileinput);
+		} catch (IOException e) {
+		}
+    }
+
+    public void abrirOutput(String nombre)
+    {
+        try {
+        	fileoutput = new FileOutputStream(nombre);
+			objectoutput = new ObjectOutputStream(fileoutput);
+		} catch (IOException e) {
+			
+		}
 
     }
 
-    public void abrirOutput(String nombre) throws IOException
-    {
-        fileoutput = new FileOutputStream(nombre);
-        objectoutput = new ObjectOutputStream(fileoutput);
-
-    }
-
-    public void cerrarOutput() throws IOException
+    public void cerrarOutput() 
     {
         if (objectoutput != null)
-            objectoutput.close();
+			try {
+				objectoutput.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
     }
 
-    public void cerrarInput() throws IOException
+    public void cerrarInput()
     {
         if (objectinput != null)
-            objectinput.close();
+			try {
+				objectinput.close();
+			} catch (IOException e) {
+			}
 
     }
 
 
-    public void escribir(Serializable p) throws IOException
+    public void escribir(Serializable p) 
     {
         if (objectoutput != null)
-            objectoutput.writeObject(p);
+			try {
+				objectoutput.writeObject(p);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     }
 
-    public Serializable leer() throws IOException, ClassNotFoundException
+    public Serializable leer() 
     {
         Serializable p = null;
         if (objectinput != null)
-            p = (Serializable) objectinput.readObject();
+			try {
+				p = (Serializable) objectinput.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         return p;
-    }
-    
-    /**
-     * Funcion que permite crear un DTO de la clase sistema.
-     * Pre: sistema!=null
-     * Post: Objeto de tipo DTO emparentado con la clase Sistema
-     * @param sistema
-     * @return
-     */
-    public SistemaDTO sistemaAsistemaDTO(Sistema sistema) {
-    	SistemaDTO nuevoSistemaDTO=new SistemaDTO();
-    	nuevoSistemaDTO.setDatos(sistema.getDatos());
-    	nuevoSistemaDTO.setTecnicos(sistema.getTecnicos());
-    	return nuevoSistemaDTO;
-    }
-    
-    /**
-     * Funcion que inicializa la clase Sistema
-     * Pre: sistemaDTO!=null
-     * Post: Clase Sistema incializada
-     * @param sistemaDTO
-     */
-    public void inicializaSistemaConDTO(SistemaDTO sistemaDTO) {
-    	Sistema nuevoSistema=Sistema.getInstance();
-    	nuevoSistema.setDatos(sistemaDTO.getDatos());
-    	nuevoSistema.setTecnicos(sistemaDTO.getTecnicos());    	
     }
 
 }
