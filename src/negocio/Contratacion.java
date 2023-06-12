@@ -1,11 +1,10 @@
 package negocio;
 
-import java.io.Serializable;
 
 /**
  *Clase que representa una contratacion de un cliente con los servicios correspondientes.
  */
-public abstract class Contratacion implements Cloneable, Serializable{ 
+public abstract class Contratacion implements Cloneable{ 
     protected int camaras;
     protected int botonesAntipanicos;
     protected boolean movilAcompanamiento;
@@ -97,3 +96,4 @@ public abstract class Contratacion implements Cloneable, Serializable{
     return clon;
     }
 }
+

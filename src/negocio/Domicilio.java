@@ -1,10 +1,8 @@
 package negocio;
 
-import java.io.Serializable;
-
 /** Clase que representa un domicilio de un abonado. Contiene un String para el nombre de la calle y un int para la altura. 
  */
-public class Domicilio implements Cloneable, Serializable {
+public class Domicilio implements Cloneable {
     private String calle;
     private int numero;
 
@@ -57,4 +55,28 @@ public class Domicilio implements Cloneable, Serializable {
 		Domicilio clon=(Domicilio)super.clone();
 		return clon;
 	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if(this==object) {
+			return true;
+		}
+		if(!(object instanceof Domicilio)) {
+			return false;
+		}
+		final Domicilio other=(Domicilio) object;
+		if(this.hashCode()!=other.hashCode())
+			return false;
+		return true;
+		
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash=1;
+		hash=hash*20+calle.hashCode();
+		hash=hash*20+numero;
+		return 1;
+	}
+	
 }

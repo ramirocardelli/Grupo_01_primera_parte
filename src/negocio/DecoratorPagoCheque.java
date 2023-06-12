@@ -13,15 +13,13 @@ public class DecoratorPagoCheque extends DecoratorPago{
         super(encapsulado);
     }
 
-    /** Metodo para calcular el monto total a pagar de una factura aplicando el incremento del 10% por pagar con cheque.
-     * @return double con el valor del monto total a abonar.
-     */
-    public double calcularTotalConDescuento() {
-            return encapsulado.calcularTotalConDescuento() * factor;
-    }
-
 	@Override
 	public String toString() {
 		return this.encapsulado.toString()+"\t Metodo de pago: cheque\n";
+	}
+
+	@Override
+	public double valorConDesc() {
+		return encapsulado.valorConDesc()*factor;
 	}
 }
