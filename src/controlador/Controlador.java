@@ -45,7 +45,7 @@ public class Controlador implements ActionListener, Observer
 	}
 
 	@Override
-	public void actionPerformed(ActionEventExtended e) //ventana lanza eventos
+	public void actionPerformed(ActionEvent e) //ventana lanza eventos
 	{
 		String comando = e.getActionCommand();
 		if (comando.equalsIgnoreCase("PAGAR")) {

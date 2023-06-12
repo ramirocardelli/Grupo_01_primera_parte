@@ -366,7 +366,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		
 		if (!this.isShowing()) { //FIN JORNADA - PERSISTIR
 			event2 = new ActionEvent(this,0,"PERSISTIR");
-			this.actionListener.actionPerformed(event);
+			this.actionListener.actionPerformed(event2);
 		}
 			
 	}
