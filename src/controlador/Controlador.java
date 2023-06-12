@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Observable;
 import java.util.Observer;
+
+import negocio.AbonadoYaCargadoException;
 import negocio.ActionEventExtended;
 import negocio.Domicilio;
 import negocio.Estado;
 import negocio.Sistema;
+import negocio.TipoIncorrectoPersonaException;
 import persistencia.IPersistencia;
 import persistencia.Persistencia;
 import persistencia.SistemaDTO;
@@ -23,8 +26,7 @@ public class Controlador implements ActionListener, Observer
 	
 	
 	public Controlador() {
-		this.vista = new Ventana();
-		this.vista.setActionListener(this);
+		this.vista = new Ventana(this);;
 		sistema=Sistema.getInstance();
 		this.sistema.addObserver(this);
 		deserializar();
@@ -59,7 +61,7 @@ public class Controlador implements ActionListener, Observer
 					this.vista.muestraMensaje(estado.getMensaje());
 		}
 
-	@Override
+	
 	public void actionPerformed(ActionEvent a) //ventana lanza eventos
 	{
 		
@@ -90,13 +92,18 @@ public class Controlador implements ActionListener, Observer
 				else if (comando.equalsIgnoreCase("PERSISTIR")){
 						this.serializar();
 				}
-				/*else if (comando.equalsIgnoreCase("DESPERSISTIR")){ //Se tendria que hacer automaticamente
-
-						this.deserializar();
-				}*/ 
+				else if (comando.equalsIgnoreCase("ALTACLIENTE")) { //puede devolver excepcion - pasarsela al controlador desde el sistema
+					try {
+						System.out.println(e.nombreCliente+e.DNI+e.tipoPersona);
+						this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
+					} catch (AbonadoYaCargadoException | TipoIncorrectoPersonaException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				 
 	}
-					
-
+				
 		public void serializar() {
 			IPersistencia persistencia = new Persistencia();
 			SistemaDTO sistemaDTO;

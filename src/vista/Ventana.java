@@ -29,7 +29,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.KeyEvent;
 
-public class Ventana extends JFrame implements IVista, KeyListener, MouseListener, WindowListener {
+public class Ventana extends JFrame implements IVista, KeyListener, MouseListener, WindowListener, ActionListener {
 
 	private JPanel contentPane;
 	private JTextField RtaDNI;
@@ -38,6 +38,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JTextField RtaBotones;
 	private JTextField RtaMovil;
 	private JTextField RtaNombreTecnico;
+	private JTextField RtaNombre;
 	private JButton botonPagar;
 	private JButton botonContratarServicio;
 	private JButton botonDarDeBaja;
@@ -46,19 +47,22 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	private JButton botonActualizarMes;
 	private JButton botonSolicitarTecnico;
 	private JButton botonDarDeAltaTecnico;
+	private JButton botonAltaCliente;
 	private ActionListener actionListener;
 	private JTextField RtaCalle;
 	private JTextField textFieldNumero;
 	private JTextField RtaMetodoPago;
 	private JTextArea textArea_LOG;
+	private JTextField RtaTipoPersona;
+
 
 	/**
 	 * Create the frame.
 	 */
-	public Ventana() {
+	public Ventana(ActionListener controlador) {
 		
 		ActionEvent event = new ActionEvent(this,0,"DESPERSISTIR");
-		//this.actionListener.actionPerformed(event);
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 800);
@@ -204,9 +208,41 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		panelCentral.add(PanelTecnico);
 		PanelTecnico.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		JPanel PanelSolicitarTecnico = new JPanel();
-		PanelTecnico.add(PanelSolicitarTecnico);
-		PanelSolicitarTecnico.setLayout(new GridLayout(3, 1, 0, 0));
+		JPanel PanelAltaCliente = new JPanel();
+		PanelTecnico.add(PanelAltaCliente);
+		PanelAltaCliente.setLayout(new GridLayout(3, 1, 0, 0));
+		
+		JPanel PanelPersona = new JPanel();
+		PanelAltaCliente.add(PanelPersona);
+		PanelPersona.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel LabelTipoPersona = new JLabel("Persona: Fisica/Juridica");
+		PanelPersona.add(LabelTipoPersona);
+		LabelTipoPersona.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		RtaTipoPersona = new JTextField();
+		PanelPersona.add(RtaTipoPersona);
+		RtaTipoPersona.addKeyListener(this);
+		RtaTipoPersona.setColumns(10);
+		
+		this.botonAltaCliente = new JButton("Dar de alta nuevo cliente");
+		this.botonAltaCliente.setActionCommand("ALTACLIENTE");
+		this.botonAltaCliente.setEnabled(false);
+		
+		
+		JPanel panel_1 = new JPanel();
+		PanelAltaCliente.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel LabelNombre = new JLabel("Nombre");
+		panel_1.add(LabelNombre);
+		LabelNombre.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		RtaNombre = new JTextField();
+		RtaNombre.addKeyListener(this);
+		panel_1.add(RtaNombre);
+		RtaNombre.setColumns(10);
+		PanelAltaCliente.add(botonAltaCliente);
 		
 		JPanel PanelDarDeAltaTecnico = new JPanel();
 		PanelTecnico.add(PanelDarDeAltaTecnico);
@@ -251,9 +287,12 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.botonHistorico.addMouseListener(this);
 		this.botonPagar.addMouseListener(this);
 		this.botonSolicitarTecnico.addMouseListener(this);
+		this.botonAltaCliente.addMouseListener(this);
 		this.setVisible(true);
 		this.addWindowListener(this);
 		this.muestraMensaje("---------- Aqui se mostrarán los mensajes del sistema -----------");
+		
+		this.setActionListener(controlador);
 		
 	}
 
@@ -262,6 +301,8 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	
 	public void keyReleased(KeyEvent e) { // validacion de datos - FUNCIONA OK
 		
+		String nombreCliente="";
+		String tipoPersona="";
 		String dni="";
 		String tipoServicio="";
 		String movil="";
@@ -270,7 +311,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		int numero=-1;
 		String nombreTecnico;
 		int cantBotones=-1,cantCamaras=-1;
-		boolean condicion, condicionDNI, condicionTecnico, condicioncalle;
+		boolean condicion, condicionDNI, condicionTecnico, condicioncalle, condicionTipoPersona,condicionNombre;
 		
 		try{
 			cantBotones = Integer.parseInt(this.RtaBotones.getText());
@@ -286,9 +327,13 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		nombreTecnico = this.RtaNombreTecnico.getText();
 		calle = this.RtaCalle.getText();
 		metodoPago = this.RtaMetodoPago.getText();
+		tipoPersona = this.RtaTipoPersona.getText();
+		nombreCliente = this.RtaNombre.getText();
 		
+		condicionNombre = !nombreCliente.equals("");
 		condicionDNI = !dni.equals("");
 		condicioncalle = !calle.equals("");
+		condicionTipoPersona = tipoPersona.equalsIgnoreCase("juridica") || tipoPersona.equalsIgnoreCase("fisica");
 		condicion = condicionDNI && cantBotones>=0 && cantCamaras>=0 && numero>=0 && condicioncalle && (tipoServicio.equalsIgnoreCase("vivienda")||tipoServicio.equalsIgnoreCase("comercio")) && (movil.equalsIgnoreCase("si")||movil.equalsIgnoreCase("no")) && (metodoPago.equalsIgnoreCase("Efectivo")||metodoPago.equalsIgnoreCase("Cheque")||metodoPago.equalsIgnoreCase("Tarjeta"));
 		condicionTecnico = !(nombreTecnico.isBlank());
 		
@@ -300,6 +345,8 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.botonPagar.setEnabled(condicionDNI); 
 		this.botonDarDeAltaTecnico.setEnabled(condicionTecnico);
 		this.botonSolicitarTecnico.setEnabled(condicionDNI);
+		this.botonAltaCliente.setEnabled(condicionDNI && condicionTipoPersona && condicionNombre);
+		
 
 	}
 	
@@ -316,6 +363,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.botonHistorico.addActionListener(actionListener); 
 		this.botonPagar.addActionListener(actionListener); 
 		this.botonSolicitarTecnico.addActionListener(actionListener); 
+		this.botonAltaCliente.addActionListener(actionListener);
 		this.actionListener = actionListener;
 		
 	}
@@ -328,33 +376,44 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 
 
 	@Override
 	public void mousePressed(MouseEvent e) //
-	{
+	{ 
 		System.out.println("hiceClick");
 		ActionEventExtended event;
+		String tipoPersona = this.RtaTipoPersona.getText();
+		String nombreCliente = this.RtaNombre.getText();
 		String dni = this.RtaDNI.getText();
 		String tipoServicio = this.RtaComercioVivienda.getText();
 		String movil = this.RtaMovil.getText();
 		String nombreTecnico = this.RtaNombreTecnico.getText();
 		String calle = this.RtaCalle.getText();
 		String metodoPago = this.RtaMetodoPago.getText();
-		int cantBotones = Integer.parseInt(this.RtaBotones.getText());
-		int cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
-		int numero = Integer.parseInt(this.textFieldNumero.getText());
+		int cantBotones;
+		int cantCamaras;
+		int numero;
+		try {
+			cantBotones = Integer.parseInt(this.RtaBotones.getText());
+			cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+			numero = Integer.parseInt(this.textFieldNumero.getText());
+			
+		} catch (Exception ex) {
+			cantBotones = 0;
+			cantCamaras = 0;
+			numero = 0;
+			
+		}
 		
 		JButton botonApretado = (JButton)e.getSource();
 		String command = botonApretado.getActionCommand(); // lo que se debe hacer
-		event = new ActionEventExtended(botonApretado,0,command,dni,calle,numero,tipoServicio,cantBotones,cantCamaras,movil,nombreTecnico,metodoPago);
+		event = new ActionEventExtended(botonApretado,0,command,dni,calle,numero,tipoServicio,cantBotones,cantCamaras,movil,nombreTecnico,metodoPago,tipoPersona,nombreCliente);
 		if (e.getButton() == 1) //boton izq
 			this.actionListener.actionPerformed(event);
-		
 		
 			
 	}
@@ -443,4 +502,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	}
 	
 	
+	public void actionPerformed(ActionEvent e) {
+	}
 }

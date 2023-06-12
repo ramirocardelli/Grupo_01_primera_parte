@@ -14,7 +14,7 @@ public class DAO {
 		DataSource = dataSource;
 	}
 	
-	public void persistir (){
+	public void persistir () throws IOException{
 		dataAccessObject.abrirOutput(DataSource);
 		SistemaDTO sistemaDTO= UtilPersistencia.sistemaDTOFromSistema(Sistema.getInstance());
 		dataAccessObject.escribir(sistemaDTO);
@@ -23,7 +23,7 @@ public class DAO {
 	
 	
 
-	public void despersistir(){
+	public void despersistir() throws IOException{
 		dataAccessObject.abrirInput(DataSource);
 		SistemaDTO sistemaDTO= (SistemaDTO)dataAccessObject.leer();
 		UtilPersistencia.sistemaFromSistemaDTO(sistemaDTO);

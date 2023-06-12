@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
  */
 public class ActionEventExtended extends ActionEvent{ 
 	public String DNI;
+	public String nombreCliente;
 	public String calle;
 	public int numero;
 	public String tipoServicio;
@@ -15,6 +16,7 @@ public class ActionEventExtended extends ActionEvent{
 	public String movil; 
 	public String nombreTecnico;
 	public String metodoPago;
+	public String tipoPersona;
 	
 	public ActionEventExtended(Object source, int id, String command) {
 		super(source,id,command);
@@ -22,7 +24,7 @@ public class ActionEventExtended extends ActionEvent{
 	
 	public ActionEventExtended(Object source, int id, String command, String dNI, String calle, int numero,
 			String tipoServicio, int cantBotones, int cantCamaras, String movil, String nombreTecnico,
-			String metodoPago) {
+			String metodoPago, String tipoPersona, String nombreCliente) {
 		super(source, id, command);
 		DNI = dNI;
 		this.calle = calle;
@@ -33,6 +35,8 @@ public class ActionEventExtended extends ActionEvent{
 		this.movil = movil;
 		this.nombreTecnico = nombreTecnico;
 		this.metodoPago = metodoPago;
+		this.tipoPersona = tipoPersona;
+		this.nombreCliente = nombreCliente;
 	}
 	
 	

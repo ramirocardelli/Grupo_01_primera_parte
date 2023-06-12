@@ -1,6 +1,7 @@
 package negocio;
 
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -301,11 +302,21 @@ public class Sistema extends Observable implements Serializable{
 	}
 	
 	public void persistir() {
-		this.dao.persistir();
+		try {
+			this.dao.persistir();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void despersistir() {
-		this.dao.despersistir();
+		try {
+			this.dao.despersistir();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }                                               
 
