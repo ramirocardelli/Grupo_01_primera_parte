@@ -28,6 +28,12 @@ public class SubSistemaTecnicos implements Serializable{
 		tecnicos.remove(tecnico);
 	}
 	
+	
+	public synchronized void liberarTecnico(Tecnico tecnico) {
+		tecnico.atendiendo=false;
+		notifyAll();
+	}
+	
 	public synchronized Tecnico solicitarTecnico() {
 	int i;
 	Tecnico rta=null;
