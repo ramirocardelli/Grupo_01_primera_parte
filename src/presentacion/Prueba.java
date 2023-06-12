@@ -10,7 +10,6 @@ import persistencia.Persistencia;
 	public class Prueba {
 		public static void main(String[] args)  {
 			Sistema sistema=Sistema.getInstance();
-			IPersistencia persistencia = new Persistencia();
 			
 			Controlador controlador = new Controlador();
 			

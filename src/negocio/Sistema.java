@@ -1,8 +1,10 @@
 package negocio;
 
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Observable;
 
 
 /** Clase que representa el sistema de gestion de facturas y abonados.
@@ -10,7 +12,7 @@ import java.util.GregorianCalendar;
 /** Clase que representa el sistema de gesti�n de facturas y abonados.
 >>>>>>> Stashed changes
  */
-public class Sistema { 
+public class Sistema extends Observable implements Serializable { 
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
     private GregorianCalendar fechaAct;
@@ -197,6 +199,21 @@ public class Sistema {
 	 **/
 	public void MuestraEstado() {
 		datos.muestraEstado();
+	}
+
+	public void historico(String dNI) { //MUESTRA ESTADO
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void solicitarTecnico(String dNI) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void altaTecnico(String nombreTecnico) {
+		// TODO Auto-generated method stub
+		
 	}
 }                                               
 

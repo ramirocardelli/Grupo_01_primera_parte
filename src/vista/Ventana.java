@@ -347,7 +347,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public void mousePressed(MouseEvent e) //
 	{
 		ActionEventExtended event;
-		ActionEvent event2;
 		String dni = this.RtaDNI.getText();
 		String tipoServicio = this.RtaComercioVivienda.getText();
 		String movil = this.RtaMovil.getText();
@@ -365,8 +364,8 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 			this.actionListener.actionPerformed(event);
 		
 		if (!this.isShowing()) { //FIN JORNADA - PERSISTIR
-			event2 = new ActionEvent(this,0,"PERSISTIR");
-			this.actionListener.actionPerformed(event2);
+			event = new ActionEventExtended(this,0,"PERSISTIR");
+			this.actionListener.actionPerformed(event);
 		}
 			
 	}

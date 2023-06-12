@@ -6,15 +6,19 @@ import java.awt.event.ActionEvent;
 /** Clase que funciona como pojo para transportar datos de la ventana mediante un ActionEvent.
  */
 public class ActionEventExtended extends ActionEvent{ 
-	protected String DNI;
-	protected String calle;
-	protected int numero;
-	protected String tipoServicio;
-	protected int cantBotones;
-	protected int cantCamaras; 
-	protected String movil; 
-	protected String nombreTecnico;
-	protected String metodoPago;
+	public String DNI;
+	public String calle;
+	public int numero;
+	public String tipoServicio;
+	public int cantBotones;
+	public int cantCamaras; 
+	public String movil; 
+	public String nombreTecnico;
+	public String metodoPago;
+	
+	public ActionEventExtended(Object source, int id, String command) {
+		super(source,id,command);
+	}
 	
 	public ActionEventExtended(Object source, int id, String command, String dNI, String calle, int numero,
 			String tipoServicio, int cantBotones, int cantCamaras, String movil, String nombreTecnico,

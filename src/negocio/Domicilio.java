@@ -12,7 +12,7 @@ public class Domicilio implements Cloneable {
      * <b> Pre: </b> calle no puede ser null ni " ", numero no puede ser negativo. <br>
      * <b> Post: </b> Se crea domicilio, que contiene la calle y el numero de la vivienda.
      */
-    private Domicilio(String calle, int numero) {
+    public Domicilio(String calle, int numero) {
             this.calle=calle;
             this.numero=numero;
     }
