@@ -1,6 +1,6 @@
 package negocio;
 
-public class Estado implements Serializable{
+public class Estado{
 	String mensaje; //mensaje a mostrar o null
 	String queSoy;//informa si es una excepcion, resultado de thread o un cambio en sistema
 	

@@ -30,7 +30,7 @@ public class SubSistemaDatos implements Serializable{
     	if(abonado!=null){
     		Contratacion buscaContratacion=this.buscaContratacion(nuevaContratacion.domicilio);
     		if(buscaContratacion==null) { 
-    			abonado.contratarServicio(buscaContratacion);
+    			abonado.contratarServicio(nuevaContratacion);//??????????????????????????????????
     		}
     		else 
     			throw new DomicilioYaConContratacionExcepcion(nuevaContratacion,buscaContratacion);
