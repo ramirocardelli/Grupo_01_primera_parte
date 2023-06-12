@@ -2,7 +2,11 @@ package negocio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * Clase que permite realizar la administracion concurrente de Tecnicos solicitados por los Abonados. 
+ * @author Joaquin
+ *
+ */
 public class SubSistemaTecnicos implements Serializable{
 	private ArrayList<Tecnico> tecnicos=new ArrayList<Tecnico>();
 
