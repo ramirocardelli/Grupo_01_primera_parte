@@ -112,7 +112,7 @@ public class SubSistemaDatos {
 			while(itContrataciones.hasNext()) {
 				listaContrataciones.add(itContrataciones.next());
 			}
-			abonado.findeMes(new Factura(fecha, listaContrataciones));
+			abonado.findeMes(new Factura(fecha,listaContrataciones));//MAL ABONADO TIENE QUE CLONAR LAS CONTRATACIONES
 		}
 	}
 	
