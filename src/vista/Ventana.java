@@ -73,7 +73,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public Ventana() {
 		
 		ActionEvent event = new ActionEvent(this,0,"DESPERSISTIR");
-		//this.actionListener.actionPerformed(event);
+		this.actionListener.actionPerformed(event);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 800);
@@ -151,7 +151,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		BotonesAntipanico.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLabelsContratacion.add(BotonesAntipanico);
 		
-		JLabel MovilAcomp = new JLabel("Movil acompañaniento?");
+		JLabel MovilAcomp = new JLabel("Movil acompañaniento? (si/no)");
 		MovilAcomp.setHorizontalAlignment(SwingConstants.CENTER);
 		panelLabelsContratacion.add(MovilAcomp);
 		
