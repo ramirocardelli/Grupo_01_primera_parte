@@ -4,11 +4,13 @@ public class SinContratacionState implements IState{
 	private PersonaFisica persona;
 		
 	public SinContratacionState(PersonaFisica persona) {
+    	assert persona != null: "Persona nula";
 		this.persona = persona;
 	}
 	
 	@Override
 	public void contratarServicio(Contratacion contratacion) throws PagoException {
+    	assert contratacion != null: "Contratacion nula";
 		this.persona.addContratacion(contratacion);
 		
 	}
@@ -20,7 +22,6 @@ public class SinContratacionState implements IState{
 
 	@Override
 	public void pagaFactura(IFactura factura) throws PagoException {
-		// no puede
 		throw new PagoException("No puede pagar factura si no tiene contrataciones");
 	}
 	

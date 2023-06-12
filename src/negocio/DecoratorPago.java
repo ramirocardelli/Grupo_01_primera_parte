@@ -14,6 +14,7 @@ public abstract class DecoratorPago implements IFactura,Cloneable{
      */
     public DecoratorPago(IFactura encapsulado) {
         super();
+    	assert encapsulado != null : "Encapsulado nulo";
         this.encapsulado = encapsulado;
     }
 

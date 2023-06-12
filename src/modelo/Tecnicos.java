@@ -28,6 +28,7 @@ public class Tecnicos implements Serializable {
      * <b> Pre: </b> tecnico no puede ser null, ni tampoco puede ya encontrarse en la lista.
      */
     public void agregaTecnico(Tecnico tecnico) {
+    	assert tecnico != null : "Tecnico nulo";
 		this.Tecnicos.add(tecnico);
     }
     

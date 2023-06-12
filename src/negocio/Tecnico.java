@@ -11,6 +11,8 @@ public class Tecnico implements Serializable{
 
 	public Tecnico(String nombre) {
 		super();
+    	assert nombre != null: "Nombre nulo";
+    	assert nombre != "": "Nombre vacio";
 		this.nombre = nombre;
 	}
 

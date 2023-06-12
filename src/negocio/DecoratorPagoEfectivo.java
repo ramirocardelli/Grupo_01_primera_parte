@@ -11,6 +11,7 @@ public class DecoratorPagoEfectivo extends DecoratorPago {
      */
     public DecoratorPagoEfectivo(IFactura encapsulado) {
         super(encapsulado);
+    	assert encapsulado != null : "Encapsulado nulo";
     }
     
     @Override

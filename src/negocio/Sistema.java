@@ -50,6 +50,10 @@ public class Sistema extends Observable implements Serializable{
     }
     
     public void PagarFactura(String dni,String metodoPago) { //metodo invocado por ventana
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert metodoPago != null: "Metodo de pago nulo";
+    	assert metodoPago != "": "Metodo de pago vacio";
     	Estado estado=null;
     	try {
 			IFactura Fpagada=datos.pagaFactura(dni,metodoPago);
@@ -85,6 +89,13 @@ public class Sistema extends Observable implements Serializable{
      * @throws PagoException 
      */
     public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert camaras < 0: "Camaras negativas";
+    	assert botonesAntipanicos < 0: "Botones antipanicos negativos";
+    	assert tipo != null: "tipo nulo";
+    	assert tipo != "": "tipo vacio";
+    	assert domicilio != null: "Domicilio nulo";
     	Estado estado=null;
 		try {
 			FactoryContratacion FC=new FactoryContratacion();
@@ -114,6 +125,9 @@ public class Sistema extends Observable implements Serializable{
      * @throws PagoException 
      */
     public void eliminaContratacionAbonado(String dni,Domicilio domicilio)  {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert domicilio != null: "Domicilio nulo";
     	Estado estado=null;
     	try {
 			this.datos.eliminarContratacion(dni, domicilio);
@@ -137,6 +151,8 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> dni no puede ser null ni " ".
      */
     public Abonado buscaAbonado(String dni) throws DniDesconocidoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
     	Abonado rta= this.datos.buscaAbonado(dni);
     	if(rta==null) {
     		throw new DniDesconocidoException(dni);
@@ -151,6 +167,7 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> domicilio no puede ser null.
      */
     public Contratacion buscaContratacion(Domicilio domicilio) throws DomicilioSinContratacionException {
+    	assert domicilio != null: "Domicilio nulo";
     	Contratacion rta=this.datos.buscaContratacion(domicilio);
     	if(rta==null)
     		throw new DomicilioSinContratacionException(domicilio);
@@ -164,6 +181,10 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> dni no puede ser null ni " ".
      */
     public IFactura buscaFactura(String dni, GregorianCalendar mesYanio) throws DniDesconocidoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert mesYanio != null: "Fecha nula";
+    	
     	IFactura rta=this.datos.buscaFactura(dni, mesYanio);
     	if(rta==null) {
     		throw new DniDesconocidoException(dni);
@@ -180,6 +201,9 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> dni no puede ser null ni " ".
      */
     public IFactura clonacionFactura(String dni,GregorianCalendar mesYanio) throws CloneNotSupportedException,DniDesconocidoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert mesYanio != null: "Fecha nula";
     	IFactura rta=null;
     	Abonado abonado=datos.buscaAbonado(dni);
     	if(abonado!=null) {
@@ -196,6 +220,8 @@ public class Sistema extends Observable implements Serializable{
      * @throws DomicilioSinContratacionException cuando el domicilio ingresado no corresponde a ninguna contratacion.
      */
     public void aplicaPromocion(Domicilio domicilio, Promo promocion) throws DomicilioSinContratacionException {
+    	assert domicilio != null: "domicilio nulo";
+    	assert promocion != null: "promocion nula";
         Contratacion contratacion=datos.buscaContratacion(domicilio);
         if(contratacion!=null)
         	contratacion.promo(promocion);
@@ -212,16 +238,29 @@ public class Sistema extends Observable implements Serializable{
      * @throws  
      */
     public void nuevoAbonado(String nombre,String dni,String tipo) throws AbonadoYaCargadoException, TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    	assert nombre != null: "nombre nulo";
+    	assert nombre != "": "nombre vacio";
+    	assert dni != null: "dni nulo";
+    	assert dni != "": "dni vacio";
+    	assert tipo != null: "tipo nulo";
+    	assert tipo != "": "tipo vacio";
     	FactoryAbonado FA=new FactoryAbonado();
     	Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
     	datos.agregaAbonado(abonado);
     }
 
     public void eliminaAbonado(String dni) throws DniDesconocidoException,AbonadoConFacturaException {
+    	assert dni != null: "dni nulo";
+    	assert dni != "": "dni vacio";
     	this.datos.eliminaAbonado(dni);
     }
     
     public void actualizaContratacion(String dni, Domicilio domicilio,int camaras, int botonesAntipanicos, int movilAcompanamiento) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert camaras < 0: "Camaras negativas";
+    	assert botonesAntipanicos < 0: "Botones antipanicos negativos";
+    	assert domicilio != null: "Domicilio nulo";
     	Abonado buscaAbonado= datos.buscaAbonado(dni);
     	if(buscaAbonado!=null) {
     		Contratacion contratacion=buscaAbonado.getContratacion(domicilio);
@@ -248,11 +287,13 @@ public class Sistema extends Observable implements Serializable{
 	}
 
 	public void setDatos(SubSistemaDatos datos) {
+    	assert datos != null: "datos nulo";
 		this.datos = datos;
 	}
 
 
 	public void setTecnicos(SubSistemaTecnicos tecnicos) {
+    	assert tecnicos != null: "tecnicos nulos";
 		this.tecnicos = tecnicos;
 	}
 
@@ -261,6 +302,8 @@ public class Sistema extends Observable implements Serializable{
 	}
 
 	public void historico(String dni) { //MUESTRA ESTADO
+    	assert dni != null: "dni nulo";
+    	assert dni != "": "DNI vacio";
 		Estado estado;
 		try {
 			String muestraHistorico=datos.historico(dni);
@@ -281,6 +324,8 @@ public class Sistema extends Observable implements Serializable{
 	 * @throws DniDesconocidoException: Si no existe un Abonado para ese DNI se lanza una excepcion
 	 */
 	public void solicitarTecnico(String dni) {
+    	assert dni != null: "dni nulo";
+    	assert dni != "": "DNI vacio";
 		Estado estado=null;
 		Abonado aux=this.datos.buscaAbonado(dni);
 		if (aux!=null)
@@ -291,6 +336,8 @@ public class Sistema extends Observable implements Serializable{
 	}
 
 	public void altaTecnico(String nombreTecnico) {
+    	assert nombreTecnico != null: "nombreTecnico nulo";
+    	assert nombreTecnico != "": "nombreTecnico vacio";
 		this.tecnicos.agregarTecnico(new Tecnico(nombreTecnico));
 		
 	}

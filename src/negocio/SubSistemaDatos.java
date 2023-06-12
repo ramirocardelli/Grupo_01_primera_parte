@@ -22,6 +22,9 @@ public class SubSistemaDatos {
 	}	
 	
 	public void nuevaContratacion(String dni, Contratacion nuevaContratacion) throws DomicilioYaConContratacionExcepcion, DniDesconocidoException, PagoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert nuevaContratacion != null: "nuevaContratacion nula";
 		Abonado abonado=this.abonados.get(dni);
     	if(abonado!=null){
     		Contratacion buscaContratacion=this.buscaContratacion(nuevaContratacion.domicilio);
@@ -36,6 +39,9 @@ public class SubSistemaDatos {
 	}
 	
 	public void eliminarContratacion(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException, PagoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert domicilio != null: "Domicilio nulo";
 		Abonado abonado= abonados.get(dni);
 		if(abonado!=null) {
 			abonado.bajaServicio(domicilio);
@@ -46,11 +52,14 @@ public class SubSistemaDatos {
 	}
 	
 	
-	public Abonado buscaAbonado(String dni)  {
+	public Abonado buscaAbonado(String dni)  {    	
+		assert dni != null: "DNI nulo";
+		assert dni != "": "DNI vacio";
 		return abonados.get(dni);
 	}
 	
 	public Contratacion buscaContratacion(Domicilio domicilio)  { //Ingresando un domicilio busca la contratacion
+    	assert domicilio != null: "Domicilio nulo";
 		Iterator<Abonado>it=abonados.values().iterator();
 		Contratacion rta = null;
 		boolean encuentra=false;
@@ -65,6 +74,9 @@ public class SubSistemaDatos {
 	}
 	
 	public IFactura buscaFactura(String dni,GregorianCalendar mesYanio) throws DniDesconocidoException { //Ingresando un domicilio busca la contratacion
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert mesYanio != null: "Fecha nula";
 		Abonado buscaAbonado= abonados.get(dni);
 		IFactura rta=null;
 		if(buscaAbonado!=null) {
@@ -77,6 +89,7 @@ public class SubSistemaDatos {
 	}
 	
 	public void agregaAbonado(Abonado abonado) throws AbonadoYaCargadoException {
+    	assert abonado != null: "Abonado nulo";
 		if(!this.abonados.containsKey(abonado.getDni())){ //verifica que abonado no este cargado en la lista de abonados sin contratacion	
 			abonados.put(abonado.getDni(), abonado);
 		}
@@ -85,7 +98,9 @@ public class SubSistemaDatos {
 	}
 	
 	
-	public void eliminaAbonado(String dni) throws DniDesconocidoException, AbonadoConFacturaException {
+	public void eliminaAbonado(String dni) throws DniDesconocidoException, AbonadoConFacturaException {    	
+		assert dni != null: "DNI nulo";
+		assert dni != "": "DNI vacio";
 		Abonado eliminar=this.abonados.get(dni);
 		if(eliminar!=null) {
 			if(eliminar.getFactura(null)==null) {
@@ -102,7 +117,8 @@ public class SubSistemaDatos {
 	}
 
 	
-	public void findeMes(GregorianCalendar fecha) {
+	public void findeMes(GregorianCalendar fecha) {    		
+		assert fecha != null: "Fecha nula";
 		Iterator<Abonado> itAbonados= this.abonados.values().iterator();
 		Abonado abonado;
 		while(itAbonados.hasNext()) { //clona las contrataciones para que estan permanezcan constantes en el historico (no son referencias)
@@ -112,6 +128,10 @@ public class SubSistemaDatos {
 	}
 	
 	public IFactura pagaFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException,noHayFacturaAPagarException, PagoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
+    	assert metodoPago != null: "Metodo de pago nulo";
+    	assert metodoPago != "": "Metodo de pago vacio";
 		Abonado abonado=this.abonados.get(dni);
 		IFactura factura=null;
 		if(abonado!=null) {
@@ -138,6 +158,8 @@ public class SubSistemaDatos {
 		return rta;
 	}
 	public String historico(String dni) throws DniDesconocidoException {
+    	assert dni != null: "DNI nulo";
+    	assert dni != "": "DNI vacio";
 		Abonado abonado=this.abonados.get(dni);
 		String rta=null;
 		if(abonado!=null) {

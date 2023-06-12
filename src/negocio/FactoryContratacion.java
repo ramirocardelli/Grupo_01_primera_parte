@@ -16,6 +16,11 @@ public class FactoryContratacion {
      * <b> Post: </b> Se crea una contratacion segun el tipo. 
      */
 	public Contratacion creaContratacion(int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws TipoIncorrectoServicioException {
+    	assert camaras < 0 : "Camaras negativas";
+    	assert botonesAntipanicos < 0 : "Botones antipanico negativos";
+    	assert domicilio != null : "Domicilio nulo";
+    	assert tipo != null : "Tipo nulo";
+    	assert tipo != "" : "Tipo vacio";
 		Contratacion creado = null;
 		if(tipo.equals("Vivienda")) 
 			creado=new ContratacionVivienda(camaras, botonesAntipanicos, movilAcompanamiento, domicilio);
