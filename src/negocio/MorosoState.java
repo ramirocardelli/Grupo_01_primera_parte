@@ -21,7 +21,7 @@ public class MorosoState implements IState {
 	@Override
 	public void pagaFactura(IFactura factura) throws PagoException {
 		//puede y 30% recargo
-		this.persona.abonarFactura(new DecoratorPagoMoroso(factura));
+		
 	}
 	
 	
