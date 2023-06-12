@@ -14,6 +14,7 @@ public class Sistema {
     private SubSistemaDatos datos;
     private static Sistema instancia=null;
     private GregorianCalendar fechaAct;
+    private SubSistemaTecnicos tecnicos;
     
 
     /** Constructor privado para evitar que se creen muchas instancias del Sistema
@@ -23,6 +24,7 @@ public class Sistema {
         this.datos=new SubSistemaDatos();
         GregorianCalendar aux= new GregorianCalendar(); //se obtiene la hr act del sistema
         fechaAct.set(aux.get(Calendar.YEAR), aux.get(Calendar.MONTH), 0);
+        this.tecnicos=new SubSistemaTecnicos();
     }
     
     /** Constructor estatico para evitar que se cree mas de una instancia del Sistema (patron Singleton)
