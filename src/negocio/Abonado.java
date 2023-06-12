@@ -28,6 +28,10 @@ public abstract class Abonado implements Cloneable{
 		this.dni = dni;
 	}
 
+    public abstract void contratarServicio(Contratacion contratacion) throws PagoException;
+    public abstract void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;
+    public abstract void pagaFactura(IFactura factura) throws PagoException;
+
     
     public String getNombre() {
         return nombre;
@@ -105,7 +109,7 @@ public abstract class Abonado implements Cloneable{
 		this.facturaPendiente.add(factura);
 	}
 	
-	public void pagaFactura(IFactura factura){
+	public void abonarFactura(IFactura factura){
 		this.historicoFacturas.put(factura.getMesYAnio(),factura);
 		this.facturaPendiente.removeFirst();
 	}

@@ -6,23 +6,22 @@ public class ConContratacionState implements IState {
 	public ConContratacionState(PersonaFisica persona) {
 		this.persona = persona;
 	}
-	
+
 	@Override
-	public void ContratarServicio() {
-		//puede
+	public void contratarServicio(Contratacion contratacion) throws PagoException {
+		this.persona.addContratacion(contratacion);
 		
 	}
 
 	@Override
-	public void BajaServicio() {
-		//puede
+	public void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException {
+		this.persona.eliminaContratacion(domicilio);
 		
 	}
 
 	@Override
-	public void PagaFactura() {
-		//puede
+	public void pagaFactura(IFactura factura) throws PagoException {
+		this.persona.abonarFactura(factura);
 	}
-	
 	
 }

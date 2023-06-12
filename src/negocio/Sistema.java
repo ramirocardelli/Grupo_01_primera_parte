@@ -41,7 +41,7 @@ public class Sistema {
     	fechaAct.add(Calendar.MONTH, 1);
     }
     
-    public void PagarFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException, noHayFacturaAPagarException {
+    public void PagarFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException, noHayFacturaAPagarException, PagoException {
     	datos.pagaFactura(dni,metodoPago);
     	//deberia notificarle a la vista quien y el precio de la factura (se puede hacer q el metodo devuelva esos datos y se hace un notify obeserver)
     }
@@ -58,8 +58,9 @@ public class Sistema {
      * @throws NoExisteFacturaException si no existe la factura para agregar la contratacion
      * @throws TipoIncorrectoServicioException cuando se ingresa un tipo incorrecto de servicio.
      * @throws DniDesconocidoException 
+     * @throws PagoException 
      */
-    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, TipoIncorrectoServicioException, DniDesconocidoException { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
+    public void nuevaContratacion(String dni,int camaras, int botonesAntipanicos, boolean movilAcompanamiento, Domicilio domicilio, String tipo) throws DomicilioYaConContratacionExcepcion, TipoIncorrectoServicioException, DniDesconocidoException, PagoException { //falta lanzar la excepcion de domicilio ya con contratacion, del factory y la de no encontrar abonado con factura
     	FactoryContratacion FC=new FactoryContratacion();
     	Contratacion nuevaContratacion=FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
     	this.datos.nuevaContratacion(dni,nuevaContratacion);
@@ -71,8 +72,9 @@ public class Sistema {
      * @throws DomicilioSinContratacionEnAbonadoException cuando el domicilio ingresado no corresponde a ninguna contratacion.
      * @throws DniDesconocidoException cuando el dni ingresado no corresponde a ningun abonado. <br>
      * <b> Pre: </b> dni no puede ser " " ni null y domicilio no puede ser null.
+     * @throws PagoException 
      */
-    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DniDesconocidoException, DomicilioSinContratacionEnAbonadoException {
+    public void eliminaContratacionAbonado(String dni,Domicilio domicilio) throws DniDesconocidoException, DomicilioSinContratacionEnAbonadoException, PagoException {
     	this.datos.eliminarContratacion(dni, domicilio);
     }
     

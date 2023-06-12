@@ -21,12 +21,12 @@ public class SubSistemaDatos {
 	public SubSistemaDatos() {
 	}	
 	
-	public void nuevaContratacion(String dni, Contratacion nuevaContratacion) throws DomicilioYaConContratacionExcepcion, DniDesconocidoException {
-		Abonado buscaAbonado=this.abonados.get(dni);
-    	if(buscaAbonado!=null){
+	public void nuevaContratacion(String dni, Contratacion nuevaContratacion) throws DomicilioYaConContratacionExcepcion, DniDesconocidoException, PagoException {
+		Abonado abonado=this.abonados.get(dni);
+    	if(abonado!=null){
     		Contratacion buscaContratacion=this.buscaContratacion(nuevaContratacion.domicilio);
     		if(buscaContratacion==null) { 
-    			buscaAbonado.addContratacion(buscaContratacion);
+    			abonado.contratarServicio(buscaContratacion);
     		}
     		else 
     			throw new DomicilioYaConContratacionExcepcion(nuevaContratacion,buscaContratacion);
@@ -35,10 +35,10 @@ public class SubSistemaDatos {
     		throw new DniDesconocidoException(dni);
 	}
 	
-	public void eliminarContratacion(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException {
+	public void eliminarContratacion(String dni,Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException, DniDesconocidoException, PagoException {
 		Abonado abonado= abonados.get(dni);
 		if(abonado!=null) {
-			abonado.eliminaContratacion(domicilio);
+			abonado.bajaServicio(domicilio);
 		}
 		else {
 			throw new DniDesconocidoException(dni);
@@ -116,14 +116,14 @@ public class SubSistemaDatos {
 		}
 	}
 	
-	public void pagaFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException,noHayFacturaAPagarException {
+	public void pagaFactura(String dni,String metodoPago) throws DniDesconocidoException, MetodoDePagoInvalidoException,noHayFacturaAPagarException, PagoException {
 		Abonado abonado=this.abonados.get(dni);
 		if(abonado!=null) {
 			IFactura aPagar=abonado.getFactura(null);
 			if(aPagar!=null) {
 				FactoryDecoradoFactura Fa= new FactoryDecoradoFactura();
-				IFactura pagada=Fa.creaFactura(aPagar, metodoPago); //obtiene la factura a pagar
-				abonado.pagaFactura(pagada);
+				IFactura factura=Fa.creaFactura(aPagar, metodoPago); //obtiene la factura a pagar
+				abonado.pagaFactura(factura);
 			}
 			else
 				throw new noHayFacturaAPagarException(dni);

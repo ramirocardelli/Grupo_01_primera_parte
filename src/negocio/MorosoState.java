@@ -9,18 +9,19 @@ public class MorosoState implements IState {
 	
 	
 	@Override
-	public void ContratarServicio() {
-		// no puede
+	public void contratarServicio(Contratacion contratacion) throws PagoException {
+		throw new PagoException("No puede contratar nuevo servicio porque es moroso");
 	}
 
 	@Override
-	public void BajaServicio() {
-		//no puede
+	public void bajaServicio(Domicilio domicilio) throws PagoException {
+		throw new PagoException("No puede dar de baja servicio porque es moroso");
 	}
 
 	@Override
-	public void PagaFactura() {
+	public void pagaFactura(IFactura factura) throws PagoException {
 		//puede y 30% recargo
+		
 	}
 	
 	

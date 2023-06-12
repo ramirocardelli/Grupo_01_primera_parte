@@ -27,4 +27,26 @@ public class PersonaJuridica extends Abonado {
 		factura.setPersonaJ(true);
 		this.facturaPendiente.add(factura); //no cambia de estado y no pasa a moroso (no posee estados)
 	}
+
+
+	@Override
+	public void contratarServicio(Contratacion contratacion) {
+		// TODO Auto-generated method stub
+		this.addContratacion(contratacion);
+		
+	}
+
+
+	@Override
+	public void bajaServicio(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
+		this.eliminaContratacion(domicilio);
+	}
+
+
+	@Override
+	public void pagaFactura(IFactura factura) {
+		// TODO Auto-generated method stub
+		this.abonarFactura(factura);
+		
+	}
 }
