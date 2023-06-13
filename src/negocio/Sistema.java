@@ -11,9 +11,6 @@ import persistencia.DAO;
 
 
 /** Clase que representa el sistema de gestion de facturas y abonados.
-=======
-/** Clase que representa el sistema de gesti�n de facturas y abonados.
->>>>>>> Stashed changes
  */
 public class Sistema extends Observable implements Serializable{ 
     private SubSistemaDatos datos;
@@ -61,18 +58,25 @@ public class Sistema extends Observable implements Serializable{
 			Abonado abonado=datos.buscaAbonado(dni);
 			String mensaje="El abonado "+abonado.nombre+" paga correctamente su factura del "+ Fpagada.getMesYAnio().get(Calendar.MONTH)+"/"+ Fpagada.getMesYAnio().get(Calendar.YEAR)+" por un importe de: $"+ Fpagada.valorConDesc();
 			estado= new Estado(mensaje,"SISTEMA");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (DniDesconocidoException e) {
 			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (PagoException e) {
 			estado=new Estado(e.getMessage(),"EXCEPCION");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (MetodoDePagoInvalidoException e) {
 			estado= new Estado("El metodo de pago ingresado no coincide con los disponibles","EXCEPCION");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (noHayFacturaAPagarException e) {
 			estado= new Estado("El abonado con dni: "+ e.getDni()+ " no dispone de facturas pendientes de pago","EXCEPCION");
-		}
-    	setChanged();
-    	notifyObservers(estado);
-    	
+			setChanged();
+	    	notifyObservers(estado);
+		}	
     }
     
     
@@ -99,22 +103,28 @@ public class Sistema extends Observable implements Serializable{
     	assert domicilio != null: "Domicilio nulo";
     	Estado estado=null;
 		try {
+			System.out.println("entro");
 			FactoryContratacion FC=new FactoryContratacion();
 			Contratacion nuevaContratacion = FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
 			this.datos.nuevaContratacion(dni,nuevaContratacion);
 			Abonado abonado=datos.buscaAbonado(dni);
 			estado=new Estado("El abonado "+ abonado.getNombre()+ " contrata un nuevo sistema de "+tipo+ "para su domicilio: "+ domicilio.toString(),"SISTEMA");
-		} catch (TipoIncorrectoServicioException e) {
-			estado=new Estado("El tipo de servicio ingresado es invalido","EXCEPTION");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (DomicilioYaConContratacionExcepcion e) {
-			estado=new Estado("El domicilio: "+ e.getDomicilio().toString()+ " ya se encuentra con una contratacion","EXCEPTION");
+			estado=new Estado("El domicilio ya se encuentra con una contratacion","EXCEPCION");
+			setChanged();
+	    	notifyObservers(estado);
 		} catch (DniDesconocidoException e) {
 			estado= new Estado("Ningun cliente registrado posee como dni "+e.getDni(),"EXCEPCION");
-		} catch (PagoException e) {
-			
+			setChanged();
+	    	notifyObservers(estado);
 		}
-		setChanged();
-    	notifyObservers(estado);
+		catch (PagoException e) {
+			estado = new Estado(e.getMessage(),"EXCEPCION");
+			setChanged();
+	    	notifyObservers(estado);
+		}
     }
     
     /** Metodo para eliminar una contratacion de un abonado.
@@ -238,7 +248,7 @@ public class Sistema extends Observable implements Serializable{
      * <b> Pre: </b> nombre, dni y tipo no pueden ser null.
      * @throws  
      */
-    public void nuevoAbonado(String nombre,String dni,String tipo) throws TipoIncorrectoPersonaException{ //FALTA LANZAR LA EXCEPCION DEL FACTORY
+    public void nuevoAbonado(String nombre,String dni,String tipo) {
     	assert nombre != null: "nombre nulo";
     	assert nombre != "": "nombre vacio";
     	assert dni != null: "dni nulo";
@@ -246,7 +256,7 @@ public class Sistema extends Observable implements Serializable{
     	assert tipo != null: "tipo nulo";
     	assert tipo != "": "tipo vacio";
     	FactoryAbonado FA=new FactoryAbonado();
-    	Abonado abonado=FA.creaAbonado(nombre, dni, tipo);
+    	Abonado abonado=FA.creaAbonado(nombre, dni, tipo);	
     	try {
 			datos.agregaAbonado(abonado);
 		} catch (AbonadoYaCargadoException e) {
@@ -254,6 +264,9 @@ public class Sistema extends Observable implements Serializable{
 			setChanged();
 			notifyObservers(estado);
 		}
+    	Estado estado2 = new Estado("Se creo el abonado correctamente","SISTEMA");
+    	setChanged();
+		notifyObservers(estado2);
     }
  
     
@@ -324,6 +337,7 @@ public class Sistema extends Observable implements Serializable{
 		notifyObservers(estado);
 	}
 
+	
 	public String muestraEstadoSist() {
 		return datos.muestraEstadoSistema();
 	}
@@ -339,20 +353,34 @@ public class Sistema extends Observable implements Serializable{
     	assert dni != "": "DNI vacio";
 		Estado estado=null;
 		Abonado aux=this.datos.buscaAbonado(dni);
-		if (aux!=null)
+		if (aux!=null) {
 			aux.solicitarTecnico();
+			estado=new Estado("Se solicito un tecnico","SISTEMA");
+			setChanged();
+			notifyObservers(estado);
+		}
+			
 		else {
 			estado= new Estado("Ningun cliente registrado posee como dni "+dni,"EXCEPCION");
 			setChanged();
 			notifyObservers(estado);
 		}
+		
 	}
-
+	
+	/**
+	  * Dado un dni nombre de un tecnico
+	 *  Pre: nombreTecnico no puede ser null.
+	 *  Post:se agrego un tecnico al listado dd tecnicos
+	 * @param nombreTecnico
+	 */
 	public void altaTecnico(String nombreTecnico) {
     	assert nombreTecnico != null: "nombreTecnico nulo";
     	assert nombreTecnico != "": "nombreTecnico vacio";
 		this.tecnicos.agregarTecnico(new Tecnico(nombreTecnico));
-		
+		Estado estado = new Estado ("Se dio de alta el tecnico correctamente","SISTEMA");
+		setChanged();
+		notifyObservers(estado);
 	}
 	
 	public void muestraThread(String mnsg) {

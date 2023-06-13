@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * Clase que permite realizar la administracion concurrente de Tecnicos solicitados por los Abonados. 
- * @author Joaquin
  *
  */
 public class SubSistemaTecnicos implements Serializable{
@@ -22,11 +21,11 @@ public class SubSistemaTecnicos implements Serializable{
 	 * Post: Tecnico agregado a la lista
 	 * @param tecnico
 	 */
-	public void agregarTecnico(Tecnico tecnico) {//Habria que poner semaforos para controlar acceso al mismo tiempo al arreglo
+	public void agregarTecnico(Tecnico tecnico) {
     	assert tecnico != null: "Tecnico nulo";
 		tecnicos.add(tecnico);
-		notifyAll();
 	}
+	
 	/**
 	 * 
 	 * Pre: tecnico!=null

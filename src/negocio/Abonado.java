@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -138,6 +139,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
 		return contrataciones.values().iterator();
 	}
 	
+	
 	/**
 	 * Funcion que permite que un abonado solicite un tecnico al azar de forma concurrente.
 	 */
@@ -174,6 +176,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
 	protected String historico() {
 		return "El historico de facturas para el abonado: " + this.nombre +" es: "+this.historicoFacturas.toString();
 	}
+	
 	
 	
 	

@@ -9,7 +9,7 @@ public class SinContratacionState implements IState{
 	}
 	
 	@Override
-	public void contratarServicio(Contratacion contratacion) throws PagoException {
+	public void contratarServicio(Contratacion contratacion) throws PagoException{
     	assert contratacion != null: "Contratacion nula";
 		this.persona.addContratacion(contratacion);
 		

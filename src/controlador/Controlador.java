@@ -87,26 +87,21 @@ public class Controlador implements ActionListener, Observer
 					this.sistema.findeMes();
 				}
 				else if (comando.equalsIgnoreCase("SOLICITARTECNICO")) {
-					this.sistema.solicitarTecnico(e.DNI); //AGREGAR
+					this.sistema.solicitarTecnico(e.DNI);
 				}
 				else if (comando.equalsIgnoreCase("ALTATECNICO")){
-					this.sistema.altaTecnico(e.nombreTecnico); //AGREGAR
+					this.sistema.altaTecnico(e.nombreTecnico);
 				}
 				else if (comando.equalsIgnoreCase("PERSISTIR")){
 						this.serializar();
 				}
-				else if (comando.equalsIgnoreCase("ALTACLIENTE")) { //puede devolver excepcion - pasarsela al controlador desde el sistema
-					try {
-						System.out.println(e.nombreCliente+e.DNI+e.tipoPersona);
+				else if (comando.equalsIgnoreCase("ALTACLIENTE")) { 
 						this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
-					} catch (/*AbonadoYaCargadoException |*/ TipoIncorrectoPersonaException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					}
 				}
 				 
 	}
-	}
+	
 				
 		public void serializar() {
 			IPersistencia persistencia = new Persistencia();

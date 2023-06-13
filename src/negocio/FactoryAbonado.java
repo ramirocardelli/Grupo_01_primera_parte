@@ -9,11 +9,10 @@ public class FactoryAbonado {
      * @param dni : dni del abonado.<br>
      * @param tipo : tipo de persona(juridica o fisica)<br>
      * @return Abonado segun el tipo.<br>
-     * @throws TipoIncorrectoPersonaException cuando el tipo de abonado es incorrecto.<br>
      * <b> Pre: </b> nombre,dni y tipo no pueden ser vacios o nulos. <br>
      * <b> Post: </b> Se crea un abonado segun el tipo. 
      */
-	public Abonado creaAbonado(String nombre,String dni,String tipo) throws TipoIncorrectoPersonaException {
+	public Abonado creaAbonado(String nombre,String dni,String tipo) {
     	assert nombre != null : "Nombre nulo";
     	assert nombre != "" : "Nombre nulo";
     	assert dni != null : "DNI nulo";
@@ -25,9 +24,6 @@ public class FactoryAbonado {
 			creado=new PersonaJuridica(nombre, dni);
 		else if(tipo.equalsIgnoreCase("Fisica"))
 			creado=new PersonaFisica(nombre, dni);
-		else
-			throw new TipoIncorrectoPersonaException(nombre, dni, tipo);
-		
 		return creado;
 	}
 }

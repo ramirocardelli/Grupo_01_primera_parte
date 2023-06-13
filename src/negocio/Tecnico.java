@@ -3,7 +3,6 @@ package negocio;
 import java.io.Serializable;
 /**
  * Clase simple que implementa los Tecnicos usados por la clase SubSistemaTecnicos.
- * @author Joaquin
  */
 public class Tecnico implements Serializable{
 	protected String nombre;

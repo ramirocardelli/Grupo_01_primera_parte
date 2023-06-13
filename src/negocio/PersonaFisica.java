@@ -35,7 +35,7 @@ public class PersonaFisica extends Abonado {
 	}
 
 	@Override
-	public void contratarServicio(Contratacion contratacion) throws PagoException {
+	public void contratarServicio(Contratacion contratacion) throws PagoException{
     	assert contratacion != null: "Contratacion nula";
 		this.estado.contratarServicio(contratacion);
 		
