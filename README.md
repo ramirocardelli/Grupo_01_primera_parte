@@ -1,4 +1,4 @@
-# Grupo_01_primera_parte
+# Grupo_01_segunda_parte
 
 Ramiro Cardelli
 Josefina Frasca
