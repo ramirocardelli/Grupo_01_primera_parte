@@ -136,11 +136,11 @@ public class SubSistemaDatos implements Serializable{
 		Abonado abonado=this.abonados.get(dni);
 		IFactura factura=null;
 		if(abonado!=null) {
-			IFactura aPagar=abonado.getFactura(null);
+			IFactura aPagar=abonado.getFactura(null); //obtiene la factura a pagar, para decorarla
 			if(aPagar!=null) {
 				FactoryDecoradoFactura Fa= new FactoryDecoradoFactura();
 				factura=Fa.creaFactura(aPagar, metodoPago); //obtiene la factura a pagar
-				abonado.pagaFactura(factura);
+				factura =abonado.pagaFactura(factura); //puede alterar el valor de factura en el caso de que el abonado sea fisico y moroso
 			}
 			else
 				throw new noHayFacturaAPagarException(dni);

@@ -6,5 +6,6 @@ public interface IState extends Serializable{
 
 	void contratarServicio(Contratacion contratacion) throws PagoException;
 	void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;
-	void pagaFactura(IFactura factura) throws PagoException;
+	IFactura pagaFactura(IFactura factura) throws PagoException;
+	void findeMes(Factura factura);
 }
