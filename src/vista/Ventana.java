@@ -386,35 +386,40 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	{ 
 		System.out.println("hiceClick");
 		ActionEventExtended event;
-		String tipoPersona = this.RtaTipoPersona.getText();
-		String nombreCliente = this.RtaNombre.getText();
-		String dni = this.RtaDNI.getText();
-		String tipoServicio = this.RtaComercioVivienda.getText();
-		String movil = this.RtaMovil.getText();
-		String nombreTecnico = this.RtaNombreTecnico.getText();
-		String calle = this.RtaCalle.getText();
-		String metodoPago = this.RtaMetodoPago.getText();
-		int cantBotones;
-		int cantCamaras;
-		int numero;
-		try {
-			cantBotones = Integer.parseInt(this.RtaBotones.getText());
-			cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
-			numero = Integer.parseInt(this.textFieldNumero.getText());
-			
-		} catch (Exception ex) {
-			cantBotones = 0;
-			cantCamaras = 0;
-			numero = 0;
-			
-		}
-		
-		JButton botonApretado = (JButton)e.getSource();
-		String command = botonApretado.getActionCommand(); // lo que se debe hacer
-		event = new ActionEventExtended(botonApretado,0,command,dni,calle,numero,tipoServicio,cantBotones,cantCamaras,movil,nombreTecnico,metodoPago,tipoPersona,nombreCliente);
-		if (e.getButton() == 1) //boton izq
-			this.actionListener.actionPerformed(event);
-		
+		System.out.println(e.toString());
+		if (e.getSource() instanceof JButton) {
+			JButton boton=(JButton) e.getSource();
+			if (boton.isEnabled()==true) {
+				String tipoPersona = this.RtaTipoPersona.getText();
+				String nombreCliente = this.RtaNombre.getText();
+				String dni = this.RtaDNI.getText();
+				String tipoServicio = this.RtaComercioVivienda.getText();
+				String movil = this.RtaMovil.getText();
+				String nombreTecnico = this.RtaNombreTecnico.getText();
+				String calle = this.RtaCalle.getText();
+				String metodoPago = this.RtaMetodoPago.getText();
+				int cantBotones;
+				int cantCamaras;
+				int numero;
+				try {
+					cantBotones = Integer.parseInt(this.RtaBotones.getText());
+					cantCamaras = Integer.parseInt(this.RtaCamaras.getText());
+					numero = Integer.parseInt(this.textFieldNumero.getText());
+					
+				} catch (Exception ex) {
+					cantBotones = 0;
+					cantCamaras = 0;
+					numero = 0;
+					
+				}
+				
+				JButton botonApretado = (JButton)e.getSource();
+				String command = botonApretado.getActionCommand(); // lo que se debe hacer
+				event = new ActionEventExtended(botonApretado,0,command,dni,calle,numero,tipoServicio,cantBotones,cantCamaras,movil,nombreTecnico,metodoPago,tipoPersona,nombreCliente);
+				if (e.getButton() == 1) //boton izq
+					this.actionListener.actionPerformed(event);
+			}
+			}
 			
 	}
 
