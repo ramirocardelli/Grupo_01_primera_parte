@@ -61,45 +61,41 @@ public class Controlador implements ActionListener, Observer
 					this.vista.muestraMensaje(estado.getMensaje());
 		}
 
-	
-	public void actionPerformed(ActionEvent a) //ventana lanza eventos
-	{
-		System.out.println("entre");
-		ActionEventExtended e;
-		if (a instanceof ActionEventExtended) {
-			System.out.println("Hice algo");
-			e = (ActionEventExtended) a;
+	/**
+	 * Pre: a debe ser ser de tipo ActionEventExtended o hijo de el
+	 */
+	public void actionPerformed(ActionEvent a) { //ventana lanza eventos
+		assert ((a instanceof ActionEventExtended)==true);
+		
+		ActionEventExtended e=(ActionEventExtended) a;
 		String comando = e.getActionCommand();
 		if (comando.equalsIgnoreCase("PAGAR")) {
 			this.sistema.PagarFactura(e.DNI,e.metodoPago);
 		}
 		else if (comando.equalsIgnoreCase("CONTRATAR")) {
-				this.sistema.nuevaContratacion(e.DNI,e.cantCamaras,e.cantBotones,e.movil.equalsIgnoreCase("Si"),new Domicilio(e.calle,e.numero),e.tipoServicio);
-			}
-			else if (comando.equalsIgnoreCase("DARBAJA")) {
-					this.sistema.eliminaContratacionAbonado(e.DNI,new Domicilio(e.calle,e.numero));
-				}
-				else if (comando.equalsIgnoreCase("HISTORICO")) {
-						this.sistema.historico(e.DNI); //AGREGAR
-					}
-	
-				else if (comando.equalsIgnoreCase("ACTUALIZARMES")) {
-					this.sistema.findeMes();
-				}
-				else if (comando.equalsIgnoreCase("SOLICITARTECNICO")) {
-					this.sistema.solicitarTecnico(e.DNI);
-				}
-				else if (comando.equalsIgnoreCase("ALTATECNICO")){
-					this.sistema.altaTecnico(e.nombreTecnico);
-				}
-				else if (comando.equalsIgnoreCase("PERSISTIR")){
-						this.serializar();
-				}
-				else if (comando.equalsIgnoreCase("ALTACLIENTE")) { 
-						this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
-					}
-				}
-				 
+			this.sistema.nuevaContratacion(e.DNI,e.cantCamaras,e.cantBotones,e.movil.equalsIgnoreCase("Si"),new Domicilio(e.calle,e.numero),e.tipoServicio);
+		}
+		else if (comando.equalsIgnoreCase("DARBAJA")) {
+			this.sistema.eliminaContratacionAbonado(e.DNI,new Domicilio(e.calle,e.numero));
+		}
+		else if (comando.equalsIgnoreCase("HISTORICO")) {
+			this.sistema.historico(e.DNI); //AGREGAR
+		}
+		else if (comando.equalsIgnoreCase("ACTUALIZARMES")) {
+			this.sistema.findeMes();
+		}
+		else if (comando.equalsIgnoreCase("SOLICITARTECNICO")) {
+			this.sistema.solicitarTecnico(e.DNI);
+		}
+		else if (comando.equalsIgnoreCase("ALTATECNICO")){
+			this.sistema.altaTecnico(e.nombreTecnico);
+		}
+		else if (comando.equalsIgnoreCase("PERSISTIR")){
+				this.serializar();
+		}
+		else if (comando.equalsIgnoreCase("ALTACLIENTE")) { 
+				this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
+		}	 
 	}
 	
 				
