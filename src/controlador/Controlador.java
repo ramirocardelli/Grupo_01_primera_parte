@@ -26,10 +26,11 @@ public class Controlador implements ActionListener, Observer
 	
 	
 	public Controlador() {
-		this.vista = new Ventana(this);;
+		this.setVista(new Ventana(this));
 		sistema=Sistema.getInstance();
 		this.sistema.addObserver(this);
-		deserializar();
+		this.sistema.despersistir();
+		
 	}
 	
 
@@ -91,41 +92,10 @@ public class Controlador implements ActionListener, Observer
 			this.sistema.altaTecnico(e.nombreTecnico);
 		}
 		else if (comando.equalsIgnoreCase("PERSISTIR")){
-				this.serializar();
+				this.sistema.persistir();
 		}
 		else if (comando.equalsIgnoreCase("ALTACLIENTE")) { 
 				this.sistema.nuevoAbonado(e.nombreCliente,e.DNI,e.tipoPersona);
 		}	 
 	}
-	
-				
-		public void serializar() {
-			IPersistencia persistencia = new Persistencia();
-			SistemaDTO sistemaDTO;
-			try {
-				persistencia.abrirOutput("sistema.bin");
-				sistemaDTO=UtilPersistencia.sistemaDTOFromSistema(sistema);
-				persistencia.escribir(sistemaDTO);
-				persistencia.cerrarOutput();
-			} catch (IOException e1) {
-				this.vista.muestraMensaje("No se pudo abrir el archivo");
-			}
-			
-		}
-		
-		public void deserializar() {
-			IPersistencia persistencia = new Persistencia();
-			SistemaDTO sistemaDTO;
-			try {
-				persistencia.abrirInput("sistema.bin");
-				sistemaDTO = (SistemaDTO) persistencia.leer();
-				UtilPersistencia.sistemaFromSistemaDTO(sistemaDTO);
-				persistencia.cerrarInput();
-			} catch (ClassNotFoundException | IOException e1) {
-				this.vista.muestraMensaje("No se pudo abrir el archivo");
-			}
-			
-		}
-
-
 }

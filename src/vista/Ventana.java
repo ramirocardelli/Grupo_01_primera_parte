@@ -292,7 +292,6 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		this.addWindowListener(this);
 		this.muestraMensaje("---------- Aqui se mostrarán los mensajes del sistema -----------");
 		
-		this.actionListener = controlador;//this.setActionListener(controlador);
 		
 	}
 
@@ -477,6 +476,11 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void setActionListener(ActionListener actionListener) {
+		this.actionListener = actionListener;
 	}
 
 }
