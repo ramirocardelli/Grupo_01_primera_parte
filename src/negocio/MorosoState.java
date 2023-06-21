@@ -16,25 +16,19 @@ public class MorosoState implements IState {
 	
 	@Override
 	public void contratarServicio(Contratacion contratacion) throws PagoException {
-		throw new PagoException("El abonado: "+this.persona.getNombre() +" no puede contratar nuevo servicio porque es moroso");
+		throw new PagoException("No puede contratar nuevo servicio porque es moroso");
 	}
 
 	@Override
 	public void bajaServicio(Domicilio domicilio) throws PagoException {
-		throw new PagoException("El abonado: "+this.persona.getNombre() +" no puede dar de baja servicio porque es moroso");
+		throw new PagoException("No puede dar de baja servicio porque es moroso");
 	}
 
 	@Override
-	public IFactura pagaFactura(IFactura factura) throws PagoException {
+	public void pagaFactura(IFactura factura) throws PagoException {
+		//puede y 30% recargo
     	assert factura != null: "Factura nula";
-    	this.persona.abonaFactura(); //retira la factura de facturas pendientes de pago
-    	this.persona.setEstado(new ConContratacionState(persona));
-		return new DecoratorPagoMoroso(factura);
-	}
-
-	@Override
-	public void findeMes(Factura factura) {
-		// El moroso a fin de mes no debe tramitar nuevas facturas pendientes (se interrumpen sus contrataciones hasta que abone su factura mas antigua)
+		this.persona.abonarFactura(new DecoratorPagoMoroso(factura));
 	}
 	
 	

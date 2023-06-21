@@ -3,7 +3,7 @@ package negocio;
 /** Clase que representa un abonado que es de tipo persona fisica. Puede aceptar clonacion.
  */
 public class PersonaFisica extends Abonado {
-	private IState estado;
+	private IState estado = new SinContratacionState(this);
     /** Constructor de 2 parametros String que crea un abonado de tipo persona fisica.
      * @param nombre : nombre de la persona fisica
      * @param dni : numero de documento de la persona fisica. <br>
@@ -12,23 +12,28 @@ public class PersonaFisica extends Abonado {
      */
     public PersonaFisica(String nombre, String dni) {
 		super(nombre, dni);
-		this.estado= new SinContratacionState(this);
     	assert nombre != null: "Nombre nulo";
     	assert dni != null: "DNI nulo";
 	}
 
-    public void setEstado(IState estado) {
+	@Override
+	public void findeMes(Factura factura) {
+    	assert factura != null: "Factura nula";
+		factura.setPersonaJ(false);
+		if(facturaPendiente!=null) {
+			//cambiar estado a moroso
+		}
+		else
+			this.facturaPendiente.add(factura);
+		
+		//DELEGAR AL ESTADO
+	}
+	
+	private void setEstado(IState estado) {
     	assert estado != null: "Estado nulo";
 		this.estado = estado;
 	}
-    
-	@Override
-	public void findeMes(Factura factura) {
-		assert factura != null: "Factura nula";
-		factura.setPersonaJ(false);
-    	this.estado.findeMes(factura);
-	}
-	
+
 	@Override
 	public void contratarServicio(Contratacion contratacion) throws PagoException{
     	assert contratacion != null: "Contratacion nula";
@@ -44,44 +49,12 @@ public class PersonaFisica extends Abonado {
 	}
 
 	@Override
-	public IFactura pagaFactura(IFactura factura) throws PagoException {
+	public void pagaFactura(IFactura factura) throws PagoException {
     	assert factura != null: "Factura nula";
-		return this.estado.pagaFactura(factura);
+		this.estado.pagaFactura(factura);
+		
 	}
     
-	public boolean isFacturaPorPagar() {
-		boolean rta=false;
-		if(this.facturaPendiente.size()>0) {
-			rta=true;
-		}
-		return rta;
-	}
-	
-	public int getCantContrataciones() {
-		return this.contrataciones.size();
-	}
-	
-	public void addContratacion(Contratacion contratacion) {
-		assert contratacion != null: "Contratacion nula";
-        contrataciones.put(contratacion.getDomicilio(), contratacion);
-	}
-	
-	public void removeContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
-    	assert domicilio != null: "Domicilio nulo";
-    	if(this.contrataciones.remove(domicilio)==null) {
-        	throw new DomicilioSinContratacionEnAbonadoException(domicilio, this);
-        }
-	}
-	
-	public void addFactHistorico (Factura factura) {
-	    assert factura != null: "Factura nula";
-	    this.historicoFacturas.put(factura.getMesYAnio(),factura);
-	    this.facturaPendiente.removeFirst();
-	}
-	
-	public void abonaFactura() {
-		this.facturaPendiente.removeFirst();
-	}
 	
 	@Override
 	public String toString() {

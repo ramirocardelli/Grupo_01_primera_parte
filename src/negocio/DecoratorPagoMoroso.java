@@ -14,7 +14,7 @@ public class DecoratorPagoMoroso extends DecoratorPago implements IFactura {
 
 	@Override
 	public String toString() {
-		return this.encapsulado.toString()+"\t Factura morosa: recargo del 30%\n";
+		return this.encapsulado.toString()+" - moroso";
 	}
 
 	@Override

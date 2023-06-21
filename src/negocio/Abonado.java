@@ -36,9 +36,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
 
     public abstract void contratarServicio(Contratacion contratacion) throws PagoException;
     public abstract void bajaServicio(Domicilio domicilio) throws PagoException, DomicilioSinContratacionEnAbonadoException;
-    public abstract IFactura pagaFactura(IFactura factura) throws PagoException;
-    public abstract void findeMes(Factura factura);
-		
+    public abstract void pagaFactura(IFactura factura) throws PagoException;
 
     
     public String getNombre() {
@@ -51,6 +49,16 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
     
     public Contratacion getContratacion(Domicilio domicilio) {
     	return contrataciones.get(domicilio);
+    }
+    
+    public void addContratacion(Contratacion contratacion) {
+    	contrataciones.put(contratacion.getDomicilio(), contratacion);
+    }
+    
+    public void eliminaContratacion(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
+    	if(this.contrataciones.remove(domicilio)==null) {
+    		throw new DomicilioSinContratacionEnAbonadoException(domicilio, this);
+    	}
     }
     
     public IFactura getFactura(GregorianCalendar mesYanio) {
@@ -115,7 +123,18 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
     	}
 		return contrataciones;
     }
-
+    
+	public void findeMes(Factura factura) {
+		if(this.contrataciones.size()!=0) { //no agrega facturas si no hay contrataciones
+			this.facturaPendiente.add(factura);
+		}
+	}
+	
+	public void abonarFactura(IFactura factura){
+		this.historicoFacturas.put(factura.getMesYAnio(),factura);
+		this.facturaPendiente.removeFirst();
+	}
+	
 	public Iterator<Contratacion> getContrataciones(){
 		return contrataciones.values().iterator();
 	}

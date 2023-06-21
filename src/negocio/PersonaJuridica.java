@@ -30,34 +30,32 @@ public class PersonaJuridica extends Abonado {
 	public void findeMes(Factura factura) {
     	assert factura != null: "Factura nula";
 		factura.setPersonaJ(true);
-		if(this.contrataciones.size()!=0) { //no agrega facturas si no hay contrataciones
-			this.facturaPendiente.add(factura);
-		}
+		this.facturaPendiente.add(factura); //no cambia de estado y no pasa a moroso (no posee estados)
 	}
 
 
 	@Override
 	public void contratarServicio(Contratacion contratacion) {
     	assert contratacion != null: "Contratacion nula";
-        contrataciones.put(contratacion.getDomicilio(), contratacion);
+		// TODO Auto-generated method stub
+		this.addContratacion(contratacion);
+		
 	}
 
 
 	@Override
 	public void bajaServicio(Domicilio domicilio) throws DomicilioSinContratacionEnAbonadoException {
     	assert domicilio != null: "Domicilio nulo";
-    	if(this.contrataciones.remove(domicilio)==null) {
-        	throw new DomicilioSinContratacionEnAbonadoException(domicilio, this);
-        }
+		this.eliminaContratacion(domicilio);
 	}
 
 
 	@Override
-	public IFactura pagaFactura(IFactura factura) {
+	public void pagaFactura(IFactura factura) {
     	assert factura != null: "Factura nula";
-    	this.historicoFacturas.put(factura.getMesYAnio(),factura);
-    	this.facturaPendiente.removeFirst();
-    	return factura ;
+		// TODO Auto-generated method stub
+		this.abonarFactura(factura);
+		
 	}
 	
 	@Override
