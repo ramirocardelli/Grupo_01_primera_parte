@@ -17,7 +17,7 @@ public class Sistema extends Observable implements Serializable{
     private static Sistema instancia=null;
     private GregorianCalendar fechaAct;
     private SubSistemaTecnicos tecnicos;
-    private transient DAO dao=new DAO("nombredelarchpersist.txt");
+    private transient DAO dao=new DAO("nombredelarchpersist.bin");
     
 
     /** Constructor privado para evitar que se creen muchas instancias del Sistema
@@ -391,9 +391,12 @@ public class Sistema extends Observable implements Serializable{
 	public void persistir() {
 		try {
 			this.dao.persistir();
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+			Estado estado=new Estado("Error al persistir","SISTEMA");
+			setChanged();
+			notifyObservers(estado);
 		}
 	}
 	
@@ -401,8 +404,9 @@ public class Sistema extends Observable implements Serializable{
 		try {
 			this.dao.despersistir();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Estado estado=new Estado("Error al despersistir "+e.getLocalizedMessage()+ "","SISTEMA");
+			setChanged();
+			notifyObservers(estado);
 		}
 	}
 }                                               
