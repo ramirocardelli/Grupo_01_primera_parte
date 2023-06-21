@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
@@ -57,12 +56,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
     public IFactura getFactura(GregorianCalendar mesYanio) {
     	IFactura rta=null;
     	if(mesYanio==null) {//obtiene la sig factura a pagar
-    		try {
-    			rta=this.facturaPendiente.getFirst();
-    		}
-    		catch (NoSuchElementException e) { //se lanza esta excepcion si la linked list se encuentra vacia
-    			rta=null;
-    		}
+    		rta=this.facturaPendiente.getFirst();
     	}
     	else
     		rta=this.historicoFacturas.get(mesYanio);
