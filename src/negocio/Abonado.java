@@ -2,6 +2,7 @@ package negocio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -138,7 +139,7 @@ public abstract class Abonado extends Observable implements Cloneable,Runnable,S
 	@Override
 	public void run() {
 		String texto;
-		Random rand=new Random();
+		Random rand=new Random(new Date().getTime());
 		try {
 			Thread.sleep(200+rand.nextInt(300));//tiempo de concurrencia
 		} catch (InterruptedException e) {
