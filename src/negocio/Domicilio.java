@@ -81,7 +81,7 @@ public class Domicilio implements Cloneable,Serializable{
 		int hash=1;
 		hash=hash*20+calle.hashCode();
 		hash=hash*20+numero;
-		return 1;
+		return hash;
 	}
 	
 }
