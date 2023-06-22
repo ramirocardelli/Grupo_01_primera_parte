@@ -21,9 +21,10 @@ public class SubSistemaTecnicos implements Serializable{
 	 * Post: Tecnico agregado a la lista
 	 * @param tecnico
 	 */
-	public void agregarTecnico(Tecnico tecnico) {
+	public synchronized void agregarTecnico(Tecnico tecnico) {
     	assert tecnico != null: "Tecnico nulo";
 		tecnicos.add(tecnico);
+		notifyAll();
 	}
 	
 	/**

@@ -103,7 +103,7 @@ public class Sistema extends Observable{
     	assert domicilio != null: "Domicilio nulo";
     	Estado estado=null;
 		try {
-			System.out.println("entro");
+			//System.out.println("entro");
 			FactoryContratacion FC=new FactoryContratacion();
 			Contratacion nuevaContratacion = FC.creaContratacion(camaras, botonesAntipanicos, movilAcompanamiento, domicilio, tipo);
 			this.datos.nuevaContratacion(dni,nuevaContratacion);
@@ -377,6 +377,7 @@ public class Sistema extends Observable{
 	public void altaTecnico(String nombreTecnico) {
     	assert nombreTecnico != null: "nombreTecnico nulo";
     	assert nombreTecnico != "": "nombreTecnico vacio";
+    	Agregatecnicos
 		this.tecnicos.agregarTecnico(new Tecnico(nombreTecnico));
 		Estado estado = new Estado ("Se dio de alta el tecnico correctamente","SISTEMA");
 		setChanged();
