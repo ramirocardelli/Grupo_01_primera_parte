@@ -257,16 +257,16 @@ public class Sistema extends Observable{
     	assert tipo != "": "tipo vacio";
     	FactoryAbonado FA=new FactoryAbonado();
     	Abonado abonado=FA.creaAbonado(nombre, dni, tipo);	
+    	Estado estado;
     	try {
 			datos.agregaAbonado(abonado);
+	    	estado = new Estado("Se creo el abonado correctamente","SISTEMA");
 		} catch (AbonadoYaCargadoException e) {
-			Estado estado=new Estado("Abonado ya cargado","SISTEMA"); 
-			setChanged();
-			notifyObservers(estado);
+			estado=new Estado("Abonado ya cargado","SISTEMA"); 
 		}
-    	Estado estado2 = new Estado("Se creo el abonado correctamente","SISTEMA");
     	setChanged();
-		notifyObservers(estado2);
+		notifyObservers(estado);
+
     }
  
     

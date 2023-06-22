@@ -199,6 +199,7 @@ public class Ventana extends JFrame implements IVista, KeyListener, MouseListene
 		botonGestionFact = new JButton("Gestionar Facturacion");
 		botonGestionFact.setActionCommand("FACTURACION");
 		panelBotonesPagar_Contratar_Baja.add(botonGestionFact);
+		botonGestionFact.setEnabled(false);
 		
 		botonActualizarMes = new JButton("Actualizar mes");
 		botonActualizarMes.setActionCommand("ACTUALIZARMES");
