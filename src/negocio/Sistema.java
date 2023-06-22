@@ -377,8 +377,8 @@ public class Sistema extends Observable{
 	public void altaTecnico(String nombreTecnico) {
     	assert nombreTecnico != null: "nombreTecnico nulo";
     	assert nombreTecnico != "": "nombreTecnico vacio";
-    	Agregatecnicos
-		this.tecnicos.agregarTecnico(new Tecnico(nombreTecnico));
+    	AgregaTecnico aux=new AgregaTecnico(nombreTecnico,tecnicos);
+		aux.start();
 		Estado estado = new Estado ("Se dio de alta el tecnico correctamente","SISTEMA");
 		setChanged();
 		notifyObservers(estado);
