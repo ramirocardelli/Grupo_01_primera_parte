@@ -73,14 +73,14 @@ public class PersonaFisica extends Abonado {
         }
 	}
 	
-	public void addFactHistorico (Factura factura) {
+	public void addFactHistorico (IFactura factura) {
 	    assert factura != null: "Factura nula";
 	    this.historicoFacturas.put(factura.getMesYAnio(),factura);
-	    this.facturaPendiente.removeFirst();
+	    this.facturaPendiente.removeFirst(); //se verifica en subsistema de datos que haya una factura por pagar
 	}
 	
-	public void abonaFactura() {
-		this.facturaPendiente.removeFirst();
+	public void addFactPendiente(Factura factura) {
+		this.facturaPendiente.add(factura);
 	}
 	
 	@Override

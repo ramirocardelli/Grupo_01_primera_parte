@@ -56,7 +56,7 @@ public class PersonaJuridica extends Abonado {
 	public IFactura pagaFactura(IFactura factura) {
     	assert factura != null: "Factura nula";
     	this.historicoFacturas.put(factura.getMesYAnio(),factura);
-    	this.facturaPendiente.removeFirst();
+    	this.facturaPendiente.removeFirst(); //se verifica en subsistema de datos que exista una factura por pagar
     	return factura ;
 	}
 	

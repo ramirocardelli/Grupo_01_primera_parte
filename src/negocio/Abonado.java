@@ -57,11 +57,8 @@ public abstract class Abonado implements Cloneable,Runnable,Serializable{
   public IFactura getFactura(GregorianCalendar mesYanio) {
   	IFactura rta=null;
   	if(mesYanio==null) {//obtiene la sig factura a pagar
-  		try {
-  			rta=this.facturaPendiente.getFirst();
-  		}
-  		catch (NoSuchElementException e) { //se lanza esta excepcion si la linked list se encuentra vacia
-  			rta=null;
+  		if(!this.facturaPendiente.isEmpty()) {
+  				rta=this.facturaPendiente.getFirst();
   		}
   	}
   	else

@@ -33,7 +33,7 @@ public class ConContratacionState implements IState,Serializable{
 
 	@Override
 	public IFactura pagaFactura(IFactura factura) throws PagoException {
-    	this.persona.pagaFactura(factura);
+    	this.persona.addFactHistorico(factura);
     	return factura;
 	}
 
@@ -42,7 +42,7 @@ public class ConContratacionState implements IState,Serializable{
 		if(persona.isFacturaPorPagar()) { //si ya existe una factura pendiente entonces pasa a estado moroso
 			this.persona.setEstado(new MorosoState(persona));
 		}
-		this.persona.addFactHistorico(factura);
+		this.persona.addFactPendiente(factura);
 	}
 	
 }

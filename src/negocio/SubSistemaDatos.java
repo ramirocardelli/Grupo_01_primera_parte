@@ -108,7 +108,7 @@ public class SubSistemaDatos implements Serializable{
 				this.abonados.remove(dni);
 			}
 			else
-				throw new AbonadoConFacturaException(dni, dni);
+				throw new AbonadoConFacturaException(eliminar.getNombre(), dni);
 		}
 			throw new DniDesconocidoException(dni);
 	}

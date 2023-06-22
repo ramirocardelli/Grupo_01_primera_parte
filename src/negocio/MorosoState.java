@@ -27,9 +27,10 @@ public class MorosoState implements IState {
 	@Override
 	public IFactura pagaFactura(IFactura factura) throws PagoException {
     	assert factura != null: "Factura nula";
-    	this.persona.abonaFactura(); //retira la factura de facturas pendientes de pago
+    	factura= new DecoratorPagoMoroso(factura);
+    	this.persona.addFactHistorico(factura);
     	this.persona.setEstado(new ConContratacionState(persona));
-		return new DecoratorPagoMoroso(factura);
+		return factura;
 	}
 
 	@Override
